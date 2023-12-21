@@ -1,0 +1,683 @@
+\def\too{\longrightarrow}
+\def\Kom{\underline{\mathrm{Kom}}}
+\def\comp#1{#1^{\circ}}
+\def\projres#1{#1_{\bullet}}
+
+\section{Exactness}
+
+\begin{definition}[Complex]
+    A \textbf{Complex} of $R$-modules is a family of $R$-modules $(M_i)$ and $R$-linear maps $d_i: M_i \to M_{i+1}$ s.t. for all $i$, $d_{i+1} \circ d_i = 0$.
+\end{definition}
+
+\begin{remark}
+    The followings are some specifications on the notations:
+    \begin{itemize}
+        \item The complex is often denoted by a chain
+        \[
+            \cdots \overset{d_{i-2}}{\too} M^{i-1} \overset{d_{i-1}}{\too} M^i \overset{d_{i}}{\too} M^{i+1} \overset{d_{i+1}}{\too} \cdots
+        \]
+        or a chain with indices on the bottom with $M^i = M_{-i}$.
+        \item The complex extends to infinity in both ends. If the notation terminated on one side, all modules not written out are the trivial (the zero module).
+    \end{itemize}
+\end{remark}
+
+\begin{remark}
+    The definition of a complex is the same as stating that $\im d_{i} \subseteq \ker d_{i+1}$ for all $i$.
+\end{remark}
+
+\begin{definition}
+    For a sequence $A \overset{f}{\too} B \overset{g}{\too} C$ where $f$ and $g$ are $R$-linear maps, it is \textbf{exact at $\mathbf{B}$} if the equality is reached in the remark above, i.e. $\im f = \ker g$. 
+
+    A sequence is exact if it is exact at $A_i$ for all $i$. A complex is exact if it is exact everywhere.
+\end{definition}
+
+\begin{example}
+    The sequence $0 \too A \overset{f}{\too} B$ is exact implies that $\ker f = \{0\}$, i.e. $f$ is injective. Similarly, $A \overset{g}{\too} B \too 0$ implies that $g$ is surjective.
+\end{example}
+
+\begin{definition}
+    A \textbf{Short Exact Sequence (SES)} is an exact sequence
+    \[
+        0 \too M' \overset{i}{\too} M \overset{p}{\too} M'' \too 0
+    \]
+\end{definition}
+
+\begin{proposition}
+    Given a sequence $(\ast): 0 \too M' \overset{i}{\too} M \overset{p}{\too} M'' \too 0$, the followings are equvalent:
+    \begin{enumerate}[label=\roman*)]
+        \item $(\ast)$ is a short exact sequence.
+        \item $i$ is injective, and for $q: M \to \coker i$, there exists a unique isomorphism $\theta$ s.t. $\theta \circ q = p$.
+        \item $p$ is surjective, and for $j: M \to \ker p$, there exists a unique isomorphism $\eta$ s.t. $i = \eta \circ j$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    It suffices to prove the equivalence between i) and ii), as the case with iii) is similar:
+    \begin{itemize}
+        \item \emph{i) $\Rightarrow$ ii)}. Apply the universal property of cokernel. Since $(\ast)$ is exact, $p \circ i = 0$, there exists a map $\theta$ s.t. the following diagram commutes.
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzcd}
+                M' \arrow[rr, "i"] & & M \arrow[rr, "p"] \arrow[rrdd, "q"] & & M'' \arrow[dd, <-, "\theta"] \\
+                & & & & \\
+                & & & & \coker i
+            \end{tikzcd}
+        \end{figure}
+        The fact that $p$ is surjective, and the diagram should commute gives $\theta$ should be surjective. To prove that $\theta$ is injective, it suffices to verify that $\theta(b) = 0 \implies b = 0$ for $b \in \coker i$. Since $q$ by definition is surjective, there exists $a \in M$ s.t. $q(a) = b$. This gives $a \in \ker p = \im i$, which implies that $q(a) = 0$ as the cokernel is defined by $M/ \im i$.
+        \item \emph{ii) $\Rightarrow$ i)}. Given that $\mu$ is an isomorphism and $i$ is injective, it suffices to verify that $p$ is surjective, and $\im i = \ker p$. $\mu$ being surjective implies that $p$ is surjective; and $\mu$ being an isomorphism implies that $\ker p = \ker q = \im i$. 
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}\label{prop:criterion for split}
+    Given a short exact sequence $0 \too M' \overset{i}{\too} M \overset{p}{\too} M'' \too 0$, the following statements are equivalent:
+    \begin{enumerate}[label=\roman*)]
+        \item There exists $j: M \to M'$ s.t. $j \circ i = \Id_{M'}$
+        \item There exists $q: M'' \to M$ s.t. $p \circ q = \Id_{M''}$
+        \item There exists a submodule $N \subseteq M$ s.t. $M$ can be expressed by the internal direct sum $M = i(M') \oplus N$; and $p$ induces an isomorphism $N \simeq M''$.
+    \end{enumerate}
+    Such a short exact sequence is a \underline{split exact sequence}.
+\end{proposition}
+
+\begin{proof}
+    It suffices to give the equivalence between i) and iii), as for ii) it is similar.
+    \begin{itemize}
+        \item \emph{i) $\Rightarrow$ iii)}. Let $N = \ker j$. Check that this gives an internal direct sum:
+            \begin{itemize}
+                \item $N \cap i(M') = \{0\}$. Let $x \in i(M') \cap N$. Then there exists $u \in M'$ s.t. $i(u) \in \ker j$, i.e. $j\circ i(u) = 0$. But this indicates that $u = 0$ as $j \circ i = \Id_{M'}$. Since $i$ is a morphism of modules, $i(0) = 0$, which indicates that the only element that is in both $i(M')$ and $N$ is 0.
+                \item $N + i(M') = M$. Notice $v - i \circ j(v) \in \ker q$, and by inspection $i\circ j(v) \in \im i$.
+            \end{itemize}
+            By the first isomorphism theorem, $\im i = \ker p$ implies $M / \im i \simeq N \simeq M''$.
+        \item \emph{iii) $\Rightarrow$ i)}. Define $j: i(M') \oplus N \to i(M') \simeq M'$ since $i$ is injective.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    Generally short exact sequences do not split. A counterexample is
+    \[
+        0 \too \Z \overset{i}{\too} 2\Z \overset{p}{\too} \Z/2\Z \too 0
+    \]
+    where $i(\Z) \simeq \Z$, but the inverse map cannot be extended properly to the whole ring $\Z$. If $R$ is a field, then all short exact sequences split as one can complete a basis in a vector space; and subspaces spanned by a subset of a basis is always a direct summand of the whole space.
+\end{remark}
+
+The following present a common technique known as ``diagram chasing'':
+
+\begin{proposition}[The 5-Lemma]
+    Consider the following diagram, with blocks commute and rows exact:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            A_1 \arrow[d, "f_1"] \arrow[r, "u_1"] & A_2 \arrow[d, "f_2"] \arrow[r, "u_2"] & A_3 \arrow[d, "f_3"] \arrow[r, "u_3"] & A_4 \arrow[d, "f_4"] \arrow[r, "u_4"] & A_5 \arrow[d, "f_5"] \\
+            B_1 \arrow[r, "v_1"] & B_2 \arrow[r, "v_2"] & B_3 \arrow[r, "v_3"] & B_4 \arrow[r, "v_4"] & B_5 \\
+        \end{tikzcd}
+    \end{figure}
+    \begin{enumerate}
+        \item If $f_2, f_4$ are injective, $f_1$ is surjective, then $f_3$ is injective.
+        \item If $f_2, f_4$ are surjective, $f_5$ is injective, then $f_3$ is surjective.
+        \item (Combining i) and ii)) If $f_1, f_2, f_4, f_5$ are all isomorphisms, then $f_3$ is an isomorphism.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    The argument is symmetric, so it suffices to prove the first one. $f_3$ is injective if and only if $f_3(b) = 0 \implies b = 0$. Following the steps:
+    \begin{itemize}
+        \item Consider the third square. $v_3 \circ f_3(b) = v_3(0) = 0$, giving $f_4 \circ u_3(b) = 0$. $f_4$ being injective implies that $u_3(b) = 0$. 
+        \item Consider the second square. The top row being exact implies that $b \in \im u_2$, i.e. there exists some $c \in A_2$ s.t. $u_2(c) = b$. Commutativity gives that $v_2 \circ f_2(c) = 0$, i.e. $c' := f_2(c) \in \ker v_1$.
+        \item Consider the first square. The bottom row being exact implies that there exists some $d' \in B_1$ s.t. $v_1(d') = c'$. Since $f_1$ is surjective, there exists $d \in A_1$ s.t. $f_1(d) = d'$. For the diagram to commute, it is required that $u_1(d) = c$. But this indicates that $c \in \im u_1$, i.e. $c \in \ker u_2$, which gives $b = u_2(c) = 0$.
+    \end{itemize}
+\end{proof}
+
+% TODO Add Snake Lemma
+
+\begin{definition}
+    Let $R$ and $S$ be rings, and $F: \catlmod{R} \to \catlmod{S}$ is an additive functor. Then $F$ is \textbf{exact} if for all short exact sequences of $R$-modules $0 \too M' \too M \too M'' \too 0$, the corresponding sequence after applying $F$ is also exact.
+\end{definition}
+
+\begin{proposition}
+    $F$ is exact if and only if for all exact sequence $A \overset{f}{\too} B \overset{g}{\too} C$, $F(A) \overset{f}{\too} F(B) \overset{g}{\too} F(C)$ is also exact.
+\end{proposition}
+
+\begin{proof}
+    Proceed by showing implication in two directions:
+    \begin{itemize}
+        \item[$\Leftarrow$:] This holds by definition, where one can consider the particular case where $f$ is injective and $g$ is surjective.
+        \item[$\Rightarrow$:] Consider the following short exact sequences:
+        \[
+        \begin{array}{ll}
+            (1):\qquad\qquad & 0 \too \ker f \too A \overset{\alpha_1}{\too} \im f \too 0 \\
+            (2):\qquad\qquad & 0 \too \ker g \overset{\alpha_2}{\too} B \overset{\beta_1}{\too} \im g \too 0 \\
+            (3):\qquad\qquad & 0 \too \im g \overset{\beta_2}{\too} C \too \coker g \too 0
+        \end{array}
+        \]
+        where $\im f = \ker g$ as the sequence given is exact. These by construction are all short exact sequences, where applying $F$ gives also short exact sequences. Combining gives the sequence which is still exact after applying $F$:
+        \[
+            A \overset{\alpha_1}{\too} \im f \overset{\alpha_2}{\too} B \overset{\beta_1}{\too} \im g \overset{\beta_2}{\too} C
+        \]
+        where $\alpha_1, \beta_1$ are surjective; and $\alpha_2, \beta_2$ are injective. What we want to show is $\im F(f) = \ker F(g)$. Since $\alpha_1$ is surjective, $\im F(f) = \im F(\alpha_2)$; and since $\beta_2$ is injective, $\ker F(g) = \ker F(\beta_1)$. From the result of (2) after applying $F$, we have $\im F(\alpha_2) = \ker F(\beta_1)$.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    ``One-sided'' exact sequences can be understood functorially:
+    \begin{itemize}
+        \item Given exact sequence $0 \too M' \overset{i}{\too} M \overset{p}{\too} M''$ is the same as saying that $i$ is injective; and $M'$ is the kernel of $p$.
+        \item Similarly, given exact sequence $M' \overset{i}{\too} M \overset{p}{\too} M'' \too 0$ is the same as saying that $p$ is surjective; and $M''$ is the cokernel of $i$.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    Just as in the remark, one could consider exact functors only on one side. $F: \catlmod{R} \to \catlmod{S}$ is \textbf{left exact} if for all exact sequence $0 \too A \too B \too C$, the sequence $0 \too F(A) \too F(B) \too F(C)$ is also exact; and the definition is symmetric for right exact functors. Notice that since $F$ is an additive functor, $F(0) = 0$ (as zero morphisms are mapped to zero morphisms). 
+\end{definition}
+
+\begin{proposition}\label{prop:Hom(M,-) left exact}
+    Let $M$ be an $R$-$S$ bimodule. Then functor $F = \Hom_R(M, -): \catlmod{R} \to \catlmod{S}$ is left exact; and the converse is also true, i.e. if $0 \too \Hom_R(M, A) \too \Hom_R(M, B) \too \Hom_R(M, C)$ is exact, then $0 \too A \too B \too C$ is exact.
+\end{proposition}
+
+\begin{proof}
+    What we first want to show is that if the sequence $0 \too A \too B \too C$ is exact, then the corresponding sequence $0 \too \Hom(M, A) \too \Hom(M, B) \too \Hom(M, C)$ is exact:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            0 \arrow[r] & A \arrow[r, "f"] & B \arrow[r, "g"] & C \\
+            & & M \arrow[u, "v"] \arrow[lu, dashed, "u"] & \\
+        \end{tikzcd}
+    \end{figure}
+    The natural way to define the functor $F$ is via specifying $\Hom(M, A) \ni u \mapsto f \circ u$, $\Hom(M, B) \ni v \mapsto g \circ v$. Exactness follows from the universal property of kernel, where for all $v \in \Hom(M, B)$ s.t. $\Hom(M, C) \ni g \circ v = 0$, it factors uniquely through $f$. Furthermore, since $F$ is an additive functor, it preserves injectivity (via considering elements in $\catsets$), which indicates that $F(f)$ is also injective.
+
+    For the converse, take $M = A$. This gives the exact sequence $0 \too \Hom (A, A) \overset{\alpha}{\too} \Hom(A, B) \overset{\beta}{\too} \Hom(A, C)$. The natural ways to define the map is via specifying $\alpha = f \circ -$, $\beta = g \circ -$. Observe that the exactness of the sequence gives $\beta \circ \alpha = g \circ f $ \\ $\circ - = 0$, which indicates that $g \circ f = 0$ by associativity. $\alpha$ being injective follows directly from the fact that $f$ is injective.
+\end{proof}
+
+\begin{remark}
+    The dual argument is also true, via applying the universal property of cokernel. That is, the functor $\Hom_R(-, M)$ is right exact. The direction of exactness reverses as the functor is contravariant. 
+\end{remark}
+
+\begin{proposition}\label{prop:tensor product functor right exact}
+    If $M$ is an $S$-$R$ bimodule, then $M \tensor_R -$ is right exact. 
+\end{proposition}
+
+\begin{proof}
+    From the right exact version of Proposition \ref{prop:Hom(M,-) left exact}, it suffices to prove that for left $R$-module $N$ the sequence
+    \[
+        \Hom(M \tensor A, N) \too \Hom(M \tensor B, N) \too \Hom(M \tensor C, N) \too 0
+    \]
+    is exact. First make a parenthesis on the generalization of the adjoint property of extension and restriction of scalars:
+
+    \begin{parenthesis}[Prop 4.4 \lbrack c6\rbrack]
+        Let $M$ be an $S$-$R$ bimodule, $C$ a left $R$-module, and $N$ a left $S$-module, then there is a functorial isomorphism
+        \[
+            \Hom_S(M \tensor_R C, N) \simeq \Hom_R(C, \Hom_S(M, N))
+        \]
+    \end{parenthesis}
+
+    \begin{proof}
+        By the universal property of tensor product, it suffices to give every $R$-balanced map $f: M \times C \to N$ a map in \\ $\Hom_R(C, \Hom_S(M, N))$. Let the isomorphism be $F$ defined via $F(\tilde{f}[u\tensor v \mapsto f(u, v)]) = v\mapsto (u \mapsto f(u, v))$. The inverse exists by inspection. It is well-defined as one can consider the map $u \times v \mapsto f(u, v)$; and use the universal property of tensor product.
+    \end{proof}
+
+    Then apply the parenthesis and Proposition \ref{prop:Hom(M,-) left exact} gives that it suffices to verify that $0 \too \Hom(M, C) \too \Hom(M, B) \too \Hom(M, A)$ is exact, which holds as $M$ is in particular a right $R$-module; and in this case the functor $\Hom_R(-, \Hom_S(M, N))$ is a contravariant functor. Recall that for a contravariant functor $\Hom(-, N)$, if the sequence $A \too B \too C \too 0$ is exact, then $0 \too \Hom(C, N) \too \Hom(B, N) \too \Hom(A, N)$ is exact. This finishes the proof.
+\end{proof}
+
+\begin{remark}
+    Recall that the above isomorphism holds for all adjoint pairs $(F, G)$. Therefore, the proof applies as long as $F$ is left exact (for $G$ being right exact) or the converse holds. 
+\end{remark}
+
+In general, the above two functors and the contravariant is only left (right) exact instead of exact. Consider the short exact sequence:
+\[
+    0 \too \Z \too 2\Z \too \Z/2\Z \too 0
+\]
+\begin{itemize}
+    \item Applying $- \tensor \Z/2\Z$ gives
+    \[
+        0 \too \Z \tensor \Z/2\Z \overset{i}{\too} 2\Z \tensor \Z/2\Z \overset{p}{\too} \Z/2\Z \tensor \Z/2\Z \too 0
+    \]
+    where $2\Z \tensor \Z/2\Z = 0$ and $\Z \tensor \Z/2\Z \simeq \Z/2\Z \tensor \Z/2\Z \simeq \Z/2\Z$, as the map being $R$-linear restricts that $f(0, 1) = f(1, 0) = f(0, 0)$. This implies that $i$ is not injective.
+    \item Applying $\Hom_{\Z}(-, \Z/2\Z)$ gives
+    \[
+        0 \too \Hom_{\Z}(\Z, \Z/2\Z) \overset{i}{\too} \Hom_{\Z}(2\Z, \Z/2\Z) \overset{p}{\too} \Hom_{\Z}(\Z/2\Z, \Z/2\Z) \too 0
+    \]
+    where $\Hom_{\Z}(2\Z, \Z/2\Z) \ni h = 0$ as it is required that $h(1) + h(1) = \bar{1} + \bar{1} = 0$ which indicates that $p$ is not surjective. Similar situations appear in the contravariant case.
+\end{itemize}
+
+It is then of specific interest in which modules are the above functors exact.
+
+\section{Flat, Projective, and Injective Modules}
+
+\begin{definition}
+    Let $R$ be a ring, and $M$ a left $R$-module. Then:
+    \begin{itemize}
+        \item $M$ is a \textbf{flat module} if $- \tensor_R M$ is an exact functor.
+        \item $M$ is a \textbf{projective module} if $\Hom_R(M, -)$ is an exact functor.
+        \item $M$ is an \textbf{injective module} if $\Hom_R(-, M)$ is an exact functor.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}\label{rmk:diff def for projective module}
+    By comparing with the results obtained in the propositions aforementioned (Proposition \ref{prop:Hom(M,-) left exact}, \ref{prop:tensor product functor right exact}), it is clear what is further required by the definitions:
+    \begin{itemize}
+        \item By Proposition \ref{prop:tensor product functor right exact}, a module is flat if and only if for all injective maps $M_1 \to M_2$, the corresponding map \\ $M_1 \tensor M \to M_2 \tensor M$ is injective.
+        \item By Proposition \ref{prop:Hom(M,-) left exact}, a module is projective if and only if for all surjective maps $M_1 \to M_2$, the corresponding map \\ $\Hom_R(M, M_1) \to \Hom_R(M, M_2)$ is surjective; or the corresponding map is injective if the functor is contravariant.
+    \end{itemize}
+\end{remark}
+
+\begin{remark}\label{rmk:Alt def for projective module}
+    The fact that Hom functors in the remark above is surjective is the same as the following definition (for projective modules): $M$ is a projective $R$-module if and only if for all morphism of $R$-modules $g: M \to V$ with module $U$ for which there exists a surjective morphism $f: U \to V$, there exists a morphism of $R$-modules $h: M \to U$ s.t. $g = f \circ h$; that is, making the following diagram commute:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            & & U \arrow[dd, two heads, "f"] \\
+            & & \\
+            M \arrow[rr, "g"] \arrow[rruu, dashed, "h"] & & V
+        \end{tikzcd}
+    \end{figure}
+
+    In plain words, there exists an embedding into some module (for example, free modules) that could ``project'' surjectively to $V$. This embedding (injection) definitely needs not be unique, as for example one could always embed the projective module to a free module with higher rank. 
+    
+    This definition is indeed equivalent with the previous one, as for a surjective morphism $f: U \to V$, for any $g: M \to V$ there exists some $h: M \to U$ s.t. the diagram commute. This indicates that the morphism $\Hom(M, U) \to \Hom(M, V)$ is a surjection.
+    
+    The dual result holds also for injective modules: for all $R$-module $M$ being injective, it is equivalent to state that for any morphism $g: M \to V$, there exists some $R$-module $U$ with an injection $f: V \to U$ and some morphism $h: U \to M$ s.t. $g = h \circ f$, i.e. the following diagram commutes:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            M \arrow[rrdd, <-, "g"] \arrow[rr, <-, dashed, "h"] & & U \\
+            & & \\
+            & & V \arrow[uu, hookrightarrow, "f"]
+        \end{tikzcd}
+    \end{figure}
+\end{remark}
+
+\begin{proposition}\label{prop:criterion for projective module}
+    Let $M$ be a left $R$-module. Then the following statements are equivalent:
+    \begin{enumerate}[label=\roman*)]
+        \item $M$ is a projective $R$-module.
+        \item $M$ is a direct summand of a free $R$-module. That is, there exists a free $R$-module $F$ and an $R$-module $N$ s.t. $F \simeq M \oplus N$.
+        \item Let $P$ be an $R$-module, and $F$ be a free $R$-module. Then every short exact sequence $0 \too P \too F \too M \too 0$ is split exact.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}\ 
+    \begin{itemize}
+        \item \emph{i) $\implies$ iii)}. Apply the definition given in Remark \ref{rmk:Alt def for projective module}. $M$ being an $R$-module implies that it admits a system of generators, namely there exists some $(g_i)_{i\in I}$ s.t. $M = (g_i)_{i\in I}$. Then there exist $F = R^{(I)}$ where there exists a surjection $f: F \to M, f(e_i) = g_i$. Let $g: M \to M$ be the identity map. By the alternative definition there exists some $h: M \to F$ s.t. $f \circ h = g = \Id_M$. By Proposition \ref{prop:criterion for split} this indicates that the sequence of interest splits.
+        \item \emph{iii) $\implies$ ii)}. Consider the projection $p: F \to M$ where $M = (g_i)_{i\in I}$ and $F = R^{(I)}$. Therefore, the sequence
+        \[
+            0 \too \ker p \overset{i}{\too} F \too M \too 0
+        \]
+        is short exact, which gives $F \simeq i(\ker p) \oplus M = \ker p \oplus M$.
+        \item \emph{ii) $\implies$ i)}. Consider $F$ as a projective module. This is true as $F$ can be trivially embedded to itself. It then suffices to prove that if $F$ is projective and $F \simeq M \oplus N$, then $M$ is projective. By Remark \ref{rmk:diff def for projective module}, it suffices to prove that $\Hom_R(M, U) \to \Hom_R(M, V)$ is surjective for all $U \to V$ surjective. $F$ is projective indicates that $\Hom_R(F, U) \to \Hom_R(F, V)$ is surjective. By the fact that $\Hom_R(F, U) \simeq \Hom_R(M, U) \oplus \Hom_R(N, U)$, $\Hom_R(M, U) \to \Hom_R(M, V)$ is surjective.
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}
+    The category of $\catlmod{R}$ has enough projective modules. In particular, for $M = (g_i)_{i\in I}$ one can take $F = R^{(I)}$. 
+\end{corollary}
+
+Similarly, we would like to prove that there are ``enough'' injective objects in $\catlmod{R}$:
+
+\begin{theorem}\label{thm:enough injectives}
+    The category of $\catlmod{R}$ has enough injective objects. That is, for all $R$-module $M$, there exists an injective embedding $M \hookrightarrow Q$ where $Q$ is an injective module.
+\end{theorem}
+
+\begin{proposition}[Baer]\label{prop:Baer}
+    Let $M$ be an $R$-module. Then $M$ is injective if and only if $\Hom_R(R, M) \to \Hom_R(I, M)$ is surjective for all left ideals $I \subseteq R$. That is, for all $R$-linear maps $f: I \to M$, there exists some $u\in M$ s.t. $f(x) = xu$ for all $x\in I$ (and this gives an extension into $R$).
+\end{proposition}
+
+\begin{proof}
+    The implication from $M$ being injective to the condition follows directly from the definition of injective modules, where one considers the map $I \hookrightarrow R$ to be the injection. For the other direction, consider the following construction:
+
+    Let $i: M_1 \hookrightarrow M_2$ be an injection, where $M_1, M_2$ are $R$-modules; and let $f: M_1 \to M$ be an $R$-linear map. It suffices to show that there exists some $g: M_2 \to M$ s.t. $g \circ i = f$. Consider the family of modules $N_i$ and corresponding maps $h_i$ s.t. $M_1 \subseteq N_i \subseteq M_2$ for all $i$; and $h_i|_{M_1} = f$. Define the partial order $(N, h) \leq (N', h')$ if and only if $N \subseteq N'$, and $h'|_N = h$. Notice that such family is non-empty, as in particular $M_1$ is in the family. Further it is bounded above by $M_2$, which allows us to apply Zorn's Lemma to retrieve a maximal element $(\bar{N}, \bar{h})$. Handle the cases respectively:
+    \begin{itemize}
+        \item $\bar{N} = M_2$. Then letting $g = \bar{h}$ finishes the proof.
+        \item $\bar{N} \neq M_2$. Proceed to show that this map can be further extended, which is a contradiction.
+        
+        By the inequality there exists some $x \in M_2 - \bar{N}$. Consider $I = \{a \in R \mid ax \in N\}$ which is the submodule of $M_2$ generated by $x$. Consider the morphism of $R$-modules $f'$ where $f'(a) = \bar{h}(ax)$. By hypothesis there exists $u\in M$ s.t. $f'(x) = xu$ for all $x \in I$. Notice that $\bar{h} \circ \bar{i} = f$ where $\bar{i}: M_1 \hookrightarrow \bar{N}$ is the injection. Define the map $\tilde{h}: \bar{N} + I = \bar{N} + Rx \to M , \tilde{h}(a + vx) = \bar{h}(a) + vu$ for $a \in \bar{N}$ and $v\in N$. This is well-defined, as for all $v$ s.t. $vx \in \bar{N}$, $\bar{h}(vx) = h(vx) = f'(v) = vu$ by hypothesis. This indicates that $\bar{N}$ is not maximal as the map can be extended to $\bar{N} + Rx$, which is a contradiction.
+    \end{itemize}
+\end{proof}
+
+\begin{definition}
+    Let $M$ be an $R$-module. Then it is \textbf{divisble} if and only if for all $u \in M$, $n \in \Z_{\geq 0}$, there exists $v \in M$ s.t. $nv = u$ where multiplication by $n \in \Z_{\geq 0}$ is adding $n$ copies of the elements to itself.
+\end{definition}
+
+\begin{corollary}
+    If $R = \Z$, then $M$ being an $R$-module is injective if and only if it is divisible.
+\end{corollary}
+
+\begin{proof}
+    If $M$ is divisible, then for all $n\in \Z_{\geq 0}$, $u\in M$ there exists $v \in M$ s.t. $u = nv$. That is, for all $f: I \to M$ with $n \in I \subseteq \Z$, there exists $v \in M$ s.t. $f(n) = u = nv$. This gives the criterion in Proposition \ref{prop:Baer}. The converse holds as the converse holds in the proposition.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:enough injectives}]
+    First prove the theorem with restriction $R = \Z$. From the the previous remark it is clear that $\Z$-modules are injective if and only if it is divisible; and $\Q$ as a $\Z$ module is divisible. Consider the canonical projection $\pi: \Z^{(I)} \to M$ where bases are mapped to generators. Then $M \simeq \Z^{(I)}/\ker \pi$, which embeds into $\Q^{(I)}/\ker \pi$. Since $\ker\pi$ is a submodule of $\Z^{(I)}$, $\Q^{(I)}/\ker \pi$ is divisible and thus injective; which satisfies the condition of interest.
+
+    Now consider the general case by reducing to the case of $\Z$-modules. As $\Z$ modules, there exists an injection $h: M \hookrightarrow Q$, where $Q$ is an injective module. $Q$ being injective indicates that the functor $\Hom_{\Z}(-, Q)$ is exact (on $R$-modules). But notice that by applying the adjoint property this gives
+    \[
+        \Hom_{\Z}(-, Q) \simeq \Hom_{\Z}(R \tensor_R -, Q) \simeq \Hom_{R}(-, \Hom_{\Z}(R, Q))
+    \] 
+    which indicates that the functor $\Hom_{R}(-, \Hom_{\Z}(R, Q))$ is exact, i.e. $\Hom_{\Z}(R, Q)$ is an injective module. It then suffices to give an injective map from $M$ to $\Hom_{\Z}(R, Q)$, which is given by $u \mapsto (x \mapsto (h(xu)))$, where $u \in M$, and $x \in R$. It is well-defined and bilinear by inspection.
+\end{proof}
+
+The followings turn to the discussion of flat modules:
+
+\begin{remark}
+    Since the functor $- \tensor M$ for a given $R$-module $M$ is right exact, $M$ is flat if and only if for all injective maps $M_1 \to M_2$, $M_1 \tensor M \to M_2 \tensor M$ is also injective. 
+\end{remark}
+
+\begin{proposition}
+    Given a family of left $R$-modules $(M_i)_{i \in I}$, $\bigoplus_{i\in I} M_i$ is flat if and only if $M_i$ is flat for all $i$.
+\end{proposition}
+
+\begin{proof}
+    Since direct sum commutes with tensor product, given any injective $R$-linear map $N_1 \hookrightarrow N_2$, we have the following commutative diagram:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            N_1 \tensor (\bigoplus_{i\in I} M_i) \arrow[d, "\simeq"] \arrow[r, hookrightarrow, "f"] & N_2 \tensor (\bigoplus_{i\in I} M_i) \arrow[d, "\simeq"] \\
+            \bigoplus_{i\in I} ( N_1 \tensor M_i) \arrow[r, hookrightarrow, "f'"] & \bigoplus_{i\in I} ( N_2 \tensor M_i)
+        \end{tikzcd}
+    \end{figure}
+    Notice $f'$ is an injection if and only if $f_i'$ is an injection for all $i$ by the universal property of coproduct; and $f$ is an injection if and only if $f'$ is an injection, as the diagram should commute.
+\end{proof}
+
+\begin{corollary}
+    Projective modules are flat.
+\end{corollary}
+
+\begin{proof}
+    By Proposition \ref{prop:criterion for projective module}, an $R$-module $M$ is projective if and only if there exists $R$-modules $F$ and $N$ where $F$ is free s.t. $F \simeq M \oplus N$. By the previous proposition, it suffices to prove that $F$ is flat. Since $F \simeq \oplus_{i \in I} R^{(I)}$, it suffices to prove that $R$ is flat. This is indeed the case as $- \tensor_R R = \Id_R$, which is trivially exact.
+\end{proof}
+
+\begin{definition}
+    Let $R$ be a commutative ring, and $\varphi: R \to S$ specifies an $R$-algebra. Then $S$ is a \textbf{flat $\mathbf{R}$-algebra} if it is flat as an $R$-module. 
+\end{definition}
+
+\begin{remark}
+    This implies that the extension of scalar functor is exact, as by the fact that tensor product should be $R$-balanced, multiplication is indeed scalar multiplication on the $R$-module itself, which preserves injection. 
+\end{remark}
+
+\begin{example}
+    Consider the following flat structures:
+    \begin{itemize}
+        \item $R \to R[x_1, \cdots, x_n]$ is a flat $R$-algebra, as $R[x_1, \cdots, x_n]$ has a free $R$-module structure, where the basis is all monomials.
+        \item Let $S \subseteq R$ be a multiplicative system. Then $R \to S^{-1}R$ is a flat $R$-algebra. It suffices to verify that $S^{-1}R \tensor -$ is exact. Notice $S^{-1}R \tensor M \simeq S^{-1}M$, this is the same as stating that $S^{-1}(-)$ is exact. 
+        
+        Since $N \subseteq M \implies S^{-1}N \subseteq S^{-1}M$, $S^{-1}(-)$ preserves injections; and since $S^{-1}(M/N) \simeq S^{-1}M/ S^{-1}N$, $S^{-1}(-)$ preserves surjection. Thus verifies the exactness and flatness.
+    \end{itemize}
+\end{example}
+
+\begin{proposition}\label{prop:free iff projective in local ring}
+    Let $(R, \mathfrak{m})$ be a local Noetherian ring, and $M$ a finitely generated $R$-module. Then $M$ is projective if and only if $M$ is free. 
+\end{proposition}
+
+\begin{proof}
+    It suffices to verify that $M$ is free if it is projective. By Nakayama's Lemma, $(u_1, \cdots, u_m)$ forms a minimal system of generators of $M$ if and only if $(\bar{u}_1, \cdots, \bar{u}_m)$ forms a basis in $M/\mathfrak{m}$, This is indeed the case, as denoting $N = (u_1, \cdots, u_m)$, this gives $N + \mathfrak{m}M = M$, which indicates that $N = M$. Minimality is given by the minimality of cardinality of basis. Choose $F = R^m$ with $\varphi: F \to M$ s.t. $\varphi(e_i) = u_i$ for all $i$. Since $M$ is projective, consider the short exact sequence that splits:
+    \[
+        0 \too K \too F \overset{\varphi}{\too} M \too 0
+    \]
+    To prove that $M$ is free, it suffices to show that $K = 0$. Note that if $(a_1, \cdots, a_m) \in K$, then $\sum_{i=1}^m a_iu_i = 0 \implies \sum_{i=1}^m \bar{a}_i \bar{u}_i = 0 \implies \bar{a}_i = 0 \implies a_i \in \mathfrak{m}$ for all $i$ since $\bar{u}_i$s give a basis. That is, $K \subseteq \mathfrak{m} R^m$. Now apply the functor $-\tensor R/\mathfrak{m}$. This is an additive functor, which preserves morphisms as it acts as a group homomorphism, i.e. split exact sequences remain split exact after applying the functor. This gives the sequence
+    \[
+        0 \too K/\mathfrak{m}K \overset{\alpha}{\too} F/\mathfrak{m}F \too M/\mathfrak{m}M \too 0
+    \] 
+    which is also split. Since $K \subseteq \mathfrak{m} R^m$, $K \subseteq \mathfrak{m}F$, which indicates that $\alpha = 0$. Since $\alpha$ is injective as the sequence is exact, $K / \mathfrak{m}K = 0 \implies K = 0$. The sequence being split exact gives $F \simeq M \oplus K$, which implies $F \simeq M$. 
+\end{proof}
+
+\begin{corollary}
+    Let $R$ be a Noetherian commutative ring, and $M$ a finitely generated $R$-module. Them $M$ is projective if and only if for all maximal ideals $p$ in $R$, $M_p$ is a free $R_p$ module.
+\end{corollary}
+
+\begin{proof}
+    By Proposition \ref{prop:free iff projective in local ring}, it suffices to show that $M$ is projective if and only if for all maximal ideals $p$, the module $M_p$ is a projective $R_p$ module:
+    \begin{enumerate}
+        \item[$\Rightarrow$:] We prove a generalization of the statement. Let $\varphi: R \to S$ be a ring homomorphism, and $M$ be a projective $R$-module, then $M \tensor_R S$ is a projective $S$-module. Since $M$ is a projective $R$-module, there exists an $R$-module $N$ s.t. $R^{(I)} \simeq M \oplus N$. As tensor product commutes with direct sum, this gives the isomorphism $(M \tensor_R S) \oplus (N \tensor_R S) \simeq R^{(I)} \tensor_R S \simeq S^{(I)}$.
+        \item[$\Leftarrow$:] Since for all maximal ideals $p$, $M_p$ is a projective $R_p$ module, by the definition of projective modules we have that for all $R$-modules $A$ and $B$ where there exists a surjective map $A \twoheadrightarrow B$, the morphism of $R$-modules $\Hom_{R_p} (M_p, A_p) \to \Hom_{R_p}(M_p, B_p)$ is surjective. Since tensor product is right exact, to show that $\Hom_R(M, A) \to \Hom_R(M, B)$ is surjective it suffices to show that the map $\Hom_R(M, A) \tensor R_p \to \Hom_R(M, B) \tensor R_p$ is surjective. The identification is shown via the following proposition:
+
+        \begin{proposition}
+            Let ring $S$ be a flat $R$-module, and $f: R \to S$ a ring homomorphism. Let $M$ and $N$ be $R$-modules. Then there is a canonical morphism of $S$-modules $\Hom_R(M, N) \tensor_R S \to \Hom_S(M \tensor_R S, N \tensor_R S)$ which is functorial w.r.t. $M$ and $N$. Further, if $R$ is Noetherian, and $M$ is finitely generated, then this is an isomorphism.
+        \end{proposition}
+
+        \begin{proof}
+            Consider the morphism of $R$-modules $\Hom_R(M, N) \to \Hom_S(M \tensor_R S, N \tensor_R S)$, $f \mapsto f \tensor_R \Id_S$. Then by universal property of extension of scalars there exists a unique morphism of $S$-modules
+            \begin{equation}\tag{$\ast$}
+                \theta_M: \Hom_R(M, N) \tensor_R S \to \Hom_S(M \tensor_R S, N \tensor_R S), \qquad f \tensor a \mapsto a (f \tensor \Id_S)
+            \end{equation}
+            This is functorial w.r.t. both $M$ and $N$. Now regard this as a contravariant functor where $M$ is the argument: denote the morphism above to be $U(M) \to V(M)$. Observe the following facts:
+            \begin{itemize}
+                \item If $M = R$, then this is an isomorphism, as both sides are isomorphic to $N \tensor_R S$. 
+                \item If $M$ is free, then this is also an isomorphism. This is a direct result of the fact above, and the fact that the functors are both additive, which commutes with direct sum.
+            \end{itemize}
+            Now consider the general case where $M$ is finitely generated over a Noetherian ring $R$. Then there exists a free module $F$ s.t. $F \to M$ is surjective, where $e_i$ is mapped to $u_i$ which gives a system of generators in $M$. $R$ is Noetherian indicates that $F$ is a Noetherian $R$-module, which gives that $K := \ker \varphi$ is finitely generated.
+
+            Then similarly it is possible to take a free module $G$ where $G \to K$ is surjective. This gives an exact sequence $G \too F \too M \too 0$. (as $\im (G \to F) = \ker (F \to M)$). Applying $U$ and $V$ on the exact sequence gives the commutative diagram where the rows are exact, and the blocks commute:
+            \begin{figure}[htbp]
+                \centering
+                \begin{tikzcd}
+                    0 \arrow[r, dashed] \arrow[d, dashed] & 0 \arrow[r] \arrow[d, dashed] & U(M) \arrow[r] \arrow[d, "\theta_M"] & U(F) \arrow[r] \arrow[d, "\theta_F"] & U(G) \arrow[d, "\theta_G"] \\
+                    0 \arrow[r, dashed] & 0 \arrow[r] & V(M) \arrow[r] & V(F) \arrow[r] & V(G)
+                \end{tikzcd}
+            \end{figure}
+            The lines are indeed exact, as $S$ is flat on $R$, which gives that $- \tensor_S N$ is right exact, and $\Hom(-, N)$ is left exact. By the results on free modules, $\theta_F$ and $\theta_G$ are isomorphisms, which implies that $\theta_M$ is also an isomorphism by the 5-lemma. 
+        \end{proof}
+
+        This is indeed applicable, as in general localization preserves flatness. Consider $M$ a flat $R$-module, $S$ a multiplicative system in $R$, with an exact sequence $0 \too A \too B \too C \too 0$. To verify that this is true, it suffices to verify that the sequence $0 \too A \tensor_{S^{-1}R} S^{-1}M \too B \tensor_{S^{-1}R} S^{-1}M \too C \tensor_{S^{-1}R} S^{-1}M \too 0$ is exact. This is indeed true from the isomorphism 
+        \[
+            A \tensor_{S^{-1}R} S^{-1}M \simeq A \tensor_{S^{-1}R} (S^{-1}R \tensor_R M) \simeq (A \tensor_{S^{-1}R} S^{-1}R) \tensor_R M \simeq A \tensor_R M
+        \]
+        indicates that the sequence can be identified with $0 \too A \tensor_R M \too B \tensor_R M \too C \tensor_R M \too 0$, which is exact as $M$ is flat. In this case $R$ itself is flat as an $R$-module, which indicates that $R_p$ is also flat.
+    \end{enumerate}
+
+\end{proof}
+
+\section{Complexes$^*$}
+
+Recall that a complex is an infinite chain where the composition of any two successive morphisms gives zero. This section is devoted to further study this object.
+
+First present another lemma which again uses the technique of ``chasing the diagram'':
+
+\begin{proposition}[The Snake Lemma]
+    Consider the diagram below, where all objects are in an additive category, where the rows are exact, blocks commute, and $0$ denotes the zero object: 
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            & A \arrow[r, "f"] \arrow[d, "a"] & B \arrow[r, "g"] \arrow[d, "b"] & C \arrow[r] \arrow[d, "c"] & 0 \\
+            0 \arrow[r] & A' \arrow[r, "f'"] & B' \arrow[r, "g'"] & C' & 
+        \end{tikzcd}
+    \end{figure}
+
+    Then there exists an exact sequence
+    \[
+        \ker a \too \ker b \too \ker c \overset{\delta}{\too} \coker a \too \coker b \too \coker c
+    \]
+    where $\delta$ is known as the \underline{connecting homomorphism}.
+\end{proposition}
+
+\begin{proof}[Sketch of Proof]
+    The proof is done only for the case where the category is taken as $\catlmod{R}$.
+
+    First define the map. Let $x \in \ker c$. $g$ being surjective implies that there exists some $y \in B$ s.t. $g(y) = x$. Denote $y' = b(y)$. By the fact that blocks commute, $g'(b(y)) = c(g(y)) = 0$, which implies that $y' \in \ker g'$. Since the second row is exact, $y'$ is in the image of $f'$, which implies that there exists some $z' \in A'$ s.t. $f'(z') = y'$. Define $\delta(x) = \bar{z'} \in A' / \im a$. This is a homomorphism as all maps used above are homomorphisms.
+
+    Now check that this map is well-defined. Since $f'$ is injective by the exactness, it suffices to check that the choice of $z$ does not vary w.r.t. the choice of $y$. Suppose that there exists $y_1, y_2 \in B$ s.t. $(y_1 - y_2) \in \ker g$. By the exactness of the top row there exists $\tilde{z} \in A$ s.t. $f(\tilde{z}) = y_1 - y_2$ as $\ker g = \im f$. Let $z_1, z_2$ be the corresponding output where $y_1$ and $y_2$ are used, respectively. By the commutativity of the left block, together with the fact that $\delta$ is a homomorphism, $z_1' - z_2' = a(\tilde{z})$, which indicates that they have the same image in $\coker a$.
+
+    Now check the exactness. Consider the expanded commutative diagram:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            & \ker a \arrow[d, "a_1"] \arrow[r, "\alpha"] & \ker b \arrow[r, "\beta"] \arrow[d, "b_1"] & \ker c \arrow[r, dashed, "\delta"] \arrow[d, "c_1"] & \ \\
+            & A \arrow[r, "f"] \arrow[d, "a"] & B \arrow[r, "g"] \arrow[d, "b"] & C \arrow[r] \arrow[d, "c"] & 0 \\
+            0 \arrow[r] & A' \arrow[r, "f'"] \arrow[d, "a_2"] & B' \arrow[r, "g'"] \arrow[d, "b_2"] & C' \arrow[d, "c_2"] & \\
+            \arrow[r, dashed, "\delta"] & \coker a \arrow[r, "\alpha'"] & \coker b \arrow[r, "\beta'"] & \coker c & \\
+        \end{tikzcd}
+    \end{figure}
+
+    where the long exact sequence becomes
+    \[
+        \ker a \overset{\alpha}{\too} \ker b \overset{\beta}{\too} \ker c \overset{\delta}{\too} \coker a \overset{\alpha'}{\too} \coker b \overset{\beta'}{\too} \coker c
+    \]
+    Check the exactness respectively:
+    \begin{itemize}
+        \item At $\ker b$. We only need to show $\im \alpha = \ker \beta$. Since $a_1, b_1$ and $c_1$ are embeddings, this is just given by $\ker \beta = \ker b \cap \ker g$. 
+        \item At $\ker c$. We need to show that $\im \beta = \ker \delta $. $x \in \im \beta$ implies that the corresponding $y'$ is zero. Then by injectivity of $f'$ this gives $\delta(x) = 0$, which gives $x \in \ker \delta$.
+    \end{itemize}
+    The exactness at rest two objects can be verified using a symmetric argument. 
+\end{proof}
+
+Now we turn to the subject of complexes.
+
+\begin{definition}[Morphism of Complexes]
+    Let $\comp{K}$ and $\comp{L}$ be complexes whose objects are $R$-modules. A morphism of complexes $f: \comp{K} \to \comp{L}$ is given by a family of $R$-linear maps $f^n: K^n \to L^n$ s.t. all the squares in the following diagram is commutative:
+    \begin{figure}
+        \centering
+        \begin{tikzcd}
+            \cdots \arrow[r] & K^n \arrow[r] \arrow[d, "f^n"] & K^{n+1} \arrow[r] \arrow[d, "f^{n+1}"] & \cdots \\
+            \cdots \arrow[r] & L^n \arrow[r] & L^{n+1} \arrow[r] & \cdots \\
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{remark}
+    Clearly commutative is transited through composition of morphisms. Since $\catlmod{R}$ gives an additive category structure, this is also a category $\Kom(\catlmod{R})$ (or $\Kom_R$).
+\end{remark}
+
+\begin{definition}[Cohomology]
+    For a complex $\comp{K}: \cdots \overset{d^{n-1}}{\too} K^n \overset{d^n}{\too} K^{n+1} \too \cdots$, the \textbf{$n$-th cohomology} of $\comp{K}$ is defined as $H^n(K) := \ker(d^n)/ \im(d^{n-1})$.
+\end{definition}
+
+\begin{remark}
+    Cohomology measures how far a point in the complex is from being exact. The complex $\comp{K}$ is exact if and only if $H^n(\comp{K}) = 0$ for all $n$. 
+\end{remark}
+
+\begin{proposition}
+    $H^n: \Kom_R \to \catlmod{R}$ is a functor.
+\end{proposition}
+
+\begin{proof}
+    Define $H^n(f) := f^n$ which is the mapping $H^n(\comp{K}) \to H^n(\comp{L})$. Check according to the definition:
+    \begin{itemize}
+        \item For any complex $\comp{K}$, $H^n(\comp{K})$ is by definition an $R$-module. 
+        \item Identity is mapped to identity, as the same complex has the same cohomology.
+        \item $H^n(f \circ g) = H^n(f) \circ H^n(g)$ by the commutativity of the diagram.
+    \end{itemize}
+\end{proof}
+
+\begin{definition}
+    Suppose that $f, g>: \comp{K} \to \comp{L}$ be morphism of complexes. Then $f$ is \textbf{homotopic} to $g$ (denoted $f \sim g$) if there exists $R$-linear maps $\theta^n: K^n \to L^{n-1}$ for all $n \in \Z$, s.t. 
+    \[
+        f^n - g^n = d_L^{n-1} \circ \theta^n + \theta^{n+1} \circ d_K^n \quad \forall n \in \Z
+    \]
+    It may be clearer to consult the following diagram:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            K^{n-1} \arrow[dd, shift left, dashed, "g^{n-1}"] \arrow[rr, "d_K^{n-1}"] & & K^n \arrow[dd, shift left, dashed, "g^{n}"] \arrow[rr, "d_K^{n}"] \arrow[lldd, "\theta^n"] & & K^{n+1} \arrow[dd, shift left, dashed, "g^{n+1}"] \\
+            & & & & \\
+            L^{n-1} \arrow[uu, shift left, <-, "f^{n-1}"] \arrow[rr, "d_L^{n-1}"] & & L^n \arrow[uu, shift left, <-, "f^{n}"] \arrow[rr, "d_L^{n}"] \arrow[rruu, <-, "\theta^{n+1}"] & & L^{n+1} \arrow[uu, shift left, <-, "f^{n+1}"] \\
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{remark}
+    Homotopy implies that they induces the same cohomology everywhere. That is, if $f \sim g$, Consider for $x \in \ker d_K^n$,
+    \[
+        f^n(x) - g^n(x) = d_L^{n-1} \circ \theta^n(x) + \theta^{n+1} \circ d_K^n(x) = d_L^{n-1} \circ \theta^n(x) \in \im d_L^{n-1} = \ker d_L^n
+    \]
+\end{remark}
+
+\begin{remark}
+    If $F: \catlmod{R} \to \catlmod{S}$ is an additive functor, then
+    \begin{itemize}
+        \item If $\comp{K}$ is a complex, then the chain given by $\cdots \overset{F(d^{n-1})}{\too} F(K^n) \overset{F^(d^n)}{\too} F(K^{n+1}) \overset{F(d^{n+1})}{\too} \cdots$ is also a complex. Exactness follows directly from considering the image of the corresponding submodules after applying the functor.
+        \item Let $f = (f^n): \comp{K} \to \comp{L}$ be a morphism of complex. Then $F(f)$ is also a morphism of complex. 
+        \item If $f \sim g$, then $F(f) \sim F(g)$, as functors by definition commutes with composition; and additive functors commute with addition.
+    \end{itemize}
+\end{remark}
+
+\begin{proposition}
+    Given a short exact sequence of complexes $0 \too \comp{K} \overset{f}{\too} \comp{L} \overset{g}{\too} \comp{M} \too 0$ (tjhat is, for all $n$ the sequence with corresponding maps $0 \too K^n \too L^n \too M^n \too 0$ is exact), then there exists a canonical morphism $H^{n-1}(\comp{M}) \overset{\delta^{n-1}}{\too} H^n(\comp{K})$ for all $n$ s.t. we have a ``long exact sequence in cohomology'':
+    \[
+        \cdots \too H^n(\comp{K}) \overset{H^n(f)}{\too} H^n(\comp{L}) \overset{H^n(g)}{\too} H^n(\comp{M}) \overset{\delta^n}{\too} H^{n+1}(\comp{K}) \too \cdots
+    \]
+\end{proposition}
+
+\begin{proof}
+    Notice that $(\ker d_M^n/\im d_M^{n-1})$ and $(\ker d_M^{n+1}/\im d_M^n)$ are the kernel and cokernel of $d_M^n$, respectively. Applying Snake Lemma gives the desired result.
+\end{proof}
+
+\section{Projective and Injective Resolution$^*$}
+
+\begin{definition}[Projective Resolution]
+    Given an $R$-module $M$, a \textbf{projective resolution} of $M$ $\projres{P}$ is a complex
+    \[
+        \cdots \too P_n \too \cdots \too P_1 \too P_0 \too 0
+    \]
+    where all $P_i$s are porjective, together with a map $\projres{P} \to M$ s.t. the following sequence is exact:
+    \[
+        \cdots \too P_1 \too P_0 \too M \too 0
+    \]
+    The projective resolution is often simply denoted by $\projres{P} \to M$.
+\end{definition}
+
+\begin{proposition}
+    Projective resolution approximates an exact sequence to a module:
+    \begin{enumerate}[label=\roman*)]
+        \item Every $R$-module $M$ has a projective resolution.
+        \item Given any morphism $f: M \to M'$ and projective resolutions $\projres{P} \to M$ and $P_0' \to M'$, there exists $F: P_0 \to P_0'$ a morphism of complex s.t. the diagram is commutative:
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzcd}
+                P_0 \arrow[rr] \arrow[dd, "F"] & & M \arrow[dd, "f"] \\
+                & & \\
+                P_0' \arrow[rr] & & M'
+            \end{tikzcd}
+        \end{figure}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Construct the proof correspondingly:
+    \begin{enumerate}[label=\roman*)]
+        \item Consider $\projres{P} \to M$ be the map where $P_0$ is free; and elements in the basis is mapped to the system of generators. Similarly let $f_n: P_{n+1} \to \ker f_{n-1}$ be a similar map. This gives the construction of an infinite chain.
+        \item Similarly, do this inductively. Since $P_0$ is projective, by definition there exists $F_0$ s.t. $f \circ \varepsilon = \varepsilon' \circ F_0$ (via considering $P_0' \to M'$ be the projection). Commutativity gives $F_0(\ker \varepsilon) \subseteq \ker \varepsilon'$. Repeat via replacing $M, M'$ with $\ker \varepsilon$ and $\ker \varepsilon'$ respectively. 
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    If there exists two functors $F$ and $F'$ which both satisfy the condition in ii), then $F \sim F'$. The proof is similar to what presented above.
+\end{remark}
+
+\begin{definition}[Injective Resolution]
+    Dually, an \textbf{injective resolution} of an $R$-module $M$ is given by a complex 
+    \[
+        0 \too I^0 \too I^1 \too \cdots
+    \]
+    with $I^n$ injective for all $n$; and a morphism $M \to I$ s.t. the following sequence is an exact complex:
+    \[
+        0 \too M \too I^0 \too I^1 \too \cdots
+    \]
+\end{definition}
+
+\begin{remark}
+    The corresponding propositions as above also hold under the context of injective modules, as by Thoerem \ref{thm:enough injectives} every module can be embedded into some injective module. 
+\end{remark}
+
+\section{Derived Functors$^*$}
+
+\begin{definition}[Homological $\delta$-Functor]
+    Let $F: \catlmod{R} \to \catlmod{S}$ be a right exact functor (e.g. $F = N \tensor_R -$ for $N$ an $S$-$R$ bimodule). For all left $R$-module $M$, choose a projective resolution $\projres{P} \to M$. Define the \textbf{homological $\delta$-functor} ${L_iF}(M) := H_i(F(\projres{P})) = \ker \beta/ \im \alpha$ for $F(P_{i+1}) \overset{\alpha}{\too} F(P_i) \overset{\beta}{\too} F(P_{i-1})$. For morphisms, given two projective resolutions $\projres{P} \to M$, $\projres{P}' \to M'$ with $f: M \to M'$ $R$-linear, define $L_I F(f) := H_i(F(P_0)) \to H_i(F(P_0'))$.
+\end{definition}
+
+\begin{remark}
+    The choice of $g$ does not matter, as this is a map on the cohomology, which only makes classification up to homotopy class.
+\end{remark}
+
+\begin{remark}
+    Define $g: \projres{P} \to \projres{P}'$ s.t. $L_i F(f) = H_i(F(g))$. Let $\projres{P} \to M$ and $\projres{\tilde{P}} \to M$ be two projective resolutions of $M$. Then $g \circ h$ (and $h \circ g$) are homotopic to identity. (Applying $H_i$ they are inverse isomorphisms) This implies that up to a canonical isomorphism, the definition does not depend on the choice of resolution.
+\end{remark}
+
+\begin{definition}
+    The $\mathrm{Tor}$ functor is defined as $\mathrm{Tor}_i^R(N, M) := L_i F(M)$ for $F = N \tensor_R -$.
+\end{definition}
+
+\begin{remark}
+    We have the isomorphism $L_0 F \simeq F$, as $L_0 F = H_0(\cdots \too F(P_1) \too F(P_0) \too 0) = \coker(F(P_1) \to F(P_0)) \simeq F(M)$ since $F$ is right exact. 
+\end{remark}
+
+\begin{remark}
+    Similar to the previous chapter where we have the long exact sequence in cohomology, using the same strategy we can prove that there exists a long exact sequence for derived functors. Given the short exact sequence $0 \too M' \too M \too M'' \too 0$, we have
+    \[
+        L_1F(M') \too L_1F(M) \too L_1F(M'') \too F(M') \too F(M) \too F(M'') \too 0
+    \]
+\end{remark}

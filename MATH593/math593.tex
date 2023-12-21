@@ -1,0 +1,61 @@
+\documentclass[10pt]{report}
+\usepackage{refalg}
+
+\pagestyle{fancy}
+
+\let\Chaptermark\chaptermark
+\def\chaptermark#1{\def\Chaptername{#1}\Chaptermark{#1}}
+
+\renewcommand{\abstractname}{Preface}
+
+\author{ARessegetes Stery}
+\title{MATH593 Algebra I}
+
+\begin{document}
+
+\lhead{\Chaptername}
+
+\maketitle
+
+\centerline{
+\begin{minipage}{0.8\textwidth}
+    \begin{normalsize}
+        \begin{abstract}
+            The notes are taken for MATH593 Algebra I by Prof. \href{https://websites.umich.edu/~mmustata/}{Mircea Mustaţă} in 2023 Fall at University of Michigan. The contents covered are mainly on module theory, with a bit of extension into Commutative Algebra, Category Theory and Homological Algebra. Here I appreciate the kind help of Prof. Mustaţă throughout the whole semester.
+
+            \vspace{1em}
+            Some contents are marked with asterisk $(^*)$. These are contents excluded from testing, but out of personal interest I have recorded it. There are also some minor results that I added from the original course contents (which indicates that there may be typos or errors in the notes). Revisions, or pull requests to this repository, are more than welcomed. 
+
+            \vspace{1em}
+            For notes separated for each chapter one may consult \href{https://github.com/ARessegetesStery/MATH593-Notes}{this repository}.
+        \end{abstract}
+    \end{normalsize}
+\end{minipage}
+}
+    
+\tableofcontents
+
+\setlength{\parskip}{1em}
+
+\chapter{Ring}
+\input{chapters/c1.tex}
+
+\chapter{Module}
+\input{chapters/c2.tex}
+
+\chapter{Linear Algebra on a Ring}
+\input{chapters/c3.tex}
+
+\chapter{Categories and Functors}
+\input{chapters/c4.tex}
+
+\chapter{Tensor Product}
+\input{chapters/c5.tex}
+
+\chapter{Introduction to Homological Algebra}
+\input{chapters/c6.tex}
+
+\chapter{Multilinear Algebra}
+\input{chapters/c7.tex}
+
+\end{document}

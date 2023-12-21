@@ -1,0 +1,401 @@
+\section{Linear Transformations on a Ring}
+
+Recall the two versions of Structural Theorem of finitely generated modules over PID:
+
+\begin{theorem}[Sturcture, v1]\label{thm:Structure f.g. modules over PID v1}
+    Let $M$ be a finitely generated $R$-module, with $R$ a PID. Then there exists $a_1, \ldots, a_m \in R\smallsetminus\{0\}$ s.t. $a_1 \mid a_2 \mid \cdots \mid a_m$. 
+\end{theorem}
+
+\begin{theorem}[Structure, v2]\label{thm:Structure f.g. modules over PID v2}
+    Let $M$ be a finitely generated $R$-module, with $R$ a PID. Then there exists primes $p_i$s and $n_i$ $\in \N$ s.t. $M \simeq R^r \oplus R/(p_1^{n_1}) \oplus \cdots \oplus R/(p_r^{n_r})$.
+\end{theorem}
+
+\begin{example}
+    Let $R = \Z$, with $M$ an $R$-module. Since defining scalar multiplication on modules is equivalent to defining maps from $R$ to endomorphisms on $M$, it is sufficient for $M$ to be an abelian group. By Structural Theorem, there exists $p_i$s and $m_i$s s.t. $M \simeq \Z^r \oplus \Z/(p_1^{m_1}) \oplus \cdots \oplus \Z/(p_k^{m_k})$. $M$ is finite (as a group) if and only if $r = 0$.    
+\end{example}
+
+The direct sum allows describing it with a basis, which gives a generalization of linear algebra defined on ring (module) structure. 
+
+\begin{parenthesis}
+    Linear maps between elements in free modules can be represented as invertible matrices. 
+\end{parenthesis}
+
+\begin{proof}
+    The reasoning is similar to that under the context of vector spaces. Fix $R$ to be a commutative ring, with $M$ a finitely generated $R$-module. Let $n = \rank(M)$. Then $M \simeq R^n$. Choose $B = (e_1, \ldots, e_n)$ to be a basis of $M$. 
+
+    For all $u\in M$, there exists a unique decomposition of $u$ into the basis, i.e. there exists $a_1, \ldots, a_n$ s.t. $u = \sum_{k=1}^n a_k e_k$. Denote $M_B(u) = (a_1, \ldots, a_k)^T$. 
+
+    Now consider change of basis. Suppose that $B' = (e_1', \ldots, e_n')$ is another basis of $M$. There exists $b_{ik}$s s.t. $e_i = \sum_{k=1}^n b_{ik} e_k'$; and there exists $c_{ik}$s s.t. $e_i' = \sum_{k=1}^n b_{ik} e_k$. Apply the substitution twice gives
+    \[
+        e_i = \sum\limits_{j=1}^n b_{ij} e_j' = \sum\limits_{j=1}^n b_{ij} \left( \sum\limits_{k=1}^n c_{jk} e_k \right) = \sum\limits_{k=1}^n \sum\limits_{j=1}^n (b_{ij} c_{jk}) e_k \implies \left(\sum\limits_{k=1}^n \sum\limits_{j=1}^n (b_{ij} c_{jk}) e_k\right) - e_i = 0
+    \]
+    Since $e_i$s give a basis, this implies that $\sum_{j=1}^n (b_{ij} c_{jk}) = \delta_{ik}$. Let $V = (b_{ij}) \in M_n(R)$ to be the transition matrix from $B$ to $B'$, abd $U = (c_{ij}) \in M_n(R)$ the transition matrix from $B'$ to $B$. Conducting this concurrently gives $UV = \Id_{B}$. Similarly $VU = \Id_{B'}$.
+\end{proof}
+
+\begin{proposition}
+    The converse of the above also holds, i.e. If $(c_{kl})$ is invertible in $M_n(R)$, then for $e_k' = \sum_{l=1}^n c_{kl} e_l$, $e_k'$s also give a basis. 
+\end{proposition}
+
+\begin{proof}
+    It suffices to verify that $e_k'$s are $R$-linearly independent, and they span the whole module:
+    \begin{itemize}
+        \item If there exists $\lambda_i$s that are not all zero, that $\sum_{i=1}^n \lambda_i e_i' = 0$, then $\sum_{i=1}^n \lambda_i \sum_{k=1}^n c_{ik} e_k = 0$ which implies that $e_k$ are not $R$-linearly independent, which is a contradiction.
+        \item Since $(c_{kl})$ is invertible, there exists some $(b_{kl})$ s.t. $e_k = \sum_{l=1}^n b_{kl} e_l$. Then, for all $u\in M$ with decomposition into the original basis $u = \sum_{i=1}^n u_i e_i$, there exists a decomposition into $e_k'$s: $u = \sum_{i=1}^n u_i \sum_{j=1}^n b_{ij} e_j$. 
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    The transition matrix is compatible with representation of an element in the basis. Let $M \ni u = \sum_{i=1}^n u_i e_i$, with $U = (b_{ij})$ the transition matrix from $B = (e_i)$ to $B' = (e_i')$. Then 
+    \[
+        u = \sum\limits_{i = 1}^n u_i e_i = \sum\limits_{i=1}^n \left(u_i \sum\limits_{j=1}^n b_{ij} e_i'\right) \implies M_{B'}(u) = U\cdot M_{B}(u)
+    \]
+\end{remark}
+
+\begin{remark}
+    Using such formalization the operations are represented in the identical way as that in vector spaces:
+    \begin{enumerate}
+        \item \emph{Applying a linear map.} If $T: F\to G$ is not an endomorphism and $T$ is specified via specifying the image of the basis $T(e_j) = \sum_{i=1}^n a_{ij} f_j$, where $F$ and $G$ are finitely generated free $R$-modules; and $B_F = (e_i), B_G = (f_i)$ give a basis in the corresponding module. Then the matrix representation of $T$ under such bases is $M_{B_F B_G}(T) = (a_{ij})$. It acts in the same way as matrices acting on vectors, as for $M_{B_F}(u) = (b_1, \ldots, b_u)^T$
+        \begin{align*}
+            T(u) & = T\left( \sum_{j=1}^n b_j e_j \right) = \sum_{j=1}^n b_j T\left( e_j \right) = \sum_{j=1}^n b_j \left( \sum_{i=1}^n a_{ij} f_j \right) = \sum_{i=1}^n \sum_{j=1}^n (a_{ij} b_j) f_j \\
+            & \implies M_{B_G}(T(u)) = M_{B_F B_G}(T) \cdot M_{B_F}(u) \qquad \qquad \qquad \qquad \qquad \quad
+        \end{align*}
+        \item \emph{Composition of linear maps.} Consider $T: F \to G$ and $S: G \to H$ where $B_F = (e_i), B_G = (f_i)$ and $B_H = (g_i)$. To specify the linear maps, it suffices to specify where the elements of the basis is mapped to. Suppose that $T(e_i) = \sum_{j=1}^n a_{ji} f_j; S(f_i) = \sum_{j=1}^n b_{ji} h_j$. For $F \ni u = \sum_{i=1}^n u_i e_i$, considering $g \circ f$ gives
+        \begin{align*}
+            (S\circ T)(u)
+            & = (S\circ T)\left( \sum_{i=1}^n u_i e_i \right) = S\left( \sum_{i=1}^n u_i \sum_{j=1}^n a_{ji} f_j \right) = \sum_{i=1}^{n} u_i \sum_{j=1}^{n} a_{ji} S(f_j) \\
+            & = \sum_{i=1}^{n} u_i \sum_{j=1}^{n} a_{ji} \sum_{k=1}^n b_{kj} h_j = \sum_{i=1}^n u_i \sum_{j=1}^{n} \left(\sum_{k=1}^{n} (a_{ji}b_{kj}) h_j\right) \\
+            & \implies M_{B_F B_H} (S\circ T) = B_{B_G B_H}(S) \cdot M_{B_F B_G}(T)
+        \end{align*}
+        where the elements of $M_{B_F B_H} (S\circ T)$ is specified by $\sum_{j=1}^{n}\sum_{k=1}^{n} (a_{ji} b_{kj})$.
+        \item \emph{Change of basis.} Now consider change of basis under the context of a linear transformation. Let $T: F\to G$ be an $R$-linear map, with $M_{B_F B_G}(T)$ the matrix representation of $T$ under $B_F$ and $B_G$. Now consider change of basis maps $U: B_F\to B_F'$ and $\tilde{U}: B_G \to B_G'$. We are interested in the corresponding map $\tilde{T}$ of $T$ after applying the change of basis:
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzcd}
+                B_F'\arrow[rr, "\tilde{T}"] & & B_G' \\[7pt]
+                B_F \arrow[u, "U"] \arrow[rr, "T"] & & B_G \arrow[u, "\tilde{U}"]
+            \end{tikzcd}
+        \end{figure}
+
+        As proven above it is valid to express linear transformation and change of basis using matrices, and matrices corresponding to change of basis are invertible, we have for $u\in F$,
+        \[
+            M_{B_G'}(T(u)) = M_{B_G B_G'}(\tilde{U}) M_{B_F B_G}(T) M_{B_F' B_F}(U) = M_{B_G B_G'}(\tilde{U}) M_{B_F B_G}(T) (M_{B_F B_F'}(U))^{-1}
+        \]
+        \item \emph{Change of basis on endomorphisms.} Then the equality above becomes
+        \[
+            M_{B_G'}(T(u)) = M_{B_G B_G'}(U) M_{B_G}(T) M_{B_G' B_G}(U) = (M_{B_G' B_G}(U))^{-1} M_{B_G}(T) M_{B_G' B_G}(U)
+        \]
+        which is exactly the conjugate of a matrix. 
+    \end{enumerate}
+\end{remark}
+
+\begin{definition}
+    Two matrices $A$ and $B$ in $M_n(R)$ are \textbf{similar} if there exists some invertible $U\in M_n(R)$ s.t. $A = U^{-1}B U$. Two $R$-linear maps $T$ and $T': F \to F'$ are \textbf{similar} if there exists some isomorphism $\varphi$ s.t. $T' = \varphi^{-1} T \varphi$. 
+\end{definition}
+
+\begin{remark}
+    Similarity is an equivalence relation, with $(A = U^{-1}BU) \wedge (B = V^{-1}CV) \implies A = (VU)^{-1}C(VU)$ for transitivity.
+
+    $R$-linear maps are similar to each other if and only if the corresponding matrix is similar, as on free modules linear maps can be represented by matrices.
+\end{remark}
+
+\begin{proposition}\label{prop:canonical bijection}
+    There exists a canonical bijection between:
+    \[
+        \{ R\text{\upshape{-linear endomorphisms}}\ F\to F \} / \text{\upshape{similarity}}\ \simeq\ M_n(R) / \text{\upshape{similarity}}
+    \]
+\end{proposition}
+
+\begin{proof}
+    Choose $B_F$ to be a basis of $F$. First verify that the map is bijective: as is formalized above since $F$ is free, with a fixed basis linear transformations could be represented via matrices to indicate how the basis is transformed. Therefore, for any linear transformation there exists one matrix to represent it under $B_F$ and vice versa. Further the choice of $M_n$ is unique as matrices under different basis are conjugate w.r.t. the change of basis matrix.
+\end{proof}
+
+% TODO verify whether this is true
+\begin{remark}
+    The bijection will still be valid without the quotient. However this will cease to be canonical as the map differs by the choice of basis on which the matrix conducts the representation.
+\end{remark}
+
+\section{Rational and Smith Normal Form}
+
+The main idea of this section is to classify (and represent) linear transformations up to similarity. The construction seeks to embed a specific map into the module structure.
+
+Let $k$ be a field, with $V$ a finite-dimensional $k$-vector space. Let $T$ be an endomorphism of $V$. Then $(V, T)$ could be viewed as an $k[x]$-module via specifying that $xu := T(u)$ for all $u\in V$. 
+
+\begin{remark}
+    Since the only difference in module structure introduced by $(V, T)$ from $V$ is the application of $T$ when multiplying by $x$, submodules are preserved as long as it is closed w.r.t. $T$. That is, for all $W \subseteq V$ $k$-vector subspaces, $W\subseteq V$ is a $k[x]$-submodule as long as $T(W) \subseteq W$.  
+\end{remark}
+
+\begin{proposition}\label{prop:(V, T) isom}
+    $(V, T) \simeq (V, T')$ if and only if $T$ and $T'$ are similar.
+\end{proposition}
+
+\begin{proof}
+    Proceed via showing implication in both directions:
+    \begin{itemize}
+        \item[$\Rightarrow$] Suppose that there exists isomorphism $\varphi$ from $(V, T)$ to $(V, T')$. Then for $u\in V$ consider
+        \[
+            \varphi(T(u)) = \varphi(xu) = x \varphi(u) = T'(\varphi(u)) \implies T(u) = \varphi^{-1}(T(\varphi(u)))
+        \]
+        which implies that $T$ and $T'$ are similar.
+        \item[$\Leftarrow$] If $T$ and $T'$ are similar, there exists some isomorphism $\varphi$ s.t. $T' = \varphi^{-1}\circ T\circ\varphi$. Then $\varphi$ gives an isomorphism from $(V, T)$ to $(V, T')$ with the same process as above.
+    \end{itemize}
+\end{proof}
+
+Since $k[x]$ is a PID, applying Structural Theorem gives $V \simeq k[x]^n \oplus k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r)$. Since $k[x]$ is of infinite dimension if viewed as a $k$-vector space, $n = 0$, which gives 
+\begin{equation}\tag{$\ast$}\label{eq:(V, T) structure}
+    V \simeq k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r), \quad f_1 \mid \cdots \mid f_r
+\end{equation}
+To make the representation canonical, fix $f_i$s to be monic, i.e. the leading coefficients for $f_i$s are 1 for all $i$. 
+
+Now consider the matrix representation of applying $T$ on $V$. It is sufficient to consider the situation under $k[x]/(f_i)$, as $V$ is isomorphic to the direct sum of some copies of this, which only differs in $f_i$s chosen. This gives the following definition:
+
+\begin{definition}[Companion Matrix]
+    Let $f = a_0 + a_1 x + \ldots + a_{d-1}x^{d-1} + x^d$. Then multiplication by $x$ (application of $T$) is represented as
+    \[
+        \mathcal{C}_{f_i} = \begin{pmatrix}
+            0       & \cdots  & \cdots  & 0      & -a_0   \\
+            1       & \ddots  & \ddots  & \vdots & -a_1   \\
+            0       & \ddots  & \ddots  & \vdots & \vdots \\
+            \vdots  & \ddots  & \ddots  & 0      & \vdots \\
+            0       & \cdots  & 0       & 1      & -a_{d-1}
+        \end{pmatrix}
+    \]
+    which is the \textbf{companion matrix} of $f$. 
+\end{definition}
+
+\begin{definition}[Rational Canonical Form]
+    A matrix $A\in M_n(k)$ is in \textbf{rational canonical form} if it is in the form of
+    \[
+        \begin{pmatrix}
+            \mathcal{C}_{f_1} & & 0 \\
+            & \ddots & \\
+            0 & & \mathcal{C}_{f_r}
+        \end{pmatrix}, \qquad f_1\mid \cdots \mid f_r,\quad f_i \text{ monic,}\quad \deg f_i \geq 1\ \forall\ i
+    \]
+\end{definition}
+
+Then choosing basis to be $x^n \in k[x]/(f_i)$ s.t. $n < \deg f_i$ and appending the basis of the summands gives the matrix of $T$ in rational canonical form. Note that this is a basis as a $k$-vector space, but is not one for $V$ as a $k[x]$-module. 
+
+\begin{remark}
+    $T, T'\in\End_K{V}$ are similar if and only if they can be described in some basis in the same rational canonical form:
+\end{remark}
+
+\begin{proof}
+    By Remark \ref{prop:(V, T) isom} this implies that $(V, T) \simeq (V, T')$. Using Eq. \eqref{eq:(V, T) structure} gives that they have the same $f_i$s in \eqref{eq:(V, T) structure}, i.e. they have the same rational canonical form.
+\end{proof}
+
+% TODO Think about a more straightforward approach to this
+\begin{proposition}
+    Let $V$ be a finite-dimensional $k$-vector space with basis $B_V = (u_1, \ldots , u_n)$. Let $(V, T)$ be the extension into $k[x]$-module with $T\in\End_K(V)$, and $A$ be the matrix representation of $T$ using basis $B_V$. Consider $\varphi: k[x]^n \to k[x]^n$ s.t. it is represented by $(x\Id_n - A)$ in the canonical basis. Then $V \simeq k[x]^n/(\im \varphi)$; and $\varphi$ is injective. 
+\end{proposition}
+
+\begin{proof}
+    Consider the following commutative diagram:
+    \clearpage
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}        
+            k[x]^n \arrow[rr, "\pi"] \arrow[rrdd, "\psi"] & & k[x]^n/(\im \varphi) \arrow[dd, dashed, "h"] \\
+            & & \\
+            & & V
+        \end{tikzcd}        
+    \end{figure}
+    Specify $\psi: e_i \mapsto u_i \ \forall\ i$. To prove that $V \simeq k[x]^n / (\im \varphi)$ it suffices to verify that $\ker \psi = \im \varphi$. Proceed via showing inclusion in both directions:
+    \begin{itemize}
+        \item[$\supseteq$:] It suffices to verify that for all $j$, $\psi(\varphi(e_i)) = 0$. Applying the definition of the maps gives
+        \[
+            \psi(\varphi(e_i)) = \psi(xe_i - \sum\limits_{j=1}^n a_{ij} e_j) = x\psi(e_i) - \sum\limits_{j=1}^n a_{ij} \psi(e_j) = T(u_i) - T(u_i) = 0
+        \]
+        \item[$\subseteq$:] Specify $h: \bar{e}_i \mapsto u_i$. $\ker\psi \supseteq \im \varphi$ gives that $h$ is surjective. Notice that $h$ is an isomorphism between $k[x]$-modules if and only if $h$ is an isomorphism of $k$-vector spaces that are closed w.r.t. multiplication by $x$ (or application of $T$). Therefore, to show that $h$ is an isomorphism it suffices to show that the $k$-linear span of $\bar{e}_i$s is $k[x]^n / (\im \varphi) =: U$. 
+        
+        It suffices to verify that $x^m \bar{e}_i \in U$. Proceed via induction:
+        \begin{itemize}
+            \item \emph{Base case.} $e_i$ by definition is in the span of $e_i$s for all $i$. 
+            \item \emph{Inductive step}. Suppose that $x^k \bar{e}_i \in U$. Since $\varphi$ is a map of free $k[x]$-modules, $U \simeq \ker \varphi$, which gives 
+            \[
+                \varphi(e_i) = (xI_n - A) e_i = xe_i - \sum_{j=1}^n a_{ij} e_j = x^m e_i - \sum_{j=1}^n x^{m-1} a_{ij} e_j = 0
+            \]
+            i.e. $x^m e_i$ is spanned by $(x^{m-1} a_{ij} e_j)$s, which by inductive hypothesis are in $k$-linear span of $e_i$s.
+        \end{itemize}
+    \end{itemize}
+    It remains to show that $\varphi$ is injective. Since $\rank_{k[x]}(V) = 0$, by $V \simeq k[x]^n / (\im \varphi)$, $\rank(\im\varphi) = \rank(k[x]^n) = n$. But notice $k[x]^n / \ker \varphi \simeq \im \varphi$, i.e. $\rank{\ker \varphi} = \rank{k[x]^n} - \rank{\im \varphi} = 0$. But $\ker\varphi$ as a submodule of $k[x]$ is free, which implies that $\ker \varphi = \{0\}$, i.e. $\varphi$ is injective. 
+\end{proof}
+
+The map $(x\Id_n - A)$ is important as it annihilates the torsion module of modules on $k[x]$, it reveals the information of $f_i$s. Specifically, for each summand in the direct sum of $\bigoplus_i k[x]/(f_i)$, $f_i$ is the minimal annihilator of the whole module. 
+
+\begin{definition}[Smith Normal Form]
+    Let $(V, T)$ be a $k[x]$-module where $V$ is a finite-dimensional $k$-vector space, and $T\in \End_k(V)$. Let the matrix representation of $T$ in a certain basis to be $A$. The \textbf{Smith Normal Form} of $(x\Id_n - A) =: M$, is a matrix in the form of
+    \[
+        \left(\begin{smallmatrix}
+            1 & & & & & \\[0pt]
+            & \ddots & & & & \\[0pt]
+            & & 1 & & & \\[0pt]
+            & & & f_1 & & \\[0pt]
+            & & & & \ddots & \\[0pt]
+            & & & & & f_r
+        \end{smallmatrix}\right) \qquad \qquad f_1\mid \cdots \mid f_r,\quad f_i \text{ monic,}\quad \deg f_i \geq 1\ \forall\ i
+    \]
+    s.t. it can be transformed from $M$ via the following transformations:
+    \begin{enumerate}
+        \item Swap the rows/columns of $M$.
+        \item Multiply a row/column of $M$ by $\lambda \in k\smallsetminus \{0\}$.
+        \item Add one row/column of $M$ multiplied by $f \in k[x]$ to another row/column.
+    \end{enumerate}
+    The $f_i$s are called \underline{elementary divisors}, or \underline{invariant factors}.
+\end{definition}
+
+\begin{remark}
+    The valid operations allowed in making the transformation of $M$ are the same as applying invertible transformation, with column/row operations corresponding to manipulation of basis in the source/image.
+
+    Multiplication of one row is only allowed up to non-zero elements in $k$ as $k[x]$ is not a domain, where multiplication is not invertible.
+\end{remark}
+
+\begin{remark}
+    It could be read off from the matrix that $\Ann_{k[x]}(V) = \{g \in k[x] : f_i \mid g\ \forall\ i\}$, as there are no $1$ elements on the diagonal of the matrix.  
+\end{remark}
+
+\section{Minimal and Characteristic Polynomials}
+
+Return to the case where $V$ is a finite-dimensional $k$-vector space; and morphisms are considered in the context of $k[x]$-modules. Recall that the structure of $V$, given as a $k[x]$-module, is 
+\[
+    V \simeq k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r), \quad f_1 \mid \cdots \mid f_r
+\]
+
+\begin{definition}[Minimal Polynomial]
+    The \textbf{minimal polynomial} of $T\in \End_{k}(V)$ is the monic generator of $\Ann_{k[x]}(V)$, denoted to be $m_T(x)$. Expressing $V$ in the form of Eq. \eqref{eq:(V, T) structure}, or using Smith Normal Form, $m_T(x) = f_r$.
+\end{definition}
+
+\begin{definition}[Characteristic Polynomial]
+    Let $A \in M_n(k)$. The \textbf{characteristic polynomial} of $A$ is given as $c_A(x) = \det(x\Id_n - A) \in k[x]$. 
+\end{definition}
+
+\begin{remark}
+    Inheriting the notations in Smith Normal Form of $V$, $c_T(x) = f_1\ldots f_r$.
+\end{remark}
+
+\begin{remark}
+    If $A \sim A'$, then $m_A(x) = m_{A'}(x)$, and $c_A(x) = c_{A'}(x)$; but the converse does not necessarily hold.
+\end{remark}
+
+\begin{remark}
+    Since the minimal/characteristic polynomial is defined on the structure or invariant factors in Smith Normal Form, they are invariant w.r.t. change of basis.
+\end{remark}
+
+\begin{definition}[Eigenvalue]
+    Given $T \in \End_k(V)$, $\lambda$ is an \textbf{eigenvalue} of $T$ if the following equivalent conditions are satisfied:
+    \begin{itemize}
+        \item There exists some $v\in V \smallsetminus\{0\}$ s.t. $\lambda v = T v$, i.e. $(\lambda \Id - T)v = 0$.
+        \item $\det(\lambda \Id - T)v = 0$, i.e. $c_T(\lambda) = 0$.
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    If $(V, T) \simeq \bigoplus_{i=1}^r k[x]/(f_i)$ where $f_i$s are the invariant factors of $T$ as a morphism of $k[x]$-modules. Then $c_T(x) = \Pi_{i=1}^r f_i$. 
+\end{proposition}
+
+\begin{proof}
+    There exists some basis in which $V$ is in the rational canonical form. Then $c_T(x) = \Pi_{i=1}^r \det \mathcal{C}_{f_i}$. It then suffices to show that $\det \mathcal{C}_{f_i} = f_i$ for all $i$. Notice
+    \[
+        \det \begin{pmatrix}
+            x   &           & 0         & a_0    \\
+            -1  & \ddots    &           & a_1    \\
+                & \ddots    & x         & \vdots \\
+            0   &           & -1        & x + a_{d-1}
+        \end{pmatrix} = x\begin{pmatrix}
+            x   &           & 0         & a_1    \\
+            -1  & \ddots    &           & a_2    \\
+                & \ddots    & x         & \vdots \\
+            0   &           & -1        & x + a_{d-1}
+        \end{pmatrix} + \underbrace{a_0 \cdot (-1)^{n+1} \cdot (-1)^{n-1}}_{a_0}
+    \]
+    where, performing finitely many ($d$) steps recovers the full polynomial. 
+\end{proof}
+
+\begin{remark}
+    This proposition is also a direct result of the existence of Smith Normal Form, as after finitely many elementary row/column operations which do not change the determinant, $(x\Id_n - A)$ has $f_i$s and $1$s on the diagonal; and the result is given via simply multiplying all of them.
+\end{remark}
+
+The conclusion is that for $V \simeq k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r), \quad f_1 \mid \cdots \mid f_r$ where $f_1 \mid \cdots \mid f_r$, $m_T = f_r$; and $c_T = f_1 \ldots f_r$. This gives
+\[
+    m_T \mid c_T, \qquad c_T \mid m_T^{r}
+\]
+
+Further, since $f_r$ is the monic generator of $\Ann_{k[x]}(V)$, $m_T(T)(u) = f_r\cdot u = 0$ for all $u\in V$, i.e. $m_T(T) = 0$. Since $m_T \mid c_T$, $c_T(T) = 0$, which is the result from Cayley-Hamilton.
+
+% TODO Check whether this is true.
+\begin{remark}
+    Notice that the structure of $V$ is closely connected to that of $T$. Since application of $k[x]$ is specified by $T$; and $V$ is a $k$-vector space, i.e. no element in $k$ annihilates non-zero elements in $V$, $\Ann_{k[x]}(V) = \Ann_{k[x]}(T).$
+\end{remark}
+
+\section{Jordan Normal Form}
+
+\begin{parenthesis}
+    Let $f$ be monic in $k[x]$. Then
+    \begin{enumerate}
+        \item $k = \C$. Then irreducible polynomials $f$ has form $f = x - a$ for some $a\in \C$. 
+        \item $k = \R$. Then $f$ irreducible takes either of the following forms:
+            \begin{itemize}
+                \item $f = x - a$ for $a\in \R$.
+                \item $f = (x - \lambda)(x - \bar{\lambda})$ for $\lambda \in \C$.
+            \end{itemize}
+    \end{enumerate}
+\end{parenthesis}
+
+\begin{proof}
+    1.) follows directly from the fact that $\C$ is algebraically closed.  2.) follows from the fact that if $f$ is of degree higher than 1, it must admit a root in $\C$, which indicates that the conjugate of that is also a root. Otherwise this is the case as in $\C$.
+\end{proof}
+
+\begin{remark}
+    This classification is harder for $\Q$, as it is easy to construct a polynomial with all of its roots being irrational numbers.
+\end{remark}
+
+Now consider $k$ to be an algebraically closed field, i.e. all irreducible factors of $f\in k[x]$ are of degree 1. Then applying Structural Theorem gives
+\[
+    M \simeq \bigoplus_{i=1}^s k[x]/(x - \lambda_i)^{m_i}
+\]
+Now adopt the basis $\overline{(x - \lambda_i)^{m_i - 1}}, \ldots, \overline{x - \lambda_i}, 1$ s.t. multiplication by $x$ on polynomials of degree $m_i - 1$ can be represented by a single entry on the matrix. Then the alternative transition companion matrix is
+\[
+    \widetilde{\mathcal{C}_f} = \begin{pmatrix}
+        \lambda_i & 1 & & 0 \\
+        0 & \ddots & \ddots & \\
+        \vdots & \ddots & \ddots & 1 \\
+        0 & \cdots & 0 & \lambda_i
+    \end{pmatrix} =: J_i
+\]
+which is a \textbf{Jordan block}. Therefore, combination of such basis in each summands of $V$ gives the matrix in \textbf{Jordan Canonical Form} or \textbf{Jordan Normal Form}:
+\[
+    T = \begin{pmatrix}
+        J_1 & & \\
+        & \ddots & \\
+        & & J_s
+    \end{pmatrix}
+\]
+
+\begin{definition}
+    A matrix $M$ is \textbf{diagonalizable} if it is similar to a diagonal matrix (or equivalently its Jordan Normal Form is diagonal). A linear transformation is \textbf{diagonalizable} if it can be represented by a diagonal matrix in some basis. 
+\end{definition}
+
+\begin{remark}
+    A matrix has a Jordan Normal Form where all Jordan blocks are of size 1 is diagonal.
+\end{remark}
+
+\begin{proposition}
+    $T\in\End_k(V)$ is diagonalizable if and only if $m_T$ splits as a product of distinct degree-1 monic polynomials.
+\end{proposition}
+
+\begin{proof}
+    Proceed via showing implication in both directions:
+    \begin{itemize}
+        \item[$\Rightarrow$:] Prove the contraposition. Suppose that $m_T$ does not split into distinct monic polynomials. Then the summands of direct sum of $M$ includes $k[x]/(x - \lambda_i) m_i$ for $m_i \geq 2$, i.e. there exists a Jordan block of size greater than 1, which indicates that $T$ is not diagonalizable.
+
+        An alternative proof for this part would be to consider $p(x) = \prod_{i=1}^r (x - \lambda_i)$, which gives $p(A) = 0$. Since $p$ splits, and $m_T$ generates $p$, $m_T\mid p$, i.e. $m_T$ splits.
+        \item[$\Leftarrow$:] Suppose that $m_T$ splits. Then $V \simeq \bigoplus_{i=1}^r k[x]/(f_i)$ where $f_r$ splits. Since $f_i \mid f_r$ for all $i$, $f_i$ splits; and by Chinese Remainder Theorem $M = \bigoplus_{i=1}^s k[x]/(f_i)$ where $f_i$s are not necessarily different. Then all Jordan blocks of $T$ are of size 1.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    Given a linear transformation $T$ with its matrix representation $A$. Then 
+    \[
+        c_T(x) = x^n - \mathrm{tr}(A) x^{n-1} + \cdots + (-1)^n \det A
+    \]
+    which is clear via considering the permutation of elements in $A$. 
+\end{remark}

@@ -15,14 +15,15 @@
 
 \begin{definition}[Tensor Product]
     A \textbf{tensor product} of $M$ and $N$ is an abelian group $M \tensor_R N$ with an $R$-balanced map $\varphi: M \times N \to M \tensor_R N$ which is universal w.r.t. the property: i.e. $\forall \psi: M \times N \to P$ which is $R$-balanced, there exists a unique $f: M \tensor_R N \to P$ s.t. $\psi = f \circ \varphi$ ($\psi$ factors uniquely through $\varphi$), i.e. the following diagram commute:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M \times N \arrow[rr, "\varphi"] \arrow[rrdd, "\psi"] & & M \tensor_R N \arrow[dd, dashed, "f"] \\
             & & \\
             & & P
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{definition}
 
 \begin{remark}
@@ -45,14 +46,15 @@
     By construction it is clear that the canonical map $\varphi: M \times N \to M \tensor_R N$ is $R$-balanced, via specifying $\varphi(u, v) = \overline{e_{u, v}}$. 
 
     It suffices to verify that the construction is compatible with the universal property. Consider the $R$-balanced map $\psi: M \times N \to P$, with the group homomorphism $g: F \to P$ s.t. $g(e_{u, v}) = \psi(u, v)$:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M \times N \arrow[rr, "\varphi"] \arrow[rrdd, "\psi"] & & F/G \arrow[dd, dashed, "f"] & & F \arrow[ll, "h"] \arrow[lldd, "g"] \\
             & & & & \\
             & & P & & \\
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
     \begin{itemize}
         \item \emph{Existence}. Applying the universal property of quotient groups, which implies that there exists a unique $f$ s.t. $f \circ h = g$ where $h$ is the induced group homomorphism of the quotient. This is indeed valid, as $\psi$ is $R$-balanced, which by construction has kernel $G$.
         \item \emph{Uniqueness}. This follows from the result of universal property above; and the fact that $\varphi$ is surjective.
@@ -226,14 +228,15 @@ Let $S$ and $R$ be rings, together with a ring homomorphism $\varphi: R \to S$. 
 \begin{theorem}[Universal Property of Extension of Scalars] 
     Let $M$ be a left $R$-module, $N$ be a left $S$-module, together with a ring homomorphism $\varphi: R \to S$. Let $f: M \to N$ a morphism of $R$-modules (in the sense of restriction of scalars). Then there exists a unique morphism of $S$-modules $g: S \tensor_R M \to N$ s.t. $g(1 \tensor u) = f(u)$ for all $u \in M$:
     
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M \arrow[rr, "G"] \arrow[rrdd, "f"] & & S \tensor_R M \arrow[dd, dashed, "g"] \arrow[rr, <-, "\tensor"] & &   S \times M  \\
             & & \\
             & & N \arrow[rruu, <-, "\psi"]
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{theorem}
 
 \begin{proof}

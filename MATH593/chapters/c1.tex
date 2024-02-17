@@ -17,14 +17,15 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
 
 \begin{theorem}[Fundamental Theorem of Ring Homomorphisms]
     Let $\varphi: R\to S$ be a ring homomorphism, $I$ a two-sided ideal s.t. $I\subseteq \ker \varphi$, and $\pi$ be the natural ring homomorphism from $R$ to $(R/I)$. Then there exists a unique ring homomorphism $f: R/I \to S$ s.t. the following diagram commutes,
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering    
         \begin{tikzcd}[]
             R \arrow[rrdd, two heads, "\pi"] \arrow[rr, "\varphi"] & & S \\
             & & \\
             & & R/I \arrow[uu, "f"'] 
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
     i.e. $\varphi = f\circ \pi$.
 \end{theorem}
 
@@ -85,14 +86,15 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
 
 \begin{theorem}[Universal Property of Ring of Fractions]
     Suppose $R$ and $T$ are commutative rings, with $\varphi$ the inclusion of $R$ into $S^{-1}R$. Then for $f: R\to T$ s.t. $\forall s\in S, f(s)$ is invertible in $T$, there exists a unique ring homomorphism $g$ s.t. $f = g\circ \varphi$, i.e. make the following diagram commute:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering    
         \begin{tikzcd}[]
             R \arrow[rrdd, "f"] \arrow[rr, hookrightarrow, "\varphi"] & & S^{-1}R \arrow[dd, "g"]  \\
             & & \\
             & & T
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{theorem}
 
 \begin{proof}
@@ -145,26 +147,28 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
 
 \begin{definition}[Morphism of $R$-algebras]
     Let $\pair{R_1, f_1}, \pair{R_2, f_2}$ be $R$-algebras. A \textbf{Morphism of $R$-algebras} is a ring homomorphism $\varphi: R_1 \to R_2$ s.t. the following diagram commute; i.e. $f_2 = \varphi \circ f_1$:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering    
         \begin{tikzcd}[]
             R \arrow[rrdd, "f_2"] \arrow[rr, "f_1"] & & R_1 \arrow[dd, "\varphi"]  \\
             & & \\
             & & R_2
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{definition}
 
 \begin{definition}[$R$-subalgebra]
     Let $\pair{S, f_s}$ be a $R$-algebra for $R$ a ring. $\pair{T, f_t}$ is a \textbf{$R$-subalgebra} of $S$ if $T$ is a $R$-algebra, with $f_t(R) \subseteq S$ ; and there exists a morphism $\varphi$ from $T$ to $S$, i.e. $\varphi$ makes the following diagram commute:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering    
         \begin{tikzcd}[]
             R \arrow[rrdd, "f_s"] \arrow[rr, "f_t"] & & T \arrow[dd, hookrightarrow, "\varphi"]  \\
             & & \\
             & & S
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{definition}
 
 \begin{definition}[Polynomial Ring]
@@ -181,14 +185,15 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
 
 \begin{theorem}[Universal Property of Polynomial Ring]
     Let $R$ be a ring and $\pair{S, f}$ an $R$-algebra, and $\varphi$ be the inclusion map from $R$ to $R[x]$. For all $s\in S$, there exists a unique morphism of $R$-algebra $g: R[x] \to S$ s.t. $g(x) = a$, and the following diagram commutes, i.e. $f = g\circ \varphi$:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering    
         \begin{tikzcd}[]
             R \arrow[rrdd, hookrightarrow, "f"] \arrow[rr, "\varphi"] & & R[x] \arrow[dd, "g"]  \\
             & & \\
             & & S
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{theorem}
 
 \begin{proof}
@@ -205,14 +210,15 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
 
 \begin{theorem}[Universal Property of Polynomial Ring of Several Variables]
     Let $A$ be a commutative $R$-algebra and $g$ be the inclusion map from $R$ to $R[x_1, \cdots, x_n]$ with a fixed $n$. For every $R$-algebra $S$ and $(a_1, \cdots, a_n)\in S$, there exists a unique homomorphism of $R$-algebra $h: R[x_1, \cdots, x_n] \to S$ s.t. $h(x_i) = a_i$ for all $i\in \llbracket 1, n \rrbracket$, and the following diagram commutes, i.e. $f = h\circ g$:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}[]
             R \arrow[rrdd, hookrightarrow, "g"] \arrow[rr, "f"] & & S \\
             & & \\
             & & R[x_1, \cdots, x_n] \arrow[uu, "h"]
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{theorem}
 
 \begin{proof}[Sketch of Proof]

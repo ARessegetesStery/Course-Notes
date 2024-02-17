@@ -68,13 +68,14 @@ The direct sum allows describing it with a basis, which gives a generalization o
         \end{align*}
         where the elements of $M_{B_F B_H} (S\circ T)$ is specified by $\sum_{j=1}^{n}\sum_{k=1}^{n} (a_{ji} b_{kj})$.
         \item \emph{Change of basis.} Now consider change of basis under the context of a linear transformation. Let $T: F\to G$ be an $R$-linear map, with $M_{B_F B_G}(T)$ the matrix representation of $T$ under $B_F$ and $B_G$. Now consider change of basis maps $U: B_F\to B_F'$ and $\tilde{U}: B_G \to B_G'$. We are interested in the corresponding map $\tilde{T}$ of $T$ after applying the change of basis:
-        \begin{figure}[htbp]
+        
+        \begin{minipage}{\linewidth}
             \centering
             \begin{tikzcd}
                 B_F'\arrow[rr, "\tilde{T}"] & & B_G' \\[7pt]
                 B_F \arrow[u, "U"] \arrow[rr, "T"] & & B_G \arrow[u, "\tilde{U}"]
             \end{tikzcd}
-        \end{figure}
+        \end{minipage}
 
         As proven above it is valid to express linear transformation and change of basis using matrices, and matrices corresponding to change of basis are invertible, we have for $u\in F$,
         \[
@@ -190,14 +191,15 @@ Then choosing basis to be $x^n \in k[x]/(f_i)$ s.t. $n < \deg f_i$ and appending
 
 \begin{proof}
     Consider the following commutative diagram:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}        
             k[x]^n \arrow[rr, "\pi"] \arrow[rrdd, "\psi"] & & k[x]^n/(\im \varphi) \arrow[dd, dashed, "h"] \\
             & & \\
             & & V
         \end{tikzcd}        
-    \end{figure}
+    \end{minipage}
     Specify $\psi: e_i \mapsto u_i \ \forall\ i$. To prove that $V \simeq k[x]^n / (\im \varphi)$ it suffices to verify that $\ker \psi = \im \varphi$. Proceed via showing inclusion in both directions:
     \begin{itemize}
         \item[$\supseteq$:] It suffices to verify that for all $j$, $\psi(\varphi(e_i)) = 0$. Applying the definition of the maps gives

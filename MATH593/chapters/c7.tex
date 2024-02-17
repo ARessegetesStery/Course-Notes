@@ -45,14 +45,15 @@
 
 \begin{proposition}[Universal Property of $T(M)$]
     Consider the (forgetful) functor $F: \catlalg{R} \to \catlmod{R}, M \mapsto T(M)$. Let $M$ be an $R$-module and $S$ an $R$-algebra. If $f: M \to S$ is a morphism of $R$-modules, then there exists a unique morphism of $R$-algebras $g: T(M) \to S$ s.t. $g|_{T^1(M)} = f$, i.e. $g \circ F = f$:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M \arrow[rr, hookrightarrow, "F"] \arrow[rrdd, "f"] & & T(M) \arrow[dd, dashed, "g"] \\
             & & \\
             & & S
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{proposition}
 
 \begin{proof}
@@ -70,14 +71,15 @@
 
 \begin{remark}
     This makes $T$ a functor, which maps from $R$-modules to $R$-algebras. For all $R$-linear maps $f: M \to N$, there exists a unique morphism of $R$-algebras $T(f)$ s.t. the following diagram commutes:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M \arrow[dd, hookrightarrow] \arrow[rr, "f"] & & N \arrow[dd, hookrightarrow] \\
             & & \\
             T(M) \arrow[rr, "T(f)"] & & T(N)
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
     This makes $T$ a functor as it preserves compositions. Further this is the left adjoint of the forgetful functor $G$ which only regards $S$ as an $R$-module, i.e. we have the following isomorphism
     \[
         \Hom_{\catlalg{R}}(T(M), S) \simeq \Hom_R(M, G(S))

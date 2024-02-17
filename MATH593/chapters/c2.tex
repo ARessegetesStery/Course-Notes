@@ -92,14 +92,15 @@
 \begin{theorem}[Universal Property of Quotient Modules]
     \label{thm:Universal Property of Quotient Modules}
     Let $f: M\to P$ be a morphism of $R$-modules. Let $N$ be a submodule of $M$, with $\pi$ the induced morphism of $R$-modules. Further suppose that $N \subseteq \ker f$. Then there exists a unique $g: M/N \to P$ s.t. $f = g\circ \pi$, i.e. the following diagram commutes:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M \arrow[rr, two heads, "\pi"] \arrow[rrdd, "f"] & & M/N \arrow[dd, dashed, "g"] \\
             & & \\
             & & P \\
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{theorem}
 
 \begin{proof}
@@ -112,14 +113,15 @@
 
 \begin{theorem}[First Isomorphism Theorem]\label{thm:First Isomorphism Theorem}
     Let $f: M\to N$ be a surjective morphism of $R$-modules. Define $K := \ker f$. If there exists a morphism of $R$-modules $\bar{f}: M/K\to N$ s.t. it is $R$-linear and $\bar{f}\circ \pi = f$, i.e. the following diagram commutes:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M \arrow[rr, "f"] \arrow[rrdd, "\pi"] & & N \\
             & & \\
             & & M/K \arrow[uu, dashed, "\bar{f}"]
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 
     Then $\bar{f}$ is an isomorphism.
 \end{theorem}
@@ -139,14 +141,15 @@
 
 \begin{theorem}[Universal Property of Direct Product]\label{thm:Universal Property of Direct Product}
     Let $P$ be an $R$-module, $(M_i)_{i\in I}$ be a family of $R$-modules, with $f_j: P \to M_j$ a morphism of $R$-modules. Further let $p_j : \prod_{i\in I} M_i \to M_j$ the projection map s.t. $p_j(x) = x_j$ which is the $j$-th entry of the input. Then there exists a unique morphism of $R$-modules $f: P\to\prod_{i\in I} M_i$ s.t. $f(x) = (f_1(x), \cdots, f_n(x), \cdots)$; i.e. the following diagram commutes:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             P \arrow[rr, dashed, "f"] \arrow[rrdd, "f_j"] & & \prod_{i\in I} M_i \arrow[dd, "p_j"] \\
             & & \\
             & & M_j
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{theorem}
 
 \begin{proof}
@@ -159,14 +162,15 @@
         \alpha_j: M_j  \to \bigoplus_{i\in I} M_i, \qquad \alpha_j(x) = (x_i)i, \quad\text{where } x_i = \begin{cases} x, & i = j \\ 0, & \text{otherwise} \end{cases}
     \]
     Then there exists a unique $R$-linear map $f: \bigoplus_{i\in I} M_i \to Q$ s.t. $f\circ \alpha_j = f_j$ for all $j$, i.e. the following diagram commutes:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M_j \arrow[rr, hookrightarrow, "\alpha_j"] \arrow[rrdd, "f_j"] & & \bigoplus_{i\in I} M_i \arrow[dd, dashed, "f"]\\
             & & \\
             & & Q
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{theorem}
 
 \begin{proof}
@@ -212,14 +216,15 @@ This interlude provides some general constructions on how to obtain submodules o
 
          \begin{proof}
             Consider two functions $f: M_1 \to (M_1 + M_2)/M_2$ and $g: M_1 \to M_1\cap M_2$. Attempt to show this via applying the first isomorphism theorem. Consider the following diagram:
-            \begin{figure}[htbp]
+            
+            \begin{minipage}{\linewidth}
                 \centering
                 \begin{tikzcd}
                     M_1 \arrow[rr, two heads, "g"] \arrow[rrdd, "f"] & & M_1/(M_1\cap M_2) \arrow[dd, dashed, "h"] \\
                     & & \\
                     & & (M_1 + M_2)/M_2
                 \end{tikzcd}
-            \end{figure}
+            \end{minipage}
 
             In order to apply the first isomorphism theorem, it suffices to show that $M_1 \cap M_2 = \ker f$: as then the universal property grants the existence of such $h$, which allows the application of the First Isomorphism Theorem. This is indeed the case, as
             \begin{itemize}
@@ -445,13 +450,14 @@ For the following definitions, fix $M$ to be an $R$-module.
         \item $M$ is simple. Then $M_1 = N_1 = (0)$ which is a contradiction.
         \item $M_1 = N_1$. Since $M$ is minimal in $\mathcal{P}$, both $M_1$ and $N_1$ admit a unique composition series, i.e. $\ell(M_1) = \ell(N_1)$. Then by definition $\ell(M) = \ell(M_1) + 1$ which is a contradiction.
         \item $M_1\neq N_1$. Observe that $M_1/M_1\cap N_1$ is simple, as from the Third Isomorphism Theorem $M_1/M_1\cap N_1 \simeq (M_1 + N_1)/M_1$; and since $M'/M_1$ is a simple factor with $M_1 \neq N_1$, $M_1 \subsetneq (M_1 + N_1) \subseteq M'$, this gives $M' = M_1 + N_1$. Similarly $N_1/M_1\cap N_1$ is simple. By hypothesis $M_1$ and $N_1$ have isomorphic simple factors after reordering, there exists a composition series in both $M_1$ and $N_1$ admitting the first simple factor $M_1/M_1\cap N_1$ and $N_1/M_1\cap N_1$; and since $M'$ is minimal in $\mathcal{P}$ the theorem holds for $M_1\cap N_1$ which admits a unique (up to equivalence) composition series $\mathcal{F}$. Then the composition series of $M'$ must take the following form:
-        \begin{figure}[htbp]
+        
+        \begin{minipage}{\linewidth}
             \centering
             \begin{tikzcd}[row sep=.7em, column sep=.7em]
                 \cdots \arrow[r, symbol=\subseteq] &  M_1\cap N_1 \arrow[r, symbol=\subseteq] \arrow[rd, symbol=\subseteq] & M_1\arrow[r, symbol=\subseteq] & M & (\mathcal{M}) \\
                 (\mathcal{F}) & & N_1\arrow[ru, symbol=\subseteq] & & (\mathcal{N})
             \end{tikzcd}
-        \end{figure}
+        \end{minipage}
 
         By Third Isomorphism Theorem it is shown that these two composition series are equivalent, which implies that $M'\notin \mathcal{P}$.
     \end{itemize}
@@ -488,13 +494,14 @@ For the following definitions, fix $M$ to be an $R$-module.
 
 \begin{proof}
     The isomorphism is specified by $\varphi: x\mapsto (ax)$. It may be helpful to consider the following diagram:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}[row sep=1.5em]
             R\arrow[r, "\varphi"] & (a) \\ 
             (b)\arrow[r, "\varphi"] \arrow[u, symbol=\subseteq] & (ab)\arrow[u, symbol=\subseteq] \\
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{proof}
 
 \section{Digression on Commutative Algebra}

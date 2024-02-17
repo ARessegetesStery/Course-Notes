@@ -192,7 +192,8 @@ Similar to the case of modules we can define the \emph{Hom Functors}; but as a c
     \begin{enumerate}
         \item In \catsets, monomorphisms correspond to injective maps, and epimorphisms correspond to surjective maps.
         \item In $\catlmod{R}$, such analogy is still true via choosing the $v_1, v_2$:
-        \begin{figure}[htbp]
+        
+        \begin{minipage}{\linewidth}
             \centering
             \begin{minipage}{0.48\linewidth}
                 \centering
@@ -206,7 +207,7 @@ Similar to the case of modules we can define the \emph{Hom Functors}; but as a c
                     A \arrow[r, "u"] & B \arrow[r, shift left, two heads, "\pi"] & \arrow[l, <-, shift left, "0"] B / \im u
                 \end{tikzcd}
             \end{minipage}
-        \end{figure}
+        \end{minipage}
         \begin{itemize}
             \item For $u$ being a monomorphism, $u(\ker u) = u(0) = 0$, i.e. the inclusion map from $\ker u$ to $A$ is the same as the zero map, i.e. $\ker u = \{0\}$. 
             \item For $u$ being an epimorphism, $\pi(u(A)) = 0$ in $B / \im u$, i.e. $\pi(B) = 0$ which indicates that $\im u = B$.
@@ -225,14 +226,15 @@ Similar to the case of modules we can define the \emph{Hom Functors}; but as a c
 
 \begin{definition}[Product]
     Let $\catc$ be a category, with $(X_i)_{i\in I}$ a family of objects in $\catc$. Then the \textbf{product} of this family is given by an object $\Pi_{i\in I} X_i$ where for all $Y \in \Ob(\catc)$, with morphisms $q_j: Y \to X_j$ for $j\in I$, there exists a unique morphism $f$ s.t. $q_j = p_j \circ f$ for all $j$, i.e. the following diagram commute. The $p_j$ is the projection morphism, where $p_j (\Pi_{i\in I} x_i) = x_i$.
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             Y \arrow[rr, "f"] \arrow[rrdd, "q_j"] & & \Pi_{i\in I} X_i \arrow[dd, "p_j"] \\
             & & \\
             & & X_j
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{definition}
 
 \begin{remark}
@@ -257,14 +259,15 @@ Similar to the case of modules we can define the \emph{Hom Functors}; but as a c
 
 \begin{definition}[Coproduct]
     Given a family $(X_i)_{i\in I} \in \Ob(\catc)$, the coproduct $\amalg_{i\in I} X_i$ is the product in the dual category, i.e. with all the arrow reversed. That is, for $Y \in \Ob(\catc)$ and $f_j: X_j \to Y$, denote $\alpha_j$ to be the natural embedding of $X_j$ into the product $\amalg_{i\in I} X_i$, then there exists a unique $f$ s.t. $f \circ \alpha_j = f_j$ for all $j$, i.e. the following diagram commute:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             Y \arrow[rr, <-, "f"] \arrow[rrdd, <-, "f_j"] & & \amalg_{i\in I} X_i \arrow[dd, <-, "\alpha_j"] \\
             & & \\
             & & X_j
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{definition}
 
 \begin{remark}
@@ -327,14 +330,15 @@ Throughout the discussion, fix $\catc$ to be a preadditive category.
     \begin{itemize}
         \item $f \circ i = 0$.
         \item $f$ is universal with this property (factors uniquely through $i$), i.e. for $i': L \to A$, there exists a unique morphism $g: L \to K$ s.t. $i' = i \circ g$:
-        \begin{figure}[htbp]
+        
+        \begin{minipage}{\linewidth}
             \centering
             \begin{tikzcd}
                 K \arrow[rr, "i"] & & A \arrow[rr, "f"] & & B \\
                 & & \\
                 L \arrow[uu, "g"] \arrow[rruu, "i'"] & & 
             \end{tikzcd}
-        \end{figure}
+        \end{minipage}
     \end{itemize} 
 \end{definition}
 
@@ -352,12 +356,13 @@ Throughout the discussion, fix $\catc$ to be a preadditive category.
     The kernel often comes with an associated $K$, which is the kernel in the algebraic sense.
 
     Take $M, N \in \Ob(\catlmod{R})$, and $f: M \to N$ is a morphism of $R$-modules. Then naturally one can construct the following s.t. $g = \ker f$.
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             \ker f \arrow[r, hookrightarrow, "g"] & M \arrow[r, "f"] & N \\
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{example}
 
 \begin{definition}[Cokernel]
@@ -368,14 +373,15 @@ Throughout the discussion, fix $\catc$ to be a preadditive category.
         \item $p \circ f = 0$.
         \item For all $g: B \to C'$, there exists a unique morphism $h: C \to C'$ s.t. $g = h \circ p$; i.e. any cokernel of $f$ factors uniquely through $p$:
     \end{itemize}
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             A \arrow[rr, "f"] & & B \arrow[rr, "p"] \arrow[rrdd, "g"] & & C \arrow[dd, "h"] \\
             & & & & \\
             & & & & C'
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{definition}
 
 \begin{remark}
@@ -387,14 +393,15 @@ Throughout the discussion, fix $\catc$ to be a preadditive category.
 \end{example}
 
 It is in particular interesting to put in juxtaposition of the two concepts. Let $\catc$ be a preadditive category, and for all morphisms in $\catc$ its kernel and cokernel exist. Then consider the following commutative diagram:
-\begin{figure}[htbp]
+
+\begin{minipage}{\linewidth}
     \centering
     \begin{tikzcd}
         \ker f \arrow[rr, "i"] & & A \arrow[rr, "f"] \arrow[dd, "q"] \arrow[rrdd, dashed, "g", pos = 0.3] & & B \arrow[rr, "p"] & & \coker f \\
         & & & & & & \\[8pt]
         & & \coker i \arrow[rruu, dashed, "r", pos = 0.7] \arrow[rr, dashed, "h"] & & \ker p \arrow[uu, "j"] & & \\
     \end{tikzcd}
-\end{figure}
+\end{minipage}
 
 The universal property of kernel and cokernel gives:
 \begin{itemize}
@@ -431,26 +438,28 @@ Combining these gives the uniqueness of $h$ s.t. $f = j \circ h \circ q$.
 
 \begin{definition}[Natural Transformation]
     Let $F, G: \catc \to \catd$ be functors. Then the \textbf{natural transformation} from $F$ to $G$ $T: F \Rightarrow G$ is given by $T_U: F(U) \to G(U)$ for all $U \in \Ob(\catc)$ s.t. for all $f: A \to B$ in $\catc$ the following diagram commutes:
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             F(A) \arrow[rr, "T_A"] & & G(A) \arrow[dd, "G(f)"] \\
             & & \\
             F(B) \arrow[rr, "T_B"] \arrow[uu, <-, "F(f)"] & & G(B) \\
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
 \end{definition}
 
 \begin{example}
     In $\catlmod{R}$ where $R$ is commutative, one can consider ideals $I \subseteq J$ the transformation
-    \begin{figure}[htbp]
+    
+    \begin{minipage}{\linewidth}
         \centering
         \begin{tikzcd}
             M/IM \arrow[rr, "T_A"] & & M/JM \arrow[dd, "G(f)"] \\
             & & \\
             N/IN \arrow[rr, "T_B"] \arrow[uu, <-, "F(f)"] & & N/JN \\
         \end{tikzcd}
-    \end{figure}
+    \end{minipage}
     which maps $u \mod{IM}$ to $u \mod{JM}$. This is possible as $I \subseteq J$, where no information is missing.
 \end{example}
 

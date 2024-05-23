@@ -1,6 +1,6 @@
-# algebra-notes
+# course-notes
 
-Collective notes for algebra courses I have taken
+Collective notes for courses I have taken
 
 ---
 

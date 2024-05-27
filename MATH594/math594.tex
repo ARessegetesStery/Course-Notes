@@ -1,0 +1,51 @@
+\documentclass[10pt]{report}
+\usepackage{refalg}
+
+\pagestyle{fancy}
+
+\let\Chaptermark\chaptermark
+\def\chaptermark#1{\def\Chaptername{#1}\Chaptermark{#1}}
+
+\setlength{\parindent}{0pt}
+
+\renewcommand{\abstractname}{Preface}
+
+\author{ARessegetes Stery}
+\title{MATH594 Algebra II}
+
+\begin{document}
+
+\lhead{\Chaptername}
+
+\maketitle
+
+\centerline{
+\begin{minipage}{0.8\textwidth}
+    \begin{normalsize}
+        \begin{abstract}
+            The notes are taken for MATH594 Algebra II by Prof. \href{https://websites.umich.edu/~mmustata/}{Mircea Mustaţă} in 2024 Winter at University of Michigan. The contents covered are mainly on basic group theory, with its application in representation theory; and field extension with Galois theory. Here I appreciate the kind help of Prof. Mustaţă throughout the whole semester.
+
+            \vspace{1em}
+            Some contents are marked with asterisk $(^*)$. These are contents excluded from testing, but out of personal interest I have recorded it. There are also some minor results that I added from the original course contents (which indicates that there may be typos or errors in the notes). Revisions, or pull requests to this repository, are more than welcomed. 
+
+            \vspace{1em}
+            For notes separated for each chapter one may consult \href{https://github.com/ARessegetesStery/MATH594-Notes}{this repository}.
+        \end{abstract}
+    \end{normalsize}
+\end{minipage}
+}
+    
+\tableofcontents
+
+\setlength{\parskip}{1em}
+
+\chapter{Group Theory}
+\input{chapters/c1.tex}
+
+\chapter{Representation of Finite Groups}
+\input{chapters/c2.tex}
+
+\chapter{Finite Fields and Galois Theory}
+\input{chapters/c3.tex}
+
+\end{document}

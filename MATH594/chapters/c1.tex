@@ -1,0 +1,1822 @@
+\section{Group Preliminaries}
+
+\begin{definition}[Group]
+    A \textbf{group} is a set $G$ together with a binary operation $G \times G \to G$, often written $(a, b) \mapsto a \cdot b$ or simply $ab$, s.t. the following properties are satisfied:
+    \begin{enumerate}
+        \item \emph{Associativity:} $(ab)c = a(bc)$ for all $a, b, c \in G$.
+        \item \emph{Existence of Identity}: There exists $e = e_G \in G$ s.t. $\forall a \in G, ae = a = ea$.
+        \item \emph{Existence of Inverse}: For all $a \in G$. there exists $b \in G$ s.t. $ab = e = ba$.
+    \end{enumerate}
+    Furthermore, if the operation is commutative, i.e. for all $a, b \in G$, $ab = ba$, then the group is \textbf{commutative}, or \textbf{abelian}.
+\end{definition}
+
+\begin{notation}
+    If the group $G$ is abelian, then the operation is often represented in additive notations (with operation denoted as ``$+$'', and inverse of $a \in G$ being $-a$).
+\end{notation}
+
+\begin{remark}
+    One implicitly presented condition is that the operation of groups need to be closed within the set predefined. This is indicated by the signature of the operation, which should land in $G$. This often needs to be checked when the group structure is defined in some larger structure.
+\end{remark}
+
+\begin{remark}\label{rmk: group immediate results}
+    From the definition of group there are some immediate facts/properties:
+    \begin{enumerate}[label=\arabic*)]
+        \item The identity in the group is unique. Suppose that there exist two identity elements $e$ and $e'$, then by rule 2 $e = ee' = e'$.
+        \item For a given element in the group, the inverse of it is unique. Let $b$ and $b'$ both be the inverse of some $a \in G$. Then
+        \[
+            b = b(ab') = (ba)b' = b'    
+        \]
+        the uniqueness allows us to unambiguously denote the inverse of $a$ as $a^{-1}$. This also implies $(a^{-1})^{-1} = a$, as clearly by the previous process $a$ is the inverse of $a^{-1}$; and the inverse is unique.
+        \item $(ab)^{-1} = b^{-1} a^{-1}$. By the uniqueness of the inverse element, it suffices to check that the claimed inverse satisfies rule 2. This is indeed the case as
+        \[
+            (ab)(b^{-1}a^{-1}) = (a(bb^{-1}))a^{-1} = (ae)a^{-1} = aa^{-1} = e
+        \]
+        and for multiplication in the other sequence the checking is similar. 
+        \item For $a, b, c \in G$, then $ab = ac \implies b = c$; and $ba = ca \implies b = c$. This results directly from the fact that $a$ is invertible; and multiplying on the left/right, respectively, $a$, gives the desired result.
+    \end{enumerate}
+\end{remark}
+
+\begin{remark}\label{rmk: Z to group element}
+    The associativity of operation in the groups gives the unambiguity of writing successive multiplications. Rigorously, when written $x_1\ldots x_n$ for $n \geq 2$, it is defined inductively on $n$ via specifying the result to be $(x_1\ldots x_{n-1})x_n$. The convention is that for $n = 0$ this is simply the identity.
+
+    In particular one can unambiguously write out the power of an element:
+    \[
+        a^n := \begin{cases}
+            \underbrace{a\ldots a}_{n}  & n > 0 \\
+            e                           & n = 0 \\
+            \underbrace{a^{-1}\ldots a^{-1}}_{n} & n < 0 \\
+        \end{cases}
+    \]
+    This gives $a^m \cdot a^n = a^{m + n}$ for all $m, n \in \Z$. The cases where $m$ and $n$ are of the same sign are clear; and for those of opposite sign, applying the same elimination process as Remark \ref{rmk: group immediate results} 3) gives the desired result.
+
+    If $G$ is abelian, in additive notation we often denote $n \cdot a := a^n$.
+\end{remark}
+
+\begin{definition}
+    If $G$ and $H$ are groups, a \textbf{group homomorphism} $f: G \to H$ is a map s.t. $f(a\cdot b) = f(a) \cdot f(b)$ for all $a, b \in G$. 
+\end{definition}
+
+\begin{proposition}\label{prop: grp homo preserve identity and inverse}
+    If $f: G \to H$ is a group homomorphism, then $f(e_G) = e_H$, and $f(a^{-1}) = (f(a))^{-1}$.
+\end{proposition}
+
+\begin{proof}
+    By Remark \ref{rmk: group immediate results} 4) and the property of identity, we have
+    \[
+        f(e_G) \cdot e_H = f(e_G) = f(e_G \cdot e_G) = f(e_G) \cdot f(e_G) \implies e_H = f(e_G)
+    \]
+    For the second statement, use the above result:
+    \[
+        e_H = f(e_G) = f(a \cdot a^{-1}) = f(a) \cdot f(a^{-1})
+    \]
+    By the definition $(f(a))^{-1}$ is the inverse of $f(a)$. By the uniqueness of inverse this gives $f(a^{-1}) = f(a^{-1})$.
+\end{proof}
+
+\begin{remark}
+    Given $f: G \to H$, $g: H \to K$ which are both $f$ and $g$ are group homomorphisms, then $f \circ g$ is also a group homomorphism. This results from the fact that
+    \[
+        f(g(a \cdot b)) = f(g(a) \cdot g(b)) = f(g(a)) \cdot f(g(b))
+    \]
+    The fact that morphism is closed w.r.t. composition implies that the groups form a category \underline{Grps}.
+\end{remark}
+
+\begin{definition}
+    If $G$ and $H$ are groups, then $f: G \to H$ is a \textbf{group isomorphism} if it is a bijective group homomorphism.
+\end{definition}
+
+\begin{proposition}\label{prop: categorical def of group isomorphism}
+    $f: G \to H$ being a group homomorphism is a group isomorphism if and only if there exists a group homomorphism $g: H \to G$ s.t. $g \circ f = \Id_G$, and $f \circ g = \Id_H$.
+\end{proposition}
+
+\begin{proof}
+    It suffices to show implication in two directions:
+    \begin{enumerate}
+        \item[$\Rightarrow$:] Since $f$ is bijective, there must admit a (pointwise) inverse of $f$ s.t. $f^{-1} \circ f = \Id_{G}$, $f \circ f^{-1} = \Id_H$. Define $g = f^{-1}$. It suffices to check that $g$ is a group homomorphism. To prove this we need to verify that for all $u, v \in H$, $g(u \cdot v) = g(u) \cdot g(v)$. Since $f$ is bijective, $f$ is in particular injective, i.e. $a = b$ if and only if $f(a) = f(b)$ for all $a, b \in G$. Therefore to verify the equality above it suffices to verify the equality after applying $f$, i.e. $f \circ g(u \cdot v) = f \circ g(u) \cdot f \circ g(v)$. Then the equality holds as $f \circ g = \Id_H$. 
+        \item[$\Leftarrow$:] Prove the contrapositive. If $f$ is not injective, then $g$ cannot be well-defined; and if $f$ is not surjective, then the domain of the composition $f \circ g$ is not the whole $H$.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    Recall that under the context of categories, isomorphisms are defined as in Proposition \ref{prop: categorical def of group isomorphism}. The same proposition implies that group isomorphisms are isomorphisms in the categorical sense. 
+\end{remark}
+
+\begin{remark}
+    If there exists an isomorphism $f: G \to H$ between groups $G$ and $H$, then $G$ and $H$ are considered as \textbf{isomorphic}, denoted $G \cong H$. This is an equivalence relation as compositions of isomorphisms are still isomorphisms.
+\end{remark}
+
+\begin{definition}
+    Let $G$ be a group. Then a \textbf{subgroup} of $G$ is a subset $H \subseteq G$, which is in it self a group; and the inclusion map $i: H \hookrightarrow G$ is a group homomorphism. $H$ being the subgroup of $G$ is denoted as $H \leq G$.
+\end{definition}
+
+\begin{remark}
+    The fact that the inclusion map is required to be a group homomorphism implies that the operation in $H$ is simply the restriction of the operation in $G$.
+\end{remark}
+
+\begin{proposition}\label{prop: subgroup test}
+    Let $G$ be a group, and $H \subseteq G$ a subset. Then the followings are equivalent:
+    \begin{enumerate}[label=\roman*)]
+        \item $H$ is a subgroup of $G$.
+        \item The following three conditions are satisfied:
+        \begin{enumerate}[label=\arabic*)]
+            \item For all $a, b \in H$, $a \cdot b \in H$.
+            \item $e_G \in H$.
+            \item (Under the same operation of $G$) $a^{-1} \in H$ for all $a \in H$. 
+        \end{enumerate}
+        \item $H$ is nonempty; and for all $x, y \in H$, $x \cdot y^{-1} \in H$.
+    \end{enumerate}
+    The third condition is often used to test whether $H \subseteq G$ gives a subgroup. 
+\end{proposition}
+
+\begin{proof}
+    Verify the following implications:
+    \begin{itemize}
+        \item i) \implies ii). By the definition of subgroup, $H$ together with the same operation is a group, which by the definition of group is closed w.r.t. the group; and every element should admit an inverse. By the fact that $i$ is an inclusion, and by Proposition \ref{prop: grp homo preserve identity and inverse} $i(e_H) = e_G$ with $e_G = e_H$. 
+        \item ii) \implies i). Check that $H$ is a group: associativity is given by the fact that the operation is identical to that in $G$. and $G$ is a group; existence of inverse and identity results directly from hypothesis 2) and 3); and the operation is defined as $H \times H \to H$ given by hypothesis 1).  
+        \item ii) \implies iii). By 2) $H$ is nonempty. For all $x, y \in H$, by 3) $y^{-1} \in H$; and by 1) $x \cdot y^{-1} \in H$ given that both $x$ and $y^{-1}$ are in $H$. 
+        \item iii) \implies ii). Since $H$ is nonempty, there exists $a \in H$. iii) implies that $a \cdot a^{-1} = e_G \in H$, giving 2). For all $a \in H$, let $x = e_G$ and $y = a$, which gives $a^{-1} \in H$, satisfying 3). For all $a, b \in H$, letting $x = a, y = b^{-1}$ gives $a \cdot b \in H$.  
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    Let $f: G \to H$ be a group homomorphism, then if $G' \leq G$, then $f(G') \leq H$.
+\end{proposition}
+
+\begin{proof}
+    Apply the result of Proposition \ref{prop: subgroup test}. Since $G' \leq G$, $e_G \in G'$, and by Proposition \ref{prop: grp homo preserve identity and inverse}, $f(e_G) = e_H$, giving that $f(G')$ is nonempty. For all $x, y \in f(G')$, let $u, v \in G'$ s.t. $x = f(u), y = f(v)$. Since $G'$ is a subgroup of $G$, $u\cdot v^{-1} \in G'$. By Proposition \ref{prop: grp homo preserve identity and inverse}, this implies $f(u) \cdot f(v^{-1}) = f(u) \cdot f(v^{-1}) \in f(G')$, which gives that $f(G') \leq H$.
+\end{proof}
+
+\begin{proposition}\label{prop: kernel gives a subgroup}
+    Let $f: G \to H$ be a group homomorphism. If $H' \leq H$, then $f^{-1} (H') \leq G$. In particular, $f^{-1}(e_H) = \ker f := \{u \in G \mid f(u) = e_H\}$ is a subgroup of $G$.
+\end{proposition}
+
+\begin{proof}
+    Apply the same argument as in the above proposition. $H' \leq H \implies e_H \in H' \implies e_G \in f^{-1}(H')$, i.e. $f^{-1}(H')$ is nonempty. For all $u, v \in f^{-1}(H')$, $f(u\cdot v^{-1}) = f(u) f(v)^{-1} \in H'$ since $H' \leq H$, which implies that $u \cdot v^{-1} \in f^{-1}(H')$, i.e. $f^{-1}(H')$ is a group. 
+\end{proof}
+
+\begin{proposition}
+    Let $f: G \to H$ be a group homomorphism. Then $f$ is injective if and only if $\ker f = \{e_G\}$.
+\end{proposition}
+
+\begin{proof}
+    Proceed by showing implication in both directions:
+    \begin{enumerate}
+        \item[$\Rightarrow$:] Let $u \in \ker f$. Then $f(a) = f(a) \cdot e = f(a) \cdot f(u) = f(a \cdot u)$. But $f$ being injective implies that $a = a\cdot u$, i.e. $u = e$.
+        \item[$\Leftarrow$:] For $u, v \in G$ s.t. $f(u) = f(v)$, we have $e = f(u) \cdot (f(v))^{-1} = f(u) \cdot f(v^{-1}) = f(u \cdot v^{-1}) \implies that u \cdot v^{-1} \in \ker f$. But since the only element in $\ker f$ is the identity, this gives $u \cdot v^{-1} = e \implies u = v$, i.e. $f$ is injective.
+    \end{enumerate}
+\end{proof}
+
+\section{Group of Permutations}
+
+\begin{definition}
+    Given a set $\Omega$, the \textbf{permutation group} is defined to be $S_{\Omega} := \{f: \Omega \to \Omega \mid f\ \text{bijection}\}$. Since compositions of bijective maps are still bijective, defining the operation to be composition gives this a group structure.
+\end{definition}
+
+\begin{remark}
+    Notice that the permutation group structure depends only on the cardinality of the group on which permutations are considered. Explicitly, for $\alpha: \Omega \to \Omega'$ a bijection, there exists an isomorphism between the corresponding groups of permutations: $\beta: S_{\Omega} \to S_{\Omega'}: f \mapsto \alpha \circ f \circ \alpha^{-1}$. This is indeed an isomorphism as this is first a group homomorphism since
+    \[
+        \beta(f \circ g) = \alpha \circ f \circ g \circ \alpha^{-1} = \alpha \circ f \circ (\alpha^{-1} \circ \alpha) \circ g \circ \alpha^{-1} = \beta(f) \circ \beta(g)
+    \]
+    and this being an isomorphism follows from the fact that there exists an obvious inverse $\beta^{-1}: f \mapsto \alpha^{-1} \circ f \circ \alpha$. Therefore it suffices to denote such permutation group by the cardinality of $\Omega$: for $\Omega = \{1, \dots, n\}$ $S_{\Omega}$ is denoted as $S_n$.
+\end{remark}
+
+\begin{proposition}[Cayley]
+    Every group can be embedded into some $S_{\Omega}$. Explicitly, for group $G$ the map $\alpha: G \to S_G$ s.t. $g \mapsto \alpha_g$ where $\alpha_g(h) = gh$ ($\alpha_g$ is the action of $G$ on $G$ defined by multiplication by $g$.) is an injective group homomorphism.
+\end{proposition}
+
+\begin{proof}
+    It suffices to syntactically check that the following requirements are satisfied:
+    \begin{itemize}
+        \item \emph{$\alpha_g \in S_G$.} It suffices to check that indeed multiplication by an element in the group gives a bijection. This is clear as the action has an inverse, namely multiplying the inverse of that element. 
+        \item \emph{$\alpha$ gives a group homomorphism.} By definition $\alpha_{gh} = \alpha_g \cdot \alpha_h$.
+        \item \emph{$\alpha$ is injective.} It suffices to check that $\ker \alpha = e_G$. This is indeed the case, as for $g \in G$ s.t. $\alpha_g = \Id$, $\alpha_g(e_G) = g \cdot e_G = e_G \implies g = e_G$.
+    \end{itemize}
+\end{proof}
+
+\section{Groups Generated by a Subset}
+
+\begin{remark}
+    If $(H_i)_{i \in I}$ is a family of subgroups of $G$, then $\bigcap_{i \in I} H_i$ is also a subgroup of $G$. This can be verified by taking an element in the intersection, and check each rule of group is satisfied in each of the $H_i$s.
+\end{remark}
+
+\begin{definition}
+    If $A \subseteq G$ is a subset of $G$, then the \textbf{subgroup generated by $A$} is defined as
+    \[
+        \inner{A} := \bigcap_{A \subseteq H \leq G} H
+    \]
+\end{definition}
+
+\begin{remark}
+    By definition $\inner{A}$ is well-defined as it is described by concrete elements in the group; and as in particular $A \subseteq G \leq G$. By the previous remark, $\inner{A}$ is a subgroup of $G$. It is also the smallest subgroup that contains $A$.
+\end{remark}
+
+\begin{proposition}\label{prop: explicit presentation of generated subgroup}
+    Let $A \subseteq G$ be a subset of $G$, then $\inner{A} = \left\{ x_1\dots x_n \mid n \in \Z_{>0}; \forall i, x_i \in G \text{ or } x_i^{-1} \in G \right\}$. For $n = 0$, define $x_1 \dots x_n = e$. 
+\end{proposition}
+
+\begin{proof}
+    Proceed by double inclusion:
+    \begin{enumerate}
+        \item[$\subseteq$:] Proceed to show that RHS satisfies the definition of the $H$s above. For RHS consider $n = 1$, with $x_1 \in G$ which takes all elements in $G$. This gives $A \subseteq$ RHS. Further use Proposition \ref{prop: subgroup test}, which for any $x_1\dots x_m, y_1\dots y_n \in$ RHS, each summand of $x_1 \dots x_m (y_1 \dots y_n)^{-1} = x_1 \dots x_m y_n^{-1} \dots y_1^{-1}$ is either in $A$ or its inverse is in $A$ implying that RHS is a group. Definition above gives the subset relation.
+        \item[$\supseteq$:] It suffices to verify that any element in the specified form is in $\inner{A}$. This is the case as for $x_1\dots x_n$ where for all $i$, either $x_i \in A$ or $x_i^{-1} \in A$, $x_i \in \inner{A}$ by definition, and multiplication of two elements in the group is still in the group by closure of the operation.  
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}
+    The following defines some common terminology for characterization of a group:
+    \begin{itemize}
+        \item $G$ is \textbf{finitely generated} if there exists a finite set $A \subseteq G$ s.t. $G = \inner{A}$.
+        \item $G$ is \textbf{finite} if it has finitely many elements. 
+        \item The \textbf{order} of $G$, denoted $\abs{G}$, is the number of elements in $G$ if it is finite; or $\infty$ if $G$ is not finite (infinite).
+        \item $G$ is \textbf{cyclic} if it attains a generating set with a single element $a$. In this case $G$ is denoted as $G = \inner{a}$.
+        \item The \textbf{order} of $a \in G$, denoted $\abs{a}$ is the order of $\inner{a}$.  
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Cyclic groups are abelian. By the alternative definition provided in Proposition \ref{prop: explicit presentation of generated subgroup}, $\inner{a} = \{ a^m \mid m \in \Z \}$.
+\end{remark}
+
+\begin{proposition}\label{prop: characterization of cyclic group}
+    A group $G$ is cyclic if and only if $G \simeq \Z$ for $G$ infinite, or $G \simeq \Z/n\Z$ for some $n \in \Z_{>0}$.  
+\end{proposition}
+
+\begin{proof}
+    Choose $a \in G$ s.t. $G = \inner{a}$. Proceed via showing implication in both directions:
+    \begin{enumerate}
+        \item[$\Rightarrow$:] Consider $f: \Z \to G$ s.t. $f(1) = a$. This is a group homomorphism,  Then either
+        \begin{itemize}
+            \item \emph{$f$ is injective.} By definition of cyclic groups, for any $s \in G$ there exists $m \in G$ s.t. $s = a^m$. Then $f(m) = s$ according to the definition of $f$, giving that $f$ is surjective. Then this falls into the first case, giving $G \simeq \Z$.
+            \item \emph{$f$ is not injective.} Then there are nonzero elements that are mapped to $e$ by $f$. Since $\ker f \subseteq \Z$, there exists a smallest positive element. Define the map $f_n: \Z/n\Z \to G$ s.t. $[1] \mapsto a$. Check the followings:
+            \begin{itemize}
+                \item \emph{$f_n$ is well-defined.} It suffices to check that if $[m_1] = [m_2]$, then $f([m_1]) = (f[m_2])$. This is indeed the case as
+                \[
+                    f([m_1]) = a^{m_1} \overset{!}{=} a^{m_1} \cdot a^{(m_2 - m_1)} = a^{m_2} \cdot a^{nk} = a^{m_2} \cdot (a^n)^k = a^{m_2} = f([m_2])
+                \]
+                for some $k \in \Z$, where $\overset{!}{=}$ holds since $[m_1] = [m_2]$ implies $n \mid (m_1 - m_2)$. This gives $a^{m_1 - m_2} = e$ since $a^n = e$. 
+                \item \emph{$f_n$ is injective.} For $a \in \Z$ s.t. $f_n([a]) = 0$, $a = 0$ as otherwise this conflicts with the hypothesis that $n$ is the smallest of such integers. 
+                \item \emph{$f_n$ is surjective.} Follows from the same argument in the case where $G$ is infinite.
+            \end{itemize}
+        \end{itemize}
+        \item[$\Leftarrow$:] Since $\Z = \inner{1}$ and $\Z/n\Z = \inner{[1]}$, both of which are cyclic. 
+    \end{enumerate}
+\end{proof}
+
+\section{The Dihedral Group}
+
+\begin{definition}
+    Let $n \geq 3$, and $P_n \subset \R^2 \simeq \C$ be the regular $n$-gon s.t. its vertices are at the $n$-th roots of 1. Then the \textbf{dihedral group} $D_{2n}$ is the group of symmetry of $P_n$. Alternatively, one can write
+    \[
+        D_{2n} = \{ \varphi \in \GL_2(\R) \mid \varphi(P_n) = P_n \}
+    \]
+\end{definition}
+
+\begin{remark}
+    We have a injective map $\alpha: D_{2n} \to S_n$, where $\alpha(\varphi)$ is given by the restriction of $\varphi$ to the vertices of $P_n$. This map is injective as $\{v_1, \dots, v_n\}$ spans $\R^2$. Therefore, specifying how the vertices are transformed (permuted) fixes the whole linear transformation.
+\end{remark}
+
+\begin{remark} \label{rmk: rule of computing dihedral group}
+    Notice the following relations: by definition of rotation $\sigma^n = e$; and $\sigma \tau \sigma = \tau$, which implies $\sigma^{n-1} \tau = \tau \sigma$. This enables changing the sequence of applying $\sigma$s and $\tau$s.
+\end{remark}
+
+\begin{proposition}
+    For a fixed $n$, let $\sigma$ be the operation of counter-clockwise rotation by $\frac{2\pi}{n}$ on $P_n$; and $\tau_j$ be the operation of symmetry w.r.t. the symmetry axis passing through the vertex $j$ (which is a direction; invariant w.r.t. transformations on $P_n$). Then for every $\alpha \in D_{2n}$, it must be in the form of $\sigma^i$ or $\sigma^i \cdot \tau_j$, for some $i, j \in \Z$.
+\end{proposition}
+
+\begin{proof}
+    How the operations permute the vertices is characterized by
+    \[
+        \sigma: v_k \mapsto v_{k + 1} \qquad \tau: v_{j+k} \mapsto v_{j-k}
+    \]
+    Following the strategy of the previous remark, to fix the whole operation $\alpha$ it suffices to fix how vertices are transformed. Since elements of $D_{2n}$ are linear transformations, they map line segments to line segments, and therefore adjacent vertices to adjacent vertices. Then for $v_1 \mapsto v_{i+1}$, either $v_2 \mapsto v_{i+2}$, then $\alpha = \sigma^i$; or $v_2 \mapsto v_{i}$, then $\alpha = \sigma^i \tau_j$. The indices are considered modulo $n$ and then plus 1. 
+\end{proof}
+
+\begin{remark}
+    Using Remark \ref{rmk: rule of computing dihedral group}, we can check that indeed $\inner{D_{2n}} = D_{2n}$, by applying the remark to move all the rotations to the left of symmetries, and the reduce the expression by relations $\sigma^n = \tau^2 = e$. 
+\end{remark}
+
+\section{Product of Groups}
+
+\begin{definition}[Product of Groups]
+    Suppose that we have a family of groups $(G_i)_{i \in I}$. The \textbf{product} of groups is defined as
+    \[
+        \Pi_{i \in I} G_i := \left\{ (x_i)_{i \in I} \mid x_i \in G_i \forall i \in I \right\}
+    \]
+    with the operation defined component-wise i.e. $(x_i)_{i \in I} \cdot (y_i)_{i \in I} := (x_i y_i)_{i \in I}$.
+\end{definition}
+
+\begin{remark}
+    By the definition of the operation, the identity in the product of groups $(G_i)_{i \in I}$ is $(e_i)_{i \in I}$ where $e_i$ is the unique identity element in $G_i$; and the inverse of $(x_i)_{i \in I}$ is $(x_i^{-1})_{i \in I}$.
+\end{remark}
+
+\begin{proposition}[Universal Property of Product of Groups]\label{prop: universal property of product of groups}
+    Let group homomorphism $\pi_j: \Pi_{i \in I} G_i \to G_j, (x_i)_{i \in I} \mapsto x_j$ be the projections. Then given group homomorphisms $f_i: H \to G_i$ for all $i$, there exists a unique group homomorphism $f: H \to \Pi_{i \in I} G_i$ s.t. $\pi_i \circ f = f_i$ for all $i \in I$, i.e. the following diagram commute:
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            H \arrow[rr, dashed, "f"] \arrow[rrdd, "f_j"] & & \Pi_{i \in I} G_i \arrow[dd, "\pi_j"]\\
+            & & \\
+            & & G_j
+        \end{tikzcd}
+    \end{minipage}
+\end{proposition}
+
+\begin{proof}
+    Since the diagram is required to commute, the homomorphism $f$ can be only defined as $f(x) = (f_i(x))_{i \in I}$, which gives the uniqueness. Existence follows from the fact that $f_i$s are group homomorphisms for all $i$, which implies that $f$ is also a group homomorphism.
+\end{proof}
+
+\begin{example}[Chinese Remainder Theorem]
+    Let $m, n \in \Z_{\geq 0}$ which are relatively prime. Then there exists group isomorphism $\Z/mn\Z \simeq \Z/m\Z \times \Z/n\Z$.
+\end{example}
+
+\begin{proof}
+    Consider group homomorphisms: 
+    \[
+        f: \Z/mn\Z \to \Z/m\Z, \quad [x + mn\Z] \mapsto [x + m\Z]
+    \]
+    \[
+        g: \Z/mn\Z \to \Z/n\Z, \quad [x + mn\Z] \mapsto [x + n\Z]
+    \]
+    Check that $f$ and $g$ are well-defined. For $f$, let $a = [x + mn\Z] = b = [y + mn\Z]$. This implies that $mn \mid (x - y)$. By definition, $f(a) = [x + m\Z], f(b) = [y + m\Z]$. But this implies that $[x + m\Z] = [y + m\Z]$ as $mn \mid (x - y) \implies m \mid (x - y)$. The well-definedness of $g$ is similar.
+
+    Use the universal property above (Proposition \ref{prop: universal property of product of groups}), there exists a unique $h: \Z/mn\Z \to \Z/m\Z \times \Z/n\Z$ s.t. $h_1 = f, h_2 = g$ where $h_i$ indicates the projection to $i$-th field after applying $h$. Check that this is an isomorphism:
+    \begin{itemize}
+        \item $h$ is injective. Consider the kernel of $h$: for all $[x + mn\Z] \in \ker h$, $[x + m\Z] = 0$ and $[x + n\Z] = 0$ as it must be in the kernel of both $h_1$ and $h_2$. But this implies that $m \mid x$ and $n \mid x$, i.e. $mn \mid x$, which gives $[x + mn\Z] = 0$. That is, elements in $\ker h$ are identically zero, which gives the injectivity.
+        \item Notice that $\Z/mn\Z$ has $mn$ elements, while $\Z/m \times \Z/n\Z$ has $m \cdot n = mn$ elements. Therefore $h$ being injective implies $h$ being bijective. 
+    \end{itemize}
+\end{proof}
+
+\section{Congruence Relations}
+
+\begin{definition}[Left/Right Congruence]
+    Let $G$ be a group, with $H \leq G$. Then for $x, y \in G$,
+    \begin{itemize}
+        \item $x$ and $y$ are \textbf{left congruent} mod $H$, denoted $x \equiv_{\ell} y \mod H$ if $x^{-1}y \in H$.
+        \item $x$ and $y$ are \textbf{right congruent} mod $H$, denoted $x \equiv_{r} y \mod H$ if $xy^{-1} \in H$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    $\equiv_{\ell}$ and $\equiv_r$ are equivalence relations. The equivalence classes are noted as $xH$ and $Hx$ for $x \in G$, respectively.
+\end{remark}
+
+\begin{notation}
+    If $G$ is abelian, the operation is written additively. The congruence classes will then be denoted as $x + H$ and $H + x$ for left and right congruence classes, respectively.
+\end{notation}
+
+\begin{proof}
+    The proof is similar for two equivalence relations, so we only check for left congruence:
+    \begin{itemize}
+        \item \emph{$\equiv_{\ell}$ is Reflexive.} $x^{-1} \cdot x = e \in H$.
+        \item \emph{$\equiv_{\ell}$ is symmetric.} If $x^{-1}y \in H$, given that $H$ is a subgroup of $G$, $(x^{-1}y)^{-1} \in H$. This implies that $y^{-1}x \in H$, i.e. $y \equiv_{\ell} x \mod H$.
+        \item \emph{$\equiv_{\ell}$ is transitive.} Suppose that $x \equiv_{\ell} y \mod H, y \equiv_{\ell} z \mod H$. By the fact that subgroups are closed, $(x^{-1}y)(y^{-1}z) = x^{-1}z \in H$.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}\label{rmk: group as disjoint union of cong classes}
+    $G$ is the disjoint union of equivalence classes w.r.t. $\equiv_{\ell}$. For $x, y \in G$ s.t. $x \equiv_{\ell} y \mod H$, there exists $h \in H$ s.t. $x = yh$.
+\end{remark}
+
+\begin{proposition}
+    There is a bijection between $\{xH \mid x \in G\}$ and $\{Hx \mid x \in G\}$ for all $x \in G, H \leq G$. 
+\end{proposition}
+
+\begin{proof}
+    Define the map $\varphi: \{xH \mid x \in G\} \to \{Hx \mid x \in G\}$, $gH \mapsto Hg^{-1}$. Check that this is well-defined: for $g_1, g_2 \in G$ s.t. $g_1 H = g_2 H$, there exists $h \in H$ s.t. $g_1 = g_2 h$. Then $\varphi(g_1 H) = Hg_1^{-1} = H(g_2 h)^{-1} = Hh^{-1} g_2^{-1} = Hg_2^{-1} = \varphi(g_2 H)$. It has inverse $Hg \mapsto g^{-1}H$, with well-definedness similarly proved. This implies that $\varphi$ is a bijection.
+\end{proof}
+
+\begin{remark}
+    In the prove above, we cannot define $\varphi: gH \mapsto Hg$ as in this case this is not well-defined. Specifically, if $g_1$ does not commute with $h$ for $g_1 = g_2 h$, $\varphi(g_2 H) = Hg_1 h$ which is not necessarily equal to $H g_1$.
+\end{remark}
+
+Since the number of congruence classes w.r.t. $x \in G$ does not change with choice of left or right congruence classes and depends only on $H$, the following definition is well-defined:
+
+\begin{definition}[Index]
+    Let $G$ be a group, with $H \leq G$. Then the number of distinct $xH$ for $x \in G$ is the \textbf{index} of $H$ in $G$, denoted as $(G : H)$.
+\end{definition}
+
+\begin{remark}
+    For all $g_1, g_2 \in H$, there exists bijections $g_1 H \mapsto g_2 H$ and $H g_1 \mapsto H g_2$, given by multiplication on the left by $g_2 g_1^{-1}$, and multiplication on the right by $g_1^{-1} g_2$, respectively. 
+\end{remark}
+
+\begin{theorem}[Lagrange]\label{thm: Lagrange}
+    Let $G$ be a group. If $H \leq G$, and $G$ is finite, then $\abs{G} = \abs{H} \cdot (G : H)$.
+\end{theorem}
+
+\begin{proof}
+    By Remark \ref{rmk: group as disjoint union of cong classes}, $G$ is the disjoint union of congruence classes. There are $(G : H)$ congruence classes (in the form of $xH$ for $x \in G \smallsetminus H$), with each having $\abs{H}$ elements (given by $\{ xh \mid h \in H \}$).
+\end{proof}
+
+\begin{corollary}
+    In particular, for all $H \leq G$, $\abs{H} \mid \abs{G}$. If $G$ is finite, for all $g \in G$, $\abs{\inner{g}} \mid \abs{G}$, i.e. $g^{\abs{G}} = g^{\abs{\inner{g}} \cdot (G : \inner{g})} = e$.
+\end{corollary}
+
+\begin{example}[Fermat's Little Theorem]
+    Let $G = (\Z/p\Z)^{\times}$ with $p$ prime. Then $\abs{G} = p - 1$. For $a \in \Z$ s.t. $p \nmid a$, $\abs{[a]} = p-1$, which implies that $a^{p-1} \equiv 1 \mod p$ (using the above Corollary). 
+\end{example}
+
+\textstart
+We now seek to define a group structure on the congruence classes modulo a subgroup $H \leq G$. The issue is that the operation is not necessarily well-defined. The natural definition of the group operation is given via $(g_1 H, g_2 H) \mapsto (g_1 g_2 H)$. For $g_1 \equiv_{\ell} g_1' \mod H, g_2 \equiv_{\ell} g_2' \mod H$ we would like $g_1 g_2 \equiv_{\ell} g_1' g_2'$. In terms of the elements, we have $g_1 g_1'^{-1} g_2 g_2'^{-1} \in H$ and we want $g_1 g_2 g_2'^{-1} g_1^{-1} \in H$. This requires extra requirements on $H$.
+
+\begin{claim}\label{clm: constraint on group to have operations on cong classes}
+    The following two conditions are equivalent:
+    \begin{itemize}
+        \item For all $g_1^{-1}g_1' \in H, g_2^{-1}g_2' \in H$, this implies $(g_1 g_2)^{-1}(g_1 g_2)' \in H$.
+        \item For all $x \in G, h \in H, xhx^{-1} \in H$.
+    \end{itemize}
+\end{claim}
+
+\begin{proof}
+    Consider the following constructions in two directions:
+    \begin{itemize}
+        \item[$\Rightarrow$] Notice $g_1^{-1} g_1 \in H$ by hypothesis. Choose $g_2^{-1} = x, g_2' = x^{-1}$.
+        \item[$\Leftarrow$] Notice $(g_1 g_2)^{-1}(g_1 g_2)' = g_2^{-1} g_1^{-1} g_1' g_2' \in H$. Choose $g_2 = g_2' = x$, with $g_1^{-1} g_1' = h$. Such $g_1$ and $g_1'$ exists by first arbitrarily choose $g_1 \in H$ then compute $g_1' = g_1 h$.
+    \end{itemize}
+\end{proof}
+
+\textstart
+This gives rise to the definition of normal subgroups, and the formulation quotient with respect to it, as follows.
+
+\section{Normal Subgroup, Quotient Group and Isomorphism Theorems}
+
+\begin{definition}[Normal Subgroup]
+    A subgroup $H \leq G$ is \textbf{normal} if for all $x \in G, xHx^{-1} \in H$, where
+    \[
+        xHx^{-1} := \{ xhx^{-1} \mid h \in H \}
+    \]
+    Normal subgroups are denoted by $H \normalin G$.
+\end{definition}
+
+\begin{definition}[Quotient Group]
+    Let $G$ be a group, and $H \normalin G$. Then the \textbf{quotient group} $G/H$ is the set of left equivalence classes w.r.t. $H$, together with the group operation $(g_1 H)(g_2 H) := (g_1 g_2) H$.
+\end{definition}
+
+\begin{remark}\label{rmk: projection to quotient}
+    Explicitly check that this gives a group structure: by definition we have the identity element $eH$, with the inverse of $g_1 H = (g_1^{-1})H$. The well-definedness of the group follows from the fact that all the left congruence classes of $H$ are well-defined, i.e. operations on it does not depends on the choice if representative, by Claim \ref{clm: constraint on group to have operations on cong classes}. This also gives a group homomorphism $\pi: G \to G/H$ with $x \mapsto xH$. This is indeed a group homomorphism as $\pi(ab) = (ab) H = aH bH = \pi(a) \pi(b)$. 
+\end{remark}
+    
+\begin{remark}
+    The definition above is identical when formulated in terms of left or right congruence classes. Since we have the bijection between left and right congruence classes, to check that the definitions are identical it suffices to check that the bijection is compatible with the group operation specified. This indeed can be defined as such, as denoting the bijection to be $\Phi: xH \mapsto Hx^{-1}$ we have
+    \[
+        \Phi(xH \cdot yH) = Hx^{-1} \cdot Hy^{-1} := H y^{-1} x^{-1} = \Phi((xy) H)
+    \]
+\end{remark}
+
+\begin{example}
+    The followings give some examples of normal subgroups:
+    \begin{enumerate}
+        \item Trivially, $\{e\}$ and $G$ are normal subgroups of $G$.
+        \item If $G$ is abelian, for all $x \in G, H \leq G$, we have $xHx^{-1} = xx^{-1}H = H$ which implies that every subgroup is normal. Further the quotient $G/H$ is abelian, as by Remark \ref{rmk: projection to quotient}, the operation in $G$ induces the operation in $G/H$.
+        \item Consider the nontrivial case, where $G = D_3 = \inner{\sigma, \tau} = \{e, \sigma, \sigma^2, \tau, \tau\sigma, \tau\sigma^2\}$. Then
+            \begin{itemize}
+                \item Consider $H_1 = \inner{\sigma} = \{e, \sigma, \sigma^2\}$. Check $\tau\sigma\tau^{-1} = \tau\sigma\tau = \sigma^2\tau\tau = \sigma^2 \in H_1$; and $\tau\sigma^2\tau^{-1} = \tau\sigma^2\tau = \sigma\tau\tau = \sigma \in H_1$. Similarly for $\sigma\tau$ and $\sigma^2\tau$. This implies that $H_1$ is normal in $G$.
+                \item Consider $H_2 = \{ e, \tau \}$. we have $\sigma\tau\sigma^{-1} = \sigma\tau\sigma^2 = \tau\sigma = \sigma^2 \tau \notin H_2$ which implies that $H_2$ is not a normal subgroup.
+            \end{itemize}
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}\label{prop: equivalence definition of normal subgroup}
+    If $H \leq G$, then the following statements are equivalent:
+    \begin{enumerate}[label=\arabic*)]
+        \item $H$ is a normal subgroup of $G$.
+        \item $gH = Hg$ for all $g \in G$, i.e. the left and right equivalence classes are equal.
+        \item $gHg^{-1} = H$ for all $g \in G$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    First see that statement 2) and 3) are equivalent, by right multiplying $g$ and $g^{-1}$, respectively. For the rest of the equivalence, consider
+    \begin{itemize}
+        \item \emph{3) \implies 1)}. This in particular implies that $xhx^{-1} \in H$ for all $h \in H$, which is exactly the definition of normal subgroups.
+        \item \emph{1) \implies 3)}. The definition of normal subgroups implies that $gHg^{-1} \subseteq H$ for all $g \in G$. Apply this to $g^{-1} \in G$ gives $g^{-1} H g \subseteq H \implies H \subseteq gHg^{-1}$. Combining the two statements gives the desired equality. Alternatively, one can see that conjugating by $g$ is an isomorphism onto its image, where inclusion in one side implies that this is bijective. 
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}
+    Every subgroup with index 2 is normal.
+\end{corollary}
+
+\begin{proof}
+    Let $H \leq G$ be index 2. Then the left congruence classes are given by $\{ H, gH \}$ for $g \in G \smallsetminus H$; with the right equivalence classes $\{ H, Hg \}$. This implies that $gH = Hg$ in terms of individual elements. By Proposition \ref{prop: equivalence definition of normal subgroup} this implies that $H$ is normal in $G$. 
+\end{proof}
+
+\begin{proposition}\label{prop: kernel gives a normal subgroup}
+    Let $H \subseteq G$ be a subset. Then $H$ is a normal subgroup in $G$ if and only if there is some group homomorphism $f: G \to G'$ s.t. $\ker f = H$.
+\end{proposition}
+
+\begin{proof}
+    Consider implication in two directions:
+    \begin{enumerate}
+        \item[$\Rightarrow$:] Consider the group homomorphism induced by the quotient structure: $\pi: G \to G/H$, $g \mapsto gH$. Then $\ker \pi = \{ g \in G \mid gH = H \}$. This implies that $g \in H$.
+        \item[$\Leftarrow$:] By Proposition \ref{prop: kernel gives a subgroup} $H$ is a subgroup in $G$. Check that it is normal: for all $h \in H$, $g \in G$, we have
+        \[
+            f(ghg^{-1}) = f(g) f(h) f(g^{-1}) = f(g) (f(g))^{-1} = e \implies ghg^{-1} \in H
+        \]
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[Universal Property of Quotient Group]\label{prop: universal property of quotient group}
+    Let $G$ be a group, and $H$ is normal in $G$. Let $\pi: G \to G/H$, and $f: G \to G'$ be group homomorphisms s.t. $H \subseteq \ker f$. Then there exists a unique group homomorphism $\bar{f} : G/H \to G'$ s.t. $\bar{f} \circ \pi = f$, i.e. the following diagram commutes:
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            G \arrow[rr, "\pi"] \arrow[rrdd, "f"] & & G/H \arrow[dd, dashed, "\bar{f}"] \\
+            & & \\
+            & & G'
+        \end{tikzcd}
+    \end{minipage}
+\end{proposition}
+
+\begin{proof}
+    For uniqueness, notice that since the diagram is required to commute, we have $\bar{f} (gH) = f(g)$ for all $g \in G$. Since $\pi$ is surjective, the behavior of $\bar{f}$ is described only on image of $\pi$, i.e. on congruence classes of form $gH$ for $g \in G$. This gives the uniqueness of the map.
+    
+    For existence, check that $f$ is well-defined, and is indeed a group homomorphism:
+    \begin{itemize}
+        \item \emph{$\bar{f}$ is well-defined.} For $gH = g'H$, we want to show that $\bar{f}(gH) = \bar{f}(g'H)$, i.e. $f(g) = f(g')$. But $gH = g'H$ implies $g^{-1}g' \in H$, i.e. $f(g) \cdot (f(g'))^{-1} = f(g\cdot {g'}^{-1}) \in f(H) = e$, which gives $f(g) = f(g')$.
+        \item \emph{$\bar{f}$ is a group homomorphism.} This is simply paraphrasing of the definition $(gH)(g'H) = (gg')H$.
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}[First Isomorphism Theorem] \label{thm: first isomorphism theorem}
+    If $f: G \to G'$ is a surjective group homomorphism, then $G' \simeq G / \ker f$, i.e. the following diagram commutes with $\bar{f}$ an isomorphism:
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            G \arrow[rr, "\pi"] \arrow[rrdd, "f"] & & G/\ker f \arrow[dd, "\bar{f}"] \\
+            & & \\
+            & & G'
+        \end{tikzcd}
+    \end{minipage}
+\end{theorem}
+
+\begin{proof}
+    Uniqueness and existence of $\bar{f}$ follows from Prop \ref{prop: universal property of quotient group}. 
+
+    Check that $\bar{f}$ is an isomorphism. Surjectivity follows from the fact that $f$ is surjective, and the diagram is required to commute. To check that $\bar{f}$ is injective, consider $\ker \bar{f}$. For, $x \in \ker \bar{f}$, $\bar{f}(x) = f(x') = e$ for $x' \in G$ s.t. $\pi(x') = x$. But this implies that $x' \in \ker f$, i.e. $\pi(x') = x = e$.
+\end{proof}
+
+\begin{corollary}
+    If $f: G \to G'$ is any group homomorphism, then $\im f \simeq G/\ker f$.
+\end{corollary}
+
+\begin{remark}
+    If $f: G \to G'$ is a group homomorphism, and $H'$ is normal in $G'$, then $f^{-1}(H')$ is normal in $G$.
+\end{remark}
+
+\begin{proof}
+    Denote $p': G' \to G'/H'$ which is the projection into the quotient. Notice that $p' \circ f (f^{-1}(H)) = e$, i.e. $f^{-1}H = \ker (p' \circ f)$. Proposition \ref{prop: kernel gives a normal subgroup} gives that $f^{-1}(H')$ is normal. 
+\end{proof}
+
+\begin{remark}\label{rmk: transformation between quotient on normal subgroups}
+    Let $H$ and $H'$ be normal in $G$ and $G'$, respectively. Let $f: G \to G'$, $p: G \to G/H$, $p': G' \to G'/H'$ be group homomorphisms s.t. $f(H) \subseteq H'$. Then there exists a unique group homomorphism $\bar{f}: G/H \to G'/H'$ s.t. the following diagram commutes:
+    
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            G \arrow[rr, "f"] \arrow[dd, "p"] & & G' \arrow[dd, "p'"] \\
+            & & \\
+            G/H \arrow[rr, "\bar{f}"] & & G'/H'
+        \end{tikzcd}        
+    \end{minipage}
+
+    Proof is by applying universal property (Proposition \ref{prop: universal property of quotient group}) on $p$ and $p' \circ f$. It is applicable as $f(H) \subseteq H'$, i.e. $H \subseteq \ker (p' \circ f)$.
+\end{remark}
+
+
+\begin{parenthesis} \label{pth: quotient preserves normal subgroups}
+    Let $p: G \to G/H$ be the projection into the quotient. Then if $H \leq M$, then $M$ is normal in $G$ if and only if $p(M) = M/H$ is normal in $G/H$.
+\end{parenthesis}
+
+\begin{proof}
+    Show implications in both directions:
+    \begin{enumerate}
+        \item[$\Rightarrow$] Use Remark \ref{rmk: transformation between quotient on normal subgroups}, with $G = G'$, $H' = M$, and $f$ the identity map. By hypothesis that $H \leq M$, we have $f(H) \subseteq M$. The remark says that there exists a map $\bar{f}: G/H \to G/M$, with kernel $p(M)$ by the fact that the diagram commutes. Proposition \ref{prop: kernel gives a normal subgroup} gives the fact that $p(M)$ is normal in $G/H$.
+        \item[$\Leftarrow$] Since $M/H$ is normal in $G/H$ it is valid to consider the quotient $(G/H)/(M/H)$ with the projection $p': G/H \to (G/H)/(M/H)$, which is a group homomorphism. It is then clear that $\ker (p' \circ p) = M$, i.e. $M$ is a normal subgroup by Proposition \ref{prop: kernel gives a normal subgroup}.
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Third Isomorphism Theorem]\label{thm: third isomorphism theorem}
+    Let $G$ a group, and $H, M$ subgroups in $G$ s.t. $H \leq M \leq G$. Then $(G/H)/(M/H) \simeq G/M$.
+\end{theorem}
+
+\begin{proof}
+    Let $p: G \to G/H$ be the projection into the quotient. Consider the group homomorphism $\alpha: G/H \to G/M$, given $xH \mapsto xM$. $\ker \alpha = \{ xH \mid x \in M \} = p(M)$. By Parenthesis \ref{pth: quotient preserves normal subgroups} we know that $p(M)$ is normal in $G/H$. The First Isomorphism Theorem (Theorem \ref{thm: first isomorphism theorem}) gives the desired isomorphism. 
+\end{proof}
+
+The following theorem connects the subgroups in the quotient and the subgroups in the original group:
+
+\begin{theorem}[Correspondence]\label{thm: correspondence}
+    Let $G$ be a group, and $H$ a normal subgroup in $G$. Then we have an \emph{order-preserving} bijection:
+    \[
+        \Phi: \{ \text{subgroups in }G/H \} \longleftrightarrow \{ \text{subgroups of $G$ containing $H$} \} 
+    \]
+    which maps normal subgroups to normal subgroups. Being \emph{order-preserving} implies that $U \subseteq V$ if and only if $\Phi(U) \subseteq \Phi(V)$.
+\end{theorem}
+
+\begin{proof}
+    Define $\Phi$ as $p^{-1}$ with $p$ being the projection $G \to G/H$, as by the definition of quotient groups, we have $K \subseteq G/H \implies p^{-1}K \subseteq G$ by the fact that $p^{-1}$ is order-preserving. Further by Parenthesis \ref{pth: quotient preserves normal subgroups} we have $K \normalin G/H \implies p^{-1}K \normalin G$. The images are subgroups containing $H$, as in particular we have $p^{-1}(K) \supseteq p^{-1}(e) = H$. 
+
+    Now check that the inverse of $\Phi$ exists; and the composition in two directions are both the identity. Check the followings:
+    \begin{itemize}
+        \item $p(p^{-1}(K)) = K$ for $K \leq G/H$. By definition $p(p^{-1})(K) \subseteq K$. The equality follows from the fact that $p$ is surjective.
+        \item $p^{-1}(p(M)) = M$ for $M \leq G$. $p^{-1}(p(M)) \supseteq M$ is given by definition; while $g \in p^{-1}(p(M))$ implies that $gH = xH$ for $x \in M$ as $p$ is surjective. But this implies that $g = xh$ for some $h \in H$, i.e. $g \in M$.
+    \end{itemize}
+\end{proof}
+
+For the formulation of the Second Isomorphism Theorem, we need to first introduce some definitions:
+\begin{definition}
+    Let $B \leq G$. Then the \textbf{normalizer} of $B$ in $G$ is defined as
+    \[
+        N_G(B) := \{ g \in G \mid gBg^{-1} \subseteq B \}
+    \]
+\end{definition}
+
+\begin{remark}
+    By definition of normalizer, $B$ is normal in $G$ (the normalizer makes $B$ a normal subgroup). This is also the largest subgroup of $G$ in which $B$ is normal, as suppose that there exists a larger one, it would be included in the normalizer by definition. The normalizer exists as in particular $B$ is normal in $B$, implying that $B \subseteq N_G(B)$.
+\end{remark}
+
+\begin{notation}
+    Let $A, B \leq G$ be subgroups. Denote
+    \[
+        AB := \{ ab \mid a \in A, b \in B \}
+    \]
+\end{notation}
+
+\begin{remark}
+    By definition $AB$ is not necessarily a subgroup in $G$: for $a_1b_1, a_2 b_2 \in AB$, $a_1 b_1(a_2 b_2)^{-1} = a_1 b_1 b_2^{-1} a_2^{-1}$ which is not in the form of $AB$. But if $A \subseteq N_G(B)$, this is the case as we have
+    \[
+        a_1 b_1 b_2^{-1} a_2^{-1} = (a_1 a_2^{-1}) (a_2 b_1 b_2^{-1} a_2^{-1})
+    \]
+    which gives $a_1 b_1 (a_2 b_2)^{-1} = a' b'$ for $a' = a_1 a_2^{-1}$ and $b = a_2 b_1 b_2^{-1} a_2^{-1} \in B$.
+\end{remark}
+
+\begin{theorem}[Second Isomorphism Theorem]\label{thm: second isomorphism theorem}
+    Let $A$ and $B$ be subgroups of $G$. Further let $A \subseteq N_G(B)$. Then $A \cap B \normaleqin A$ and $B \normaleqin AB$; and we have the isomorphism $A/(A \cap B) \simeq AB/B$.
+\end{theorem}
+
+\begin{proof}
+    Notice $A \cap B \subseteq B$ and $A \subseteq N_G(B)$. Therefore, for all $b \in A \cap B$, $a \in A$, $aba^{-1} \in A \cap B$ by closure of operation in $A$ and $B$ is normal in $A$. Further $B \normalin AB$ as $(ab) b' (ab)^{-1} = abb'b^{-1} a^{-1} \in B$ since $a \in N_G(B)$. Consider $f: A \to AB$, $a \mapsto ab$ for some fixed $b \in B$. $\im f \in B$ as $B$ is a group, and in particular $A \cap B \subseteq B$. Use the result in Remark \ref{rmk: transformation between quotient on normal subgroups} to get the following commutative diagram:
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            A \arrow[rr, "f"] \arrow[dd] & & AB \arrow[dd] \\
+            & & \\
+            A/(A \cap B) \arrow[rr, "\bar{f}"] & & AB/B
+        \end{tikzcd}
+    \end{minipage}
+    $f$ is an isomorphism by definition, which implies that the induced homomorphism $\bar{f}$ is an isomorphism.
+\end{proof}
+
+\section{The Symmetric and Alternating Group}
+
+\textstart
+Recall that the Symmetric group $S_n$ is defined as 
+\[
+    S_n := \{ f: \{1, \dots, n\} \to \{1, \dots, n\} \mid f \text{ bijective} \}    
+\]
+with operation given by composition of maps.
+
+\begin{notation}
+    For $\sigma \in S_n$, it is often denoted by the one-to-one mappings:
+    \[
+        \begin{pmatrix}
+            1 & 2 & \cdots & n \\
+            \sigma(1) & \sigma(2) & \cdots & \sigma(n)
+        \end{pmatrix}
+    \]
+\end{notation}
+
+\begin{example}\label{ex: notation of permutation}
+    The composition of maps can be simply read off from the relations: for example
+    \[
+        \begin{pmatrix}
+            1 & 2 & 3 \\
+            3 & 1 & 2 \\
+        \end{pmatrix}
+        \begin{pmatrix}
+            1 & 2 & 3 \\
+            2 & 3 & 1 \\
+        \end{pmatrix} = 
+        \begin{pmatrix}
+            1 & 2 & 3 \\
+            1 & 2 & 3 \\
+        \end{pmatrix} = \Id
+    \]
+\end{example}
+
+\begin{definition}[Cycle]
+    In $S_n$, for $k \geq 2$, a \textbf{$k$-cycle} in $S_n$ is a permutation $\sigma = (a_1, \dots, a_k)$ for $a_1, \dots, a_k \in \{1, \dots, n\}$ where $\sigma(a_i) = a_{i+1}$ for $i < k$; and $\sigma(a_k) = a_1$; and $\sigma(i) = i$ for $i \notin \{a_1, \dots, a_k\}$.
+\end{definition}
+
+\begin{example}\label{ex: notation of permutation using cycles}
+    Adopting the notation for cycles, Example \ref{ex: notation of permutation} can be written as $(3 2 1)(2 3 1) = e = \Id$.
+\end{example}
+
+\begin{definition}[Transposition]
+    \textbf{Transposition}s in Symmetric groups are 2-cycles $(i j)$ for $i < j$.
+\end{definition}
+
+\begin{remark}\label{rmk: basic properties of symmetric group}
+    The following gives some basic properties of the Symmetric group:
+    \begin{enumerate}
+        \item Let $\sigma = (a_1 \dots, a_k)$ be a $k$-cycle. Then $\abs{\sigma} = k$.
+        \item If $\sigma$ and $\tau$ are disjoint cycles, i.e. the sets of elements that they act nontrivially on are disjoint, then $\sigma\tau = \tau\sigma$.
+        \item For all $\sigma \in S_n$, it can be written as a product of disjoint cycles, unique up to reordering. This can be constructed by chasing the image of any element $x$ in $\sigma$, which decomposes $\sigma$ into the product of a cycle and something else. The rest part of $\sigma$ acts trivially on $x$, which implies that they are disjoint.
+        \item Cycle $(a_1 \dots a_k) = (a_1 a_k)\dots (a_1 a_3) (a_1 a_2)$. This implies that every $\sigma \in S_n$ can be decomposed into transpositions.
+    \end{enumerate}
+\end{remark}
+
+\begin{parenthesis} \label{pth: all order-2 group are isomorphic}
+    All groups with 2 elements are isomorphic. $G = \{e, a\}$ gives $a \cdot a = e$, which implies that $G \simeq \Z/2\Z$.
+\end{parenthesis}
+
+\begin{example}
+    Consider symmetric groups with small $n$: 
+    \begin{enumerate}
+        \item $S_1 = \{e\}$. 
+        \item $S_2 = \{e, (1 2)\}$. By Parenthesis \ref{pth: all order-2 group are isomorphic}, this is isomorphic to $\Z/2\Z$.
+        \item $S_3$ is not abelian: Let $\sigma = (1 2 3)$, $\tau = (1 2)$, we have $\abs{\sigma} = 3$, $\abs{\tau} = 2$, and further $S_3 = \{e, \sigma, \sigma^2, \tau, \tau\sigma, \tau\sigma^2\}$. This implies that $S_3 \simeq D_3$.
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[Inversion]
+    \textbf{Inversion}s in $\sigma$ are elements in the set $\{ (i, j) \mid 1 \leq i < j \leq n , \sigma(i) > \sigma(j)\}$.
+\end{definition}
+
+\begin{definition}[Signature]
+    Consider group homomorphism $\varepsilon: S_n \to \{ \pm 1 \}$ where the operation in $\{ \pm 1 \}$ is integer multiplication, defined as $\sigma \mapsto (-1)^{\text{(\# inversions in $\sigma$)}}$. $\sigma$ is \underline{even} if $\varepsilon(\sigma) = 1$; and \underline{odd} if $\varepsilon(\sigma) = -1$. 
+\end{definition}
+
+\begin{example}
+    Transpositions are odd. For $\sigma = (i j)$ with $i < j$, written out explicitly it is given by the map
+    \[
+        \begin{pmatrix}
+            1 & \cdots & i & \cdots & j & \cdots & n \\
+            1 & \cdots & j & \cdots & i & \cdots & n \\
+        \end{pmatrix}
+    \]
+    The inversions are given by $\{ (i, k), (k, j) \mid i < k < j \} \cup \{ (i, j) \}$. The first part has even elements which implies that $\varepsilon(\sigma) = (-1)^1 = -1$. 
+\end{example}
+
+\begin{example}
+    If $\sigma$ is a product of $k$ transpositions, then $\varepsilon(\sigma)= (-1)^k$. By Remark \ref{rmk: basic properties of symmetric group} 4., any $k$-cycle can be decomposed into $(k-1)$ transpositions, which implies that its signature is $(-1)^{k-1}$.
+\end{example}
+
+\begin{proposition}
+    $\varepsilon$ is a group homomorphism.
+\end{proposition}
+
+\begin{proof}
+    Consider $R = \Q[x_1, \dots, x_n]$ the polynomial ring, where $\Q$ is a field. This gives a domain as every nonzero element in a field is invertible. 
+
+    Define $\Delta := \Pi_{i < j} (x_i - x_j)$. $R$ being a domain implies that this is nonzero. Given $\sigma \in S_n$, we can construct a map $\varphi_{\sigma}: R \to R$ which is a morphism of $\Q$-algebra (homomorphism that is $\Q$-linear). By the universal property of multivariate polynomial ring, to specify $\varphi_{\sigma}$, it suffices to specify the image of $x_i$s. Define $\varphi_{\sigma}(x_i) = x_{\sigma(i)}$ for all $i$. 
+    
+    Notice that $\varphi_{\sigma}(\Delta) = \Pi_{i < j} (x_{\sigma(i)} - x_{\sigma(j)}) = \varepsilon(\sigma) \cdot \Delta$. Now consider the map $\varphi: \sigma \mapsto \varphi_{\sigma}$. Notice that this is a group homomorphism: in particular $\varphi_{\sigma} \circ \varphi_{\tau} = \varphi_{\sigma\tau}$ as maps are associative. Apply to $\Delta$ gives $\varepsilon(\sigma)\varepsilon(\tau) = \varepsilon(\sigma\tau) \Delta$, i.e. $(\varepsilon(\sigma) \varepsilon(\tau) - \varepsilon(\sigma\tau))\Delta = 0$. Since $R$ is a domain, and $\Delta \neq 0$, this implies that $\varepsilon(\sigma)\varepsilon(\tau) = \varepsilon(\sigma\tau)$ which gives the desired group homomorphism.
+\end{proof}
+
+\begin{definition}[Alternating Group]
+    The \textbf{Alternating Group} $A_n$ is defined as $A_n := \ker \varepsilon_n$ for $\varepsilon_n : S_n \to \{\pm 1\} \simeq S_2$
+\end{definition}
+
+\begin{remark}
+    For $n \geq 2$, transpositions exist, which implies that $\varepsilon$ is surjective, with $e \mapsto 1, \tau \mapsto -1$ for $\tau$ some transposition. The First Isomorphism Theorem (Theorem \ref{thm: first isomorphism theorem}) gives that $S_n / A_n \simeq \Z/2\Z$.
+\end{remark}
+
+\section{Classification of Groups of Small Order}
+
+\begin{proposition}
+    If $G$ is a finite group, and $\abs{G} = p$ which is prime, then $G \simeq Z/p\Z$.
+\end{proposition}
+
+\begin{proof}
+    Choose $x \in G$ s.t. $x \neq e$. Denote $H = \inner{x}$. Clearly $\abs{H} \geq 2$, as in particular both $x$ and $e$ are in $H$. By Lagrange, $\abs{H} \mid p$, which implies that $H = G$, i.e. $G$ is cyclic. Proposition \ref{prop: characterization of cyclic group} gives the desired isomorphism.
+\end{proof}
+
+The proposition above gives that for $p = 2, 3, 5, 7$, the group of order $p$ is isomorphic to the corresponding $\Z/p\Z$. The following classifies group of order 4 and 6:
+
+\begin{proposition}
+    For group $G$ with order 4, either $G \simeq \Z/4\Z$, or $G \simeq \Z/2\Z \times \Z/2\Z$.
+\end{proposition}
+
+\begin{proof}
+    Consider the following two cases:
+    \begin{itemize}
+        \item There exists some $x \in G$ s.t. $\abs{x} = 4$, i.e. $G$ is cyclic. Then by Proposition \ref{prop: categorical def of group isomorphism}, $G \simeq \Z/4\Z$.
+        \item $G$ is not cyclic. Lagrange's Theorem gives that for all $x \in G$, $\abs{x} \mid 4$, where the only nontrivial case is $\abs{x} = 2$. Then $G = \{e, a, b, c\}$ with $a^2 = b^2 = c^2 = e$. Notice $ab \neq a, b, e$, which implies that $c = ab$. This characterization gives the isomorphism to $\Z/2\Z \times \Z/2\Z$ given by $a \mapsto (1, 0)$ and $b \mapsto (0, 1)$
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    In the proof above, notice $ba \neq e, a, b$, i.e. $c = ab = ba$. Therefore it is abelian. This is often referred to as the \underline{Klein 4-gruop}.
+\end{remark}
+
+Now consider the case where $G$ has 6 elements:
+
+\begin{proposition}
+    If $\abs{G} = 6$, then either $G \simeq \Z/6\Z$, or $G \simeq D_3$. 
+\end{proposition}
+
+\begin{proof}
+    Consider the two cases separately:
+    \begin{itemize}
+        \item $G$ is abelian. By Proposition \ref{prop: characterization of cyclic group}, $G \simeq \Z/6\Z$.
+        \item $G$ is not abelian. Lagrange gives that for all $x \in G$ s.t. $x \neq e$, $\abs{x} = 2$ or $3$.
+        \begin{lemma}
+            If $\abs{G}$ is even, there exists an element of order 2 in $G$.
+        \end{lemma}
+        \begin{proof}
+            Suppose not. Then in particular there cannot exist any element of even order, i.e. for all $x \in G$, $x^{-1} \neq x$. Then consider pairs $(x, x^{-1})$ for all $x$. Together with $e$, this gives odd number of elements, which is a contradiction.
+        \end{proof}
+        Claim that there exists $x \in G$ s.t. $\abs{x} = 3$. Suppose not. Then for all $x \in G, x^2 = e$. By proof for the case where there are 4 elements in the group, this gives that $G$ is abelian, i.e. it has a subgroup $\{ e, x, y, xy \}$ for $x, y \neq e$. But this gives a contradiction with Lagrange's Theorem.
+
+        Let $\abs{\sigma} = 3$. This gives the explicit expression of elements in $G$: $G = \{e, \sigma, \sigma^2, \tau, \tau\sigma, \tau\sigma^2\}$. Notice that $\tau\sigma \neq e, \tau, \sigma, \sigma^2$ by the fact that they are nontrivial and have different order. Then either
+        \begin{itemize}
+            \item $\tau\sigma = \sigma\tau$. But then $(\sigma\tau)^2 = \sigma^2 \neq e$, $(\sigma\tau)^3 = \tau$, which implies that $(\sigma\tau)$ generates $G$. This is a contradiction.
+            \item $\tau\sigma = \sigma^2\tau$. Then this characterize that $G \simeq D_3$.
+        \end{itemize}
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}[Structural Theorem for Finitely Generated Abelian Groups]\label{thm: structural theorem}
+    Let $G$ be a finitely generated abelan group. Then 
+    \[
+        G \simeq \Z^r \times \Pi_{i \in I} (\Z/p_i^{m_i} \Z)
+    \]
+    for $r \in \Z_{\geq 0}$, $p_i$ prime, $m_i \in \Z_{>0}$; and pairs $(p_i, m_i)$ are unique up to reordering.
+\end{theorem}
+
+\textstart
+The proof quite resembles that of Structural Theorem for finitely generated modules over PIDs, and is not repeated here. 
+
+\begin{remark}
+    Since $\Z$ has infinitely many elements, this implies that if $G$ being a finitely generated abelian group is finite, then $r = 0$, and $G \simeq \Pi_{i \in I} \Z/p_i^{m_i}\Z$.
+\end{remark}
+
+\begin{example}
+    Structural theorem directly gives the classification of isomorphism classes of abelian groups with 8 elements: $\Z/8\Z, \Z/2\Z \times \Z/4\Z, \Z/2\Z \times \Z/2\Z \times \Z/2\Z$.
+\end{example}
+
+\section{Group Action on Sets}
+
+\begin{definition}[Group Action]
+    Let $G$ be a group, and $X$ a set. A \textbf{(left) action} of $G$ on $X$ is a map $G \times X \to X$, written $(g, x) \mapsto gx$, satisfying
+    \begin{itemize}
+        \item $ex = x$ for all $x \in X$.
+        \item $g_1(g_2 x) = (g_1 g_2)x$ for all $g_1, g_2 \in G$, $x \in X$.
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    Left (and therefore right) group actions correspond to group homomorphisms $\varphi: G \to S_X$, where $S_X := \{ f: X \to X \mid f \text{ bijection} \}$ is the set of bijective maps from $X$ to itself. 
+\end{proposition}
+
+\begin{proof}
+    Notice that $\varphi_e = \Id$; and for all $g, h \in G$, $\varphi_g \circ \varphi_h = \varphi_{gh}$ for all $g, h \in G$, which gives $\varphi_g \circ \varphi_{g^{-1}} = \varphi_e = \Id$. Therefore, taking $S_X$ as a group, with the identity being the identity map, and operation the composition of maps, $\varphi$ gives a group homomorphism between $g$ and $S_X$.
+
+    For the other direction, given a group homomorphism $\varphi: G \to S_X$, we get a left action on $X$ given by $(g, x) \mapsto \varphi(g)(x)$.
+\end{proof}    
+
+\begin{example}
+    The following gives some examples of group actions:
+    \begin{enumerate}
+        \item Recall that $S_X$ attains a group structure. Therefore, for all $X$, $S_X$ acts on $X$ by $(f, x) \mapsto fx$ with the corresponding homomorphism $S_X \to S_X$.
+        \item Consider geometrically, $D_n$ acts on the vertices of a regular $n$-gon.
+        \item Let $G$ be a group, and $H \leq G$. Then we have an action of $G$ on the left congruence classes of $G$ modulo $H$, given by $(g, aH) \mapsto (ga) H$. Check that this is well-defined: if $aH = bH$, want to show that $(ga)H = (gb)H$. Hypothesis gives that $aH = bH$, i.e. $a^{-1}b \in H$. But $(ga)^{-1}(gb) = a^{-1} g^{-1} g b = a^{-1}b \in H$, which gives the equality $(ga)H = (gb) H$.
+        \item A group acts on itself via the action of conjugation, given by $(g, x) \mapsto gxg^{-1}$. Clearly, $(e, x) \mapsto exe^{-1} = x$; and $(gh, x) \mapsto (ghxh^{-1} g^{-1}) = (g, (h, x))$.
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+    Let $x, y \in X$. Then for a group action of $G$ on $X$, $x \sim y$ if there exists $g \in G$ s.t. $gx = y$.
+\end{definition}
+
+\begin{remark}
+    This is an equivalence relation:
+    \begin{itemize}
+        \item \emph{Reflexive.} let $g = e$.
+        \item \emph{Symmetric.} Suppose that there exists $g$ s.t. $gx = y$. Then multiplying $g^{-1}$ on th left gives $g^{-1}(gx) = g^{-1}y$, i.e. $x = g^{-1} y$.
+        \item \emph{Transitive.} Suppose that there exists $g, h \in G$ s.t. $y = gx, z = hy$, then $z = (hg)x$.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[Orbit]
+    Let there be an action of $G$ on $X$. the \textbf{orbit} of $x \in X$ is defined as
+    \[
+        \Orbit(x) = \{ g(x) \mid g \in G \}
+    \]
+\end{definition}
+
+\begin{definition}[Stabilizer]
+    For all $x \in X$, the \textbf{stabilizer} of $x$ is
+    \[
+        \Stab_G(x) := \{g \in G \mid gx = x\}
+    \]
+\end{definition}
+
+\begin{remark}
+    The stabilizer $\Stab_G(x)$ is a subgroup of $G$. Use the characterization of subgroups:
+    \begin{itemize}
+        \item By definition of group action, $e \in \Stab_G(x)$, which is the unit element.
+        \item If $g, h \in G$, then $gx = x \implies x = g^{-1}x$, i.e. $g^{-1} \in G$. Therefore $g^{-1}h \in G$. 
+    \end{itemize}
+\end{remark}
+
+\begin{lemma}
+    For all $x \in X$, there is a bijection
+    \[
+        (G / \Stab_G(x))_{\ell} \longleftrightarrow \Orbit(x)
+    \]
+    where $(G / \Stab_G(x))_{\ell}$ denotes the left congruence classes of $\Stab_G(x)$. In particular, $\abs{\Orbit(x)} = (G : \Stab_G(x))$, i.e. if $G$ is finite, then $\abs{\Orbit(x)} \mid \abs{G}$.
+\end{lemma}
+
+\begin{proof}
+    Notice that $gx = hx$ implies that $(g^{-1}h)x = x$, i.e. $g^{-1}h \in \Stab_G(X) \implies g \Stab_G(x) = h \Stab_G(x)$; and the implication in the inverse direction is similar. This gives a bijection $\{ gx \mid x \in G \} \to (G / \Stab_G(x))_{\ell}$ given by $gx \mapsto g \Stab_G(x)$.
+\end{proof}
+
+\begin{definition}[Transitive]
+    The action of $G$ on $X$ is \textbf{transitive} if there is only one orbit, i.e. for all $x, y \in X$, there exists some $g \in G$ s.t. $x = gy$.
+\end{definition}
+
+\begin{corollary}
+    If the action of $G$ on $X$ is transitive, then for all $x \in X$, $\Orbit(x) = X$. Let $H = \Stab_G(x)$, then there exists a bijection $(G/H)_{\ell} \to X$ given by $gH \mapsto gx$. This corresponds to the action of $G$ on $(G/H)_{\ell}$: $(g, aH) \mapsto (ga)H$.
+\end{corollary}
+
+\begin{remark}
+    If $G$ acts on $X$, then $X = \amalg_{i \in I} \Orbit(x_i)$, where $x_i$s are representatives in each orbit. In particular this can be split as
+    \[
+        \abs{x} = \sum_{x_i} \abs{\Orbit(x_i)} = \abs{\Fix(x)} + \sum_{\abs{\Orbit(x_i)} \geq 2} \abs{\Orbit(x_i)}
+    \]
+    where $\Fix(x) := \{ x \in X \mid gx = x,\ \forall g \}$, i.e. points that are stabilized by the whole group.
+\end{remark}
+
+\begin{definition}[Center]
+    Let $G$ be a group. The \textbf{center} of $g$ is defined as
+    \[
+        Z(G) := \{ x \in G \mid xg = gx,\ \forall g \in G \}
+    \]
+\end{definition}
+
+\begin{definition}[Centralizer]
+    Given $x \in G$, the \textbf{centralizer} of $x$ in $G$ is defined as
+    \[
+        C_G(x) := \{ g \in G \mid xg = gx, \text{i.e. }gxg^{-1} = x \}
+    \]
+    i.e. in which $x$ is in the center. One can also consider the centralizer of a subgroup in a similar manner. 
+\end{definition}
+
+\begin{example}
+    Fix $G$ a group, and consider the action of $G$ on itself by conjugation. $x$ and $y$ are conjugate if $\Orbit(x) = \Orbit(y)$, i.e. there exists $g \in G$ s.t. $x = gyg^{-1}$. In particular, in this case the stabilizers are the same as the centralizers.
+
+    Notice that with the action defined as conjugation, $\abs{\Orbit(x)} = 1$ if and only if $x \in Z(G)$. This gives the class equation 
+    \begin{equation}\label{eq: class equation}
+        \abs{G} = \abs{Z(G)} + \sum_i (G : C_G(x_i))
+    \end{equation}
+    where $x_i$ vary over the set of conjugate classes with more than 1 element. 
+\end{example}
+
+\begin{definition}[$p$-group]
+    If $p$ is a prime integer, a \textbf{$p$-group} is a group of order $p^m$ for some $m \geq 1$.
+\end{definition}
+
+\begin{proposition}\label{prop: center of p group has order divisible by p}
+    If $G$ is a $p$-group, then $Z(G) \neq \{e\}$. Further by the \hyperref[eq: class equation]{class equation}, $p \mid Z(G)$.
+\end{proposition}
+
+\begin{proof}
+    Consider divisibility by $p$ on both sides of the class equation. For the second term on RHS, for all $i$ s.t. $G \neq C_G(x_i)$, since $C_G(x_i)$ is a subgroup by \hyperref[thm: Lagrange]{Lagrange} $(G : C_G(x)) \mid \abs{G} = p^m$. Further as $G \neq C_G(x_i)$, $p \mid (G : C_G(x))$, $\abs{G} = p^m$ gives $p \mid \abs{G}$, which implies that $p \mid \abs{Z(G)}$.
+\end{proof}
+
+\begin{corollary}
+    If $p$ is prime, then every group with $p^2$ elements is abelian:
+\end{corollary}
+
+\begin{proof}
+    By \hyperref[thm: structural theorem]{structrual theorem}, either $G \simeq \Z/p^2\Z$, or $G \simeq \Z/p\Z \times \Z/p\Z$. Since $G$ is a $p$-group, by Proposition \ref{prop: center of p group has order divisible by p}, $p \mid \abs{Z(G)}$. \hyperref[thm: Lagrange]{Lagrange} gives $\abs{Z(G)} \mid p^2$. Then either:
+    \begin{itemize}
+        \item $\abs{Z(G)} = p^2$. Then $G$ is by definition abelian.
+        \item $\abs{Z(G)} = p$. Notice that $Z(G) \normaleqin G$. Consider the group $G/Z(G)$. This has $p$ elements, and is therefore cyclic. Let $x Z(G)$ be a generator of $G/Z(G)$. Then for all $a, b \in G$, there exists $i, j \in \Z$ and $a', b' \in Z(G)$ s.t. $a = x^i a'$, $b = x^j b'$. But notice that $ab = ba$, i.e. $G$ is abelian, which is a contradiction.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    The above result cannot be generalized. That is, for $H \normalin G$, $H$ abelian and $G$ cyclic, $G$ is not necessarily abelian. Consider the counterexample where $G = S_3$, $H = \pair{\sigma} = \{e, \sigma, \sigma^2\}$.
+\end{remark}
+
+\begin{remark}
+    If $G$ acts on $X$, $G$ also acts on $\mathcal{P}(X)$, the power set of $X$. Explicitly, for $A \in \mathcal{P}(X)$, $gA = \{gx \mid x \in A\}$. This also extends to the conjugacy of a subset in a similar manner. 
+
+    If $X$ is a group (e.g. $G$ itself) then this gives a group automorphism, which sends subgroups by subgroups, via left-composing with a group element. 
+\end{remark}
+
+\section{Sylow Theorems}
+
+\textstart
+\hyperref[thm: Lagrange]{Lagrange} gives that for a finite group $G$ and $H \leq G$, $\abs{H} \mid \abs{G}$, and $\abs{x} \mid \abs{G}$ for all $x \in G$. It is then of our interest to see how much we can get in the other direction: given a group $G$, can we get any information the order of its subgroups, and the number of them?
+
+It is impossible that we have the followings:
+\begin{itemize}
+    \item For all $m \mid \abs{G}$, there exists $x \in G$ s.t. $\abs{x} = m$. For example, it is impossible to have such $x$ for $m = \abs{G}$ in $G$ non-cyclic.
+    \item For all $m \mid \abs{G}$, there exists a subgroup of $G$ of order $m$. In particular, in a subsequent theorem (Theorem \ref{thm: A_n for n >= 5 is simple}) we will show that $A_5$ has non nontrivial normal (e.g. index-2) subgroups, i.e. no subgroup of order 30.
+\end{itemize}
+
+\begin{theorem}[Cauchy]\label{thm: Cauchy}
+    For $G$ a finite group, and $p$ prime s.t. $p \mid \abs{G}$, there exists $x \in G$ s.t. $\abs{x} = p$.
+\end{theorem}
+
+\begin{proof}
+    First consider the simple case where $G$ is abelian, and then reduce the general case to the abelian one.
+
+    \begin{enumerate}
+        \item[\bu{Case 1.}] $G$ is abelian. Follows from the \hyperref[thm: structural theorem]{structural theorem for finite abelian groups}: $G$ is isomorphic to a product of groups where one of them is $\Z/p^m\Z$ for $m \in \Z_{>0}$. This gives an element with order $p$.
+
+        Alternatively, prove by contradiction. Suppose that for all $x \in G$, $\abs{x} \neq p$. Then for all $x \in G$, $p \nmid \abs{x}$. (Otherwise for $\abs{x} = m$ and $p \mid m$, $\abs{x^{m/p}} = p$.) Let $N$ be the largest common multiple of all order of elements in $G$, then $(p, N) = 1$. Let $x_1, \dots, x_n$ be the elements of $G$. Consider the group homomorphism 
+        \[
+            f: \Z^n \to G, \qquad f(a_1, \dots, a_n) = x_1^{a_1} \cdots x_n^{a_n}
+        \]
+        Notice that if $(a_1, \dots, a_n) \in H := \{(b_1, \dots, b_n) \mid N \mid b_i, \forall i\}$, then $f(a_1, \dots, a_n) = e$ since $\abs{x_i} = a_i \mid N \implies x_i^N = e$. This implies that $H \subseteq \ker f$. Using the \hyperref[prop: universal property of quotient group]{universal property of quotient groups}, we have a group homomorphism
+        \[
+            \bar{f}: \Z^n/H \simeq (\Z/N\Z)^n \to G, \qquad \overline{(a_1, \dots, a_n)} \mapsto x_1^{a_1} \cdots x_n^{a_n}
+        \]
+        Since taking $a_i = 1$ and $a_{j(j \neq i)} = 0$ gives $x_i$, $\bar{f}$ is surjective. the \hyperref[thm: first isomorphism theorem]{first isomorphism theorem} gives $G \simeq (\Z/N\Z)^n/\ker(\bar{f})$. \hyperref[thm: Lagrange]{Lagrange} gives $\abs{G} \mid \abs{\Z/N\Z}^n = N^n$, which gives a contradiction as $p \mid \abs{G} \mid N^n$, but $(p, N) = 1$ by hypothesis.
+
+        \item[\bu{Case 2.}] $G$ is not necessarily abelian. Argue by induction on the order of the group:
+        \begin{itemize}
+            \item \emph{Base case.} $\abs{G} = 1$. The statement is vacuous as the hypothesis is not satisfied.
+            \item \emph{Inductive step.} Suppose that the theorem is true for all groups $G'$ with $\abs{G'} < \abs{G}$. Use the class equation
+            \[
+                \abs{G} = \abs{Z(G)} + \sum_{i}(G : C_G(x_i)) \qquad \text{where $x_i$ runs over set of representatives of conjugacy classes}
+            \]
+            If we can find a subgroup $H < G$ s.t. $p \mid \abs{H}$, then we can find $x \in H < G$ of order $p$ by induction hypothesis, which by definition also has order $p$ in $G$.
+
+            Now assume that $p \nmid \abs{H}$ for all $H < G$. \hyperref[thm: Lagrange]{Lagrange} gives $p \mid (G : H)$ for all $H$ as $p \mid \abs{G}$. In particular, for all representative of conjugacy classes $x_i$, $p \mid (G : C_G(x_i))$, and by class equation we have $p \mid Z(G)$. Since $Z(G) \normalin G$, this gives a contradiction.
+        \end{itemize}
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}\label{cor: p group iff order of any element is a power of p}
+    If $G$ is a finite group and $p$ is a prime, then $G$ is a $p$-group if and only if the order of any element in $G$ is a power of $p$.
+\end{corollary}
+
+\begin{proof}
+    $\Rightarrow:$ \hyperref[thm: Lagrange]{Lagrange}. $\Leftarrow:$ \hyperref[thm: Cauchy]{Cauchy}, via considering the quotient by subgroup generated by any element recursively.
+\end{proof}
+
+\begin{definition}[$p$-Sylow Subgroup]
+    Let $G$ be a finite group with order $\abs{G} = p^m n$ for $p$ prime, and $(n, p) = 1$. A \textbf{$p$-Sylow subgroup} is a subgroup $H \leq G$ satisfying $\abs{H} = p^m$. 
+\end{definition}
+
+\begin{theorem}[Sylow I]\label{thm: Sylow I}
+    Let $G$ be a finite group and $p$ a prime. If $p \mid \abs{G}$, then $G$ has a $p$-Sylow subgroup
+\end{theorem}
+
+\begin{proof}
+    Apply induction on $\abs{G}$. The theorem is vacuous for $\abs{G} = 1$. Now assume that for all $G'$ s.t. $\abs{G'} < \abs{G}$ the theorem holds. 
+
+    \begin{enumerate}
+        \item[\bu{Case 1.}] $p \mid Z(G)$. By the result from the abelian case of \hyperref[thm: Cauchy]{Cauchy}, there exists $g \in Z(G)$ s.t. $\abs{g} = p$. Let $k = \pair{g}$. Then $K \normaleqin G$ as in particular $K \leq Z(G)$. Consider $G' = G/K$, and apply the inductive hypothesis. Since $\abs{G} = p^m n$, either $m = 1$, where $K$ gives the desired $p$-Sylow group; or for $m > 1$ since $\abs{K} = p$, $\abs{G'} = p^{m-1}n < \abs{G}$. Inductive Hypothesis gives that there exists a $p$-Sylow subgroup $H' \leq G'$ with $\abs{H'} = p^{m-1}$. Use this in the quotient to construct a $p$-Sylow subgroup in $G$: Let $\pi: G \to G/K$ be the quotient, and consider $H = \pi^{-1}(H')$. Notice that $K = \pi^{-1}(e) < \pi^{-1}(H') = H$, and $H' \simeq H/K$. \hyperref[thm: Lagrange]{Lagrange} gives $\abs{H} = \abs{H'} \cdot p = p^m$, which implies that $H$ is a $p$-Sylow subgroup.
+
+        \item[\bu{Case 2.}]$p \nmid \abs{Z(G)}$. Consider again the class equation
+        \[
+            \abs{G} = \abs{Z(G)} + \sum_{i}(G : C_G(x_i)) \qquad \text{where $x_i$ runs over set of representatives of conjugacy classes}
+        \]
+        Since $\abs{G} = p^m n$, in particular $p \mid \abs{G}$. By divisibility, there exists $x_i$ s.t. $p \nmid (G: C_G(x))$. Since $C_G(x_i) \leq G$, hyperref[thm: Lagrange]{Lagrange} gives $p \mid C_G(x_i)$, i.e. $\abs{C_G(x_i)} = p^m q$ for $q < n$ (otherwise $x_i \in Z(G)$, which falls back to the first case). In particular, $\abs{C_G(x_i)} < \abs{G}$. Apply the inductive hypothesis gives that there exists a $p$-Sylow subgroup in $C_G(x_i)$, which by counting the order is also a $p$-Sylow subgroup in $G$.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    \hyperref[thm: Sylow I]{Sylow I} implies \hyperref[thm: Cauchy]{Cauchy}, as by the existence pf a $p$-Sylow subgroup using Corollary \ref{cor: p group iff order of any element is a power of p} the order of any element must be a power of $p$; and there is only one element of order 1 (the unit). We present the prove in such sequence as we have used Cauchy in the proof of Sylow I.
+\end{remark}
+
+\begin{theorem}[Sylow II]\label{thm: Sylow II}
+    For $G$ a finite group, and $p$ a prime s.t. $p \mid \abs{G}$. For $K \leq G$ any $p$-subgroup and $H \leq G$ any $p$-Sylow subgroup, then there exists $a \in G$ s.t. $K \subseteq aHa^{-1}$.
+\end{theorem}
+
+\begin{corollary}\label{cor: p-sylow conjugates into each other}
+    For $H$ and $H'$ $p$-Sylow subgroups of $G$, there exists $a \in G$ s.t. $H' = aHa^{-1}$ (by argument on order). That is, $p$-Sylow subgroups conjugate into each other.
+\end{corollary}
+
+\begin{theorem}[Sylow III]\label{thm: Sylow III}
+    Let $n_p$ be the number of $p$-Sylow subgroups in $G$. Then
+    \begin{enumerate}[label=\arabic*)]
+        \item $n_p \equiv 1 \mod{p}$.
+        \item $n_p = (G: N_G(H))$ for any $H$ that is a $p$-Sylow subgroup. Since $H \leq N_G(H) \leq G$, in particular by \hyperref[thm: Lagrange]{Lagrange} we have $n_p \mid \frac{\abs{G}}{\abs{H}}$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    More generally, for all $H \leq K \leq G$ we have $(G : H) = (G : K) \cdot (K : H)$ for $G$ finite, via counting the elements.
+\end{remark}
+
+\begin{proof}[Proof of Theorem \ref{thm: Sylow II} and \ref{thm: Sylow III}]
+    We first prove a general result, and then use it to show both \hyperref[thm: Sylow II]{Sylow II} and \hyperref[thm: Sylow III]{Sylow III}.
+
+    Consider the action of $G$ on subgroups of $G$ by conjugation. Given $H' \leq G$, by definition we have $\Stab_G(H') = N_G(H')$. Fix a $p$-Sylow subgroup $H$ of $G$. Let $\mathcal{H} = \{H = H_1, \dots, H_r\}$ be the orbit of $H$ under conjugation of elements in $G$. Let $A \leq G$ a $p$-subgroup, and consider the inclusion
+    \[
+        L = A\cap N_G(H)/A \cap H \ext N_G(H)/H = R
+    \]
+    Since $A$ is a $p$-subgroup, $L$ can be identified as a subgroup of $A$, whose order is a power of $p$. On the other hand, $\abs{R} = \frac{\abs{N_G(H)}}{\abs{H}} \mid \frac{\abs{G}}{\abs{H}} \nmid p$. Further \hyperref[thm: Lagrange]{Lagrange} gives $\abs{L} \mid \abs{R}$, i.e. $L = \{e\} \implies A \cap N_G(H) = A \cap H$.
+
+    Conjugation induces an action of $A$ on $\mathcal{H}$. After reordering, let $H_1, \dots, H_s \in \mathcal{H}$ be the representatives of the orbits of the action. Then
+    \[
+        r = \sum_{i = 1}^s \abs{\Orbit(H_i)} = \sum_{i = 1}^s (A : \Stab(H_i)) = \sum_{i = 1}^s (A : A \cap N_G(H_i)) = \sum_[i = 1]^s (A : A \cap H_i)
+    \]
+    Now use the equality above to prove the theorems:
+    \begin{enumerate}[label=\arabic*)]
+        \item Take $A = H$. Since for all $i$, $\abs{H_i} = \abs{H}$, $H \subseteq H_i$ if and only if $i = 1$. Further since $A$ is a $p$-group, $(A : A \cap H_i)$ is a power of $p$ for all $i$. This gives $r \equiv 1 \mod{p}$ (\hyperref[thm: Sylow III]{Sylow III 1)}).
+        \item Take $A = K$ in \hyperref[thm: Sylow II]{Sylow II}. By the construction in 1), there exists $i \leq s$ s.t. $A \subseteq H_i$. This proves \hyperref[thm: Sylow II]{Sylow II}.
+        \item By \hyperref[thm: Sylow II]{Sylow II} any two $p$-Sylow subgroups are conjugate, which implies that $r = n_p$ and that there is only one orbit for such $H_i$. Then
+        \[
+            r = \abs{\Orbit(H)} = \frac{\abs{G}}{\abs{\Stab_G(H)}} = (G : \Stab_G(H)) = (G : N_G(H))
+        \]
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}[Characteristic Subgroup]
+    A subgroup $H \leq G$ is a \textbf{characteristic subgroup} of $G$ if it is preserved by any $\sigma \in \Aut(G)$.
+\end{definition}
+
+\begin{remark}
+    In \hyperref[thm: Sylow III]{Sylow III}, suppose that $n_p = 1$, and let $H$ be the unique $p$-Sylow subgroup. Since $\sigma \in \Aut(G)$ maps subgroups to subgroups, $\abs{\sigma(H)}$ is also a $p$-Sylow subgroup (as $p$-Sylow subgroups are constrained by only cardinality). This implies that $\sigma(H) = H$, i.e. $H$ is a characteristic subgroup of $G$.
+\end{remark}
+
+\begin{example}
+    Let $G$ be a finite group, with $H \normaleqin G$. Suppose that $p \mid \abs{H}$. Let $K$ be the unique $p$-Sylow subgroup of $H$. Then $K \normaleqin G$ as $g \in G$ gives $\sigma \in \Aut(H)$ which preserves $K$. However, in general from $K \normaleqin H$ and $H \normaleqin G$ we cannot necessarily get $K \normaleqin G$.
+\end{example}
+
+\section{Application of Sylow Theorems}
+
+\textstart
+Sylow theorems, especially \hyperref[thm: Sylow III]{Sylow III}, gives constraints on the number of $p$-Sylow subgroups. This, together with the constraint of the order of the group, could reveal the group structure with little extra information.
+
+The first application involves classifying groups with order a product of two primes.
+
+\begin{proposition}
+    Let $G$ be a group of order $pq$, with $p$ and $q$ distinct primes, and $p < q$. If $n_p = 1$, then $G$ is abelian and cyclic.
+\end{proposition}
+
+\begin{proof}
+    Notice first that $n_q = 1$ as by \hyperref[thm: Sylow III]{Sylow III} $n_q \mid \frac{\abs{G}}{q} = p$, and $n_q \nequiv 1 \mod{q}$. Since $p < q$, $n_q = 1$.
+    
+    Therefore in $G$ we have a unique $p$- and $q$-Sylow subgroup. Let them be $P$ and $Q$, with $p$ and $q$ elements, respectively. Since $n_p = 1$, by Corollary \ref{cor: p-sylow conjugates into each other} $P \normaleqin G$. Consider the map
+    \[
+        \varphi: Q \to \Aut(P) \qquad y \mapsto (x \mapsto (y x y^{-1}))
+    \]
+    This is indeed an automorphism on $P$ as $P$ is normal in $G$. Since both $P$ and $Q$ has prime order, they are both cyclic. Then $\varphi \simeq (\Hom(\Z/q\Z, \Aut(\Z/p\Z)))$ where LHS has $q$ elements and RHS has $(p-1)$ elements. \hyperref[thm: Lagrange]{Lagrange} implies that $\abs{\im \varphi} \mid (p-1)$ and $\abs{\im \varphi} \mid (q)$ as $\im \varphi$ is a subgroup of $Q$ and $\Aut(P)$. Since $q$ is prime, and $q > p > p-1$, $\abs{\im \varphi} = 1$, i.e. for all $x \in P$, $y \in Q$, $yxy^{-1} = x \implies yx = xy$, that is elements in $P$ and $Q$ commute. 
+
+    Since both $P$ and $Q$ are cyclic, there exists $x \in P$ and $y \in Q$ s.t. $P = \pair{x}, Q = \pair{y}$. Consider the order of $pq$: let it be $m$, i.e. $(xy)^m = e$. This gives $x^m = y^{-m} = (y^m)^{-1}$. \hyperref[thm: Lagrange]{Lagrange} gives $\abs{P \cap Q} \mid p, q$, which implies that $\abs{P \cap Q} = 1$, $P \cap Q = \{e\}$. Further notice that $x^m, (y^m)^{-1} \in P \cap Q$, which gives $p \mid m$, $q \mid m \implies pq \mid m$, i.e. $pq \mid \abs{xy}$. Using the fact that $\abs{xy} \mid \abs{G} = pq$ we get $\abs{xy} = pq$. Therefore, $G = \pair{pq}$, which is cyclic.
+\end{proof}
+
+\begin{proposition}
+    Let $G$ be a group of order $pq$, with $p$ and $q$ distinct primes, and $p < q$. If $q \equiv 1 \mod{p}$ (i.e. $n_p$ is not necessarily 1), then there exists non-abelian group $G$ with order $pq$. 
+\end{proposition}
+
+\begin{proof}
+    Construction of non-abelian groups often results from maps as they generally do not commute.
+
+    Consider $(\Z/q\Z)^{\times}$ with order $(q - 1)$. Since $p \mid (q-1)$, \hyperref[thm: Cauchy]{Cauchy} gives that there exists $r \in \Z$ s.t. $r \nequiv 1 \mod{q}$, and $r^p \equiv 1 \mod{q}$ (i.e. $r$ is a nontrivial element in $\Z/q\Z$ with order $p$). Consider
+    \[
+        \alpha, \beta : \Z/q\Z \to \Z/q\Z \qquad \alpha: x \mapsto (x + 1) \qquad \beta: x \mapsto \bar{r} x
+    \]
+    Since $q$ is prime, $\bar{r}$ has an inverse for all $r$, which implies that $\alpha$ and $\beta$ are bijections. Further notice that $\abs{\alpha} = q$, $\abs{\beta} = \abs{\bar{r}} = p$. Notice
+    \[
+        \beta \alpha \beta^{-1}(x) = \bar{r}(\bar{r}^{-1}x + 1) = x + \bar{r} \implies \beta \alpha = \alpha^r \beta
+    \]
+    which does not necessarily commute. This gives a non-abelian group with order $pq$:
+    \[
+        \pair{\alpha, \beta} = \{\alpha^i \beta^j \mid i \in \llbracket 0, q-1 \rrbracket, j \in \llbracket 0, p-1 \rrbracket\}
+    \]
+\end{proof}
+
+\begin{remark}
+    Up to isomorphism, this is the only non-abelian group of order $pq$. The only adjustment that we can make is to vary $r$; but to maintain its order $p$, it can only vary through the primitive $p$-th roots in $\Z/q\Z$; and we have the isomorphism via varying $r$.
+\end{remark}
+
+\textstart
+The second application uses Sylow Theorems to count elements, which narrows down the possibilities of the structure of a particular group.
+
+\begin{proposition}\label{prop: gp of order 30 has index-2 subgp}
+    Suppose that $G$ is a group, with $\abs{G} = 30 = 2 \cdot 3 \cdot 5$. Then there is an index-2 subgroup $H$.
+\end{proposition}
+
+\begin{proof}
+    Let $P$ and $Q$ be the $p$-Sylow subgroups with 3 and 5 elements, respectively. They exist by \hyperref[thm: Sylow I]{Sylow I}.
+
+    \begin{enumerate}
+        \item[\bu{Case 1.}] $P \normaleqin G$ (or $Q \normaleqin G$, respectively). By the \hyperref[thm: second isomorphism theorem]{Second Isomorphism Theorem} we have $P/P \cap Q \simeq PQ/Q$. This is applicable as we have $Q \leq N_G(P) = G$. Use with the corresponding result for $Q$ we get $\abs{P \cap Q} \mid 3, 5 \implies \abs{P \cap Q} = 1$. Then $\abs{PQ} = \abs{P} \cdot \abs{Q} = 3 \cdot 5 = 15$ which gives a valid $H$,
+        \item[\bu{Case 2.}] Neither $P$ or $Q$ is normal in $G$. \hyperref[thm: Sylow II]{Sylow II} gives $n_3(G) > 1$, and $n_5(G) > 1$. Since $\abs{G} = 30$, we have $n_5(G) \mid \frac{30}{5} = 6 \implies n_5(G) = 6$ since $n_5(G) \equiv 1 \mod{5}$. Similarly we get $n_3(G) = 10$. Since any two $5$-Sylow subgroups have intersection $\{e\}$, $G$ has $6 \times (5-1) = 24$ elements of order 5. Similarly $G$ has $10 \times (3-1) = 20$ elements of order 3. But then $G$ has at least $20 + 24 = 44 > 30$ elements, which is a contradiction.
+    \end{enumerate}
+\end{proof}
+
+\section{Finite Simple Groups}
+
+\textstart
+Consider $G$ a finite group, with $H \normalin G$. We would like to build $G$ with $H$ and $G/H$. In the opposite direction, we would like to know when the group cannot be further decomposed in this manner.
+
+\begin{definition}[Simple]
+    A group $G$ is \textbf{simple} if $G \neq \{e\}$, and there does not exist a normal subgroup $H$ s.t. $H \neq G$ and $H \neq \{e\}$.
+\end{definition}
+
+\begin{proposition}
+    An abelian group $G$ is simple if and only if $G \simeq \Z/p\Z$ for $p$ prime.
+\end{proposition}
+
+\begin{proof}
+    Since $G$ is abelian, every subgroup is normal. Therefore, $G$ is simple if and only if it has non nontrivial subgroups. $G \neq \{e\}$ implies that for all $x \in G$, $x \neq e$, $\pair{x} = G$, then $G \simeq \Z/n\Z$. Suppose that $n = pq$ for $p, q\neq 1$, then $\abs{x^p} = \frac{n}{p} < n$.
+
+    Converse is clear: $\Z/p\Z$ only has trivial proper subgroups for $p$ prime, by divisibility.
+\end{proof}
+
+\begin{theorem}\label{thm: A_n for n >= 5 is simple}
+    If $n \geq 5$, then $A_n$ is simple. 
+\end{theorem}
+
+\begin{remark}
+    For $n = 1, 2$, $A_n = \{e\}$, which is trivial. For $n = 3$, $A_3 \simeq \Z/3\Z$ which is simple since 3 is a prime.
+
+    For $n = 4$, we have $\{e\} \normalin K_4 \normalin A_4$, where $K_4$ embeds into $A_4$ via
+    \[
+        H = \{e, (1 2) (3 4), (1 3)(2 4), (1 4)(2 3)\} = \{\sigma \in A_4 \mid \sigma^2 = e\}
+    \]
+    which is a subgroup preserved by conjugation.
+\end{remark}
+
+\begin{proof}[Proof of Theorem \ref{thm: A_n for n >= 5 is simple}]
+    Proceed via induction:
+    \begin{itemize}
+        \item \emph{Base case.} $n = 5$. $\abs{A_5} = 3 \cdot 4 \cdot 5 = 60$. Argue by contradiction: suppose that there exists $H \normaleqin A_5$, with $H \neq A_5$, $H \neq \{e\}$.
+        \begin{enumerate}
+            \item[\bu{Case 1.}] $5 \mid \abs{H}$. First notice that $n_5(A_5) > 1$, as we have two distinct 5-cycles $\pair{(1 2 3 4 5)}, \pair{(1 3 4 2 5)}$. By divisibility there exists a 5-Sylow subgroup in $H$, which is also a 5-Sylow subgroup in $A_5$. Since $H \normaleqin A_5$, and by \hyperref[thm: Sylow II]{Sylow II} all $p$-Sylow subgroups conjugate into each other, all 5-Sylow subgroups in $A_5$ are also in $H$. In particular, this implies that $n_5(H) = n_5(A_5) > 1$, and \hyperref[thm: Sylow III]{Sylow III} gives
+            \[
+                n_5(A_5) \mid \frac{60}{5} = 12, n_5(A_5)\equiv 1 \mod{5} \implies n_5(A_5) = 6
+            \]
+            which gives that $H$ has $6 \times (5 - 1) = 24$ elements of order 5. Further by \hyperref[thm: Lagrange]{Lagrange} $5 \mid \abs{H} \mid 60$, giving $\abs{H} = 30$. By the intermediate result in Proposition \ref{prop: gp of order 30 has index-2 subgp} any group of order 30 can only have one subgroup of 5 elements, which is a contradiction.
+            \item[\bu{Case 2.}] $5 \nmid \abs{H}$. Then by \hyperref[thm: Lagrange]{Lagrange} $\abs{H} \nmid 12$. Since $H$ is nontrivial, $\abs{H} \in \{2, 3, 4, 6, 12\}$. First reduce to the case where there exists $H \normalin A_5$ with $\abs{H} \in \{2, 3, 4\}$:
+            \begin{itemize}
+                \item If $\abs{H} = 12$, then $n_3(H) \mid \frac{12}{3} = 4$, $n_3(H) \equiv 1 \mod{3}$. Either
+                \begin{itemize}
+                    \item $n_3(H) = 1$. By \hyperref[thm: Sylow II]{Sylow II} $n_3(A_5) = 1$, i.e. there exists a normal subgroup of $A_5$ of order 3.
+                    \item $n_3(H) = 4$. Then there are $4 \times (3 - 1) = 8$ elements of order 3. Furthermore, $n_2(H) \mid \frac{12}{2} = 6$, $n_2(H) \equiv 1 \mod{2}$. Then $n_2(H) = 1$ or $3$. Suppose that $n_2(H) = 3$, then there are $3 \times (2 - 1) = 3$ elements of order 2. Consider the subgroup generated by the product of an element of order 2 and an element of order 3. The order of the product is divisible by 2 and 3, i.e. we have an element of order 6, which is a contradiction as we have too many elements in $H$. Therefore there exists a unique 2-Sylow subgroup; and similarly by \hyperref[thm: Sylow II]{Sylow II} $n_2(A_5) = 1$.
+                \end{itemize}
+            \end{itemize}
+            Now for the case where $\abs{H} \in \{2, 3, 4\}$, Consider the group $G/H$ where $G = A_5$, with order $\abs{G/H} \in \{15, 20, 30\}$. Seek to get a contradiction with the hypothesis:
+            \begin{claim}
+                There exists $K \normaleqin G/H$ nontrivial with $5 \mid \abs{K}$.
+            \end{claim}
+            \begin{proof}
+                Consider the cases separately:
+                \begin{itemize}
+                    \item $\abs{G/H} = 30$. By Proposition \ref{prop: gp of order 30 has index-2 subgp} there exists $K \normaleqin G/H$ with $\abs{K} = 15$.
+                    \item $\abs{G/H} = 15$. Using \hyperref[thm: Sylow III]{Sylow III} we have
+                    \[
+                        n_5(G/H)\mid \frac{15}{5} = 3, n_5(G/H) \equiv 1 \mod{5} \implies n_5(G/H) = 1
+                    \]
+                    By Corollary \ref{cor: p-sylow conjugates into each other} the 5-Sylow subgroup is a normal subgroup in $G/H$.
+                    \item $\abs{G/H} = 20$. Same as above we have
+                    \[
+                        n_5(G/H)\mid \frac{20}{5} = 4, n_5(G/H) \equiv 1 \mod{5} \implies n_5(G/H) = 1
+                    \]
+                    which gives a normal subgroup of order 5.x
+                \end{itemize}
+            \end{proof}
+            Now use the claim. By \hyperref[thm: correspondence]{Correspondence}, there exists $K' \leq G$ s.t. $K \simeq K'/H \normaleqin G/H$ which is nontrivial. This gives $K' \normaleqin G$ and $5 \mid \abs{K} \implies 5 \mid \abs{K'} = \abs{K} \cdot \abs{H}$, i.e. $K'$ is a normal subgroup in $G$ with order divisible by 5, which is a contradiction.
+        \end{enumerate}
+        \item \emph{Inductive step.} For $n \geq 6$, we know that $A_{n-1}$ is simple; and we want to show that $A_n$ is simple. 
+        
+        Argue by contradiction. Suppose that we have $H \normalin A_n$ with $H \neq \{e\}$. Let $G_i = \{ \sigma \in A_n \mid \sigma(i) = i \} \leq G = A_n$. $G_i \simeq A_{n-1}$, which by inductive hypothesis is simple. For each $1 \leq i \leq n$, consider $H \cap G_i \normaleqin G_i$ (this is normal since $H \normalin G$). This is a subgroup, which can be only either $G_i$ or $\{e\}$, as $G_i$ is simple. 
+        \begin{itemize}
+            \item[\bu{Case 1.}] There exists $i$ s.t. $H \cap G_i = G_i$, i.e. $G_i \subseteq H$. This implies that $G_j \subseteq H$ for all $j$: Consider $\tau \in A_n$, then
+            \[
+                \tau G_i \tau^{-1} = \{ \sigma \in A_n \mid \tau^{-1} \sigma \tau \in G_i \Leftrightarrow \sigma \tau(i) = \tau(i) \}
+            \]
+            i.e. $\tau G_i \tau^{-1} = G_{\tau(i)}$. But since $G_i \subseteq H \normaleqin G$, $\tau G_i \tau^{-1} \subseteq H$ which gives $G_j \subseteq H$ for all $j$. On the other hand, $\pair{G_1, \dots, G_n} = A_n$; and for $\sigma \in A_n$, we can write $\sigma = \sigma_1 \dots \sigma_n$ where each $\sigma_i$ is the product of two transpositions. Since $n \geq 5$, any such product of two transpositions lies in some $G_i$. Then $\sigma \in \pair{G_1, \dots, G_n} = A_n \subseteq H$ which implies that $A_n \subseteq H$. Contradiction.
+            \item[\bu{Case 2.}] $H \cap G_i = \{e\}$ for all $i$. This gives that for $\sigma_1, \sigma_2 \in H$ satisfying $\sigma_1(i) = \sigma_2(i) = j$, then $\sigma_1 \sigma_2^{-1} \in G_j$; and since $H \cap G_j = \{e\}$, $\sigma_1 = \sigma_2$.
+            
+            Let $\sigma \in H \smallsetminus \{e\}$. Write that as a product of disjoint cycles. Then either
+            \begin{itemize}
+                \item There exists a cycle of length at least 3, i.e. there exists $a_1, a_2, a_3$ s.t. $\sigma = (a_1 a_2 a_3) \cdots$. Take $\tau \in A_n$ s.t. $\tau$ fixes $a_1, a_2$ but not $a_3$. This indeed exists as $n \geq 5$, so after fixing two elements there can still exist cycle of length 3. Then
+                \[
+                    \tau \sigma \tau^{-1} = (a_1 a_2 \sigma(a_3)) \quad \text{as product of disjoint cycles}
+                \]
+                Since $H$ is normal, $\tau \sigma \tau^{-1} \in H$; but we have $\tau \sigma \tau^{-1}(a_1) = \sigma(a_1)$ with $\tau \sigma \tau^{-1} \neq \tau$ as they do not agree on $a_3$, which is a contradiction.
+                \item $\sigma$ is a product of disjoint transpositions. Since $n \geq 6$, we can write
+                \[
+                    \sigma = (a_1 a_2)(a_3 a_4)(a_5 a_6)
+                \]
+                Let $\tau = (a_1 a_2)(a_3 a_5)$, and by the same reasoning as above $\sigma' = \tau \sigma \tau^{-1} \in H$. $\sigma$ and $\sigma'$ agrees on $a_1$ but disagrees on $a_3$, which gives a contradiction.
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{proof}
+
+\textstart
+We then give a statement of the famous theorem classifying finite simple groups. The proof is far beyond the scope of this course and is omitted.
+
+\begin{theorem}[Classification of Finite Simple Groups]
+    Every finite simple group is isomorphic to one of the followings:
+    \begin{enumerate}
+        \item $\Z/p\Z$ with $p$ prime, $p \in \Z_{> 0}$.
+        \item $A_n$, $n \geq 3$.
+        \item Finite groups of Lie type: these occur in several series given by taking $\F_q$-points of certain algebraic groups, where $\F_q$ is the finite field of $q$ elements.
+        \begin{example}
+            Consider the \underline{projective special linear group} $\operatorname{PSL}_n(\F_q)$ for $n \neq 2, q \neq 2, 3$. This is defined as:
+            \[
+                \operatorname{SL}_n(\F_q) = \{A \in M_n(\F_q) \mid \det A = 1\} \qquad \operatorname{PSL}_n(\F_q) = \operatorname{SL}_n(\F_q)/\{A = \lambda \Id \mid \lambda^n = 1\}
+            \]
+            where the group in the quotient $\{A = \lambda \Id \mid \lambda^n = 1\}$ is the center of $\operatorname{SL}_n(\F_q)$.
+        \end{example}
+        \item 26 sporadic (isolated) groups, considered via embedding in $\GL_n(K)$ for some field $K$. 
+    \end{enumerate}
+\end{theorem}
+
+\section{Composition Series and the Jordan H\"older Theorem}
+
+\textstart
+With the introduction of simple groups, given an arbitrary group one may want to decompose it into simple groups.
+
+\begin{definition}[Composition Series]
+    If $G$ is a finite group, a \textbf{composition series} of $G$ is a sequence of subgroups
+    \[
+        \{e\} = G_0 \leq G_1 \leq \cdots \leq G_n = G
+    \]
+    satisfying
+    \begin{enumerate}[label=\arabic*)]
+        \item $G_{i-1} \normalin G_i$ for $1 \leq i \leq n$.
+        \item $G_i/G_{i-1}$ is simple.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    Notice that since normality of groups is not transitive, $G_{i-1}$ is not necessarily normal in $G$; and this is not required by the definition.
+\end{remark}
+
+\begin{proposition}
+    Every finite group has a composition series
+\end{proposition}
+
+\begin{proof}
+    Apply induction on $\abs{G}$:
+    \begin{itemize}
+        \item $\abs{G} = 1$. Then $G = G_0 = \{e\}$. 
+        \item $\abs{G} > 1$. Then either
+        \begin{itemize}
+            \item $G$ is simple. Then $G_0 = \{e\} \normalin G_1 = G$.
+            \item $G$ is not simple. Then there exists $N \normalin G$, $N \neq \{e\}$. Notice that $\abs{N}$ and $\abs{G/N}$ are both smaller than $\abs{G}$. Applying inductive hypothesis we have the composition series
+            \[
+                \begin{cases}
+                    N_0 = \{e\} \normalin \cdots \normalin N_p = N \\
+                    K_0 = \{e\} \normalin \cdots \normalin K_q = G/N
+                \end{cases}
+            \]
+            By \hyperref[thm: correspondence]{Correspondence}, for all $i \leq q$, $K_i = H_i/N$ for some $H_i \leq G$. This gives a composition series:
+            \[
+                N_0 \normalin \cdots \normalin N_p \normalin H_1 \normalin \cdots \normalin H_q
+            \]
+            Check that this is indeed a composition series: $H_{i-1} \normalin H_i$ as $K_{i-1} \normalin K_i$. \hyperref[thm: second isomorphism theorem]{Second Isomorphism Theorem} gives $H_i/H_{i-1} \simeq K_i/K_{i-1}$ which is simple.
+        \end{itemize}
+    \end{itemize}
+\end{proof}
+
+\textstart
+The composition series characterizes the group structure up to reordering of the subgroups, by the following theorem:
+
+\begin{theorem}[Jordan-H\"older]
+    If we have two composition series of $G$
+    \[
+        \begin{cases}
+            \{e\} = N_0 \leq \cdots \leq N_r = G \\
+            \{e\} = N_0' \leq \cdots \leq N_s' = G \\
+        \end{cases}
+    \]
+    Then $r = s$, and $N_k/N_{k-1}, N_m'/N_{m-1}'$ are pairwise isomorphic after reordering.
+\end{theorem}
+
+\begin{proof}
+    Apply induction on $\min\{r, s\}$. Without loss of generality let this be $r$:
+    \begin{itemize}
+        \item $r = 0$ is trivial. $r = 1$ is the case where $G$ is simple.
+        \item $r \geq 2$, with the inductive hypothesis holds for smaller $r$s. Then either
+        \begin{itemize}
+            \item $N_{r-1} = N_{s-1}'$. Then the result follows from inductive hypothesis for $\min\{r-1, s-1\}$.
+            \item $N_{r-1} \neq N_{s-1}'$. Consider the following map
+            
+            \begin{minipage}{\linewidth}
+                \centering
+                \begin{tikzcd}
+                    & & N_{r-1} \arrow[rrd, hookrightarrow, "2"] & & \\
+                    N_{r-1} \cap N_{s-1}' \arrow[rru, hookrightarrow, "1"] \arrow[rrd, hookrightarrow, "2"] & & & & G \\
+                    & & N_{s-1}' \arrow[rru, hookrightarrow, "1"] & & 
+                \end{tikzcd}
+            \end{minipage}
+            Since both $N_{r-1}$ and $N_{s-1}'$ are normal in $G$, we have $N_{r-1} \leq N_{r-1} N_{s-1}' \normaleqin G$. Since $G/N_{r-1}$ is simple, and $N_{r-1} \neq N_{r-1} N_{s-1}'$, $N_{r-1} N_{s-1}' = G$. Similarly $N_{s-1}' N_{r-1} = G$. Using the \hyperref[thm: second isomorphism theorem]{Second Isomorphism Theorem} we get the following isomorphisms:
+            \begin{equation}\tag{$\ast$}\label{eq: isoms in composition series}
+                N_{r-1}/(N_{r-1} \cap N_{s-1}') \simeq G/N_{s-1}' \qquad N_{s-1}'/(N_{r-1} \cap N_{s-1}') \simeq G/N_{r-1}
+            \end{equation}
+            Also by the definition of the composition series and the isomorphisms above, both the quotients 1 and 2 in the commutative diagram are simple.
+
+            Now let $M_1 \leq \cdots \leq M_k= N_{r-1} \cap N_{s-1}'$ be a composition series. This together with $N_{r-1}$ or $N_{s-1}'$ gives a composition series as well. Inductive hypothesis gives $k+1 = r-1 = s-1$. Use the isomorphisms in \eqref{eq: isoms in composition series} to get the conclusion.
+        \end{itemize}
+    \end{itemize}
+\end{proof}
+
+\section{Solvable Groups}
+
+\textstart
+Using the composition series we could further describe the structure of a group, via adding constraints on its ``composition series'' (as we will see, such properties do not require each successive quotient is simple). This and the next section introduces two such formalizations, the solvable groups and nilpotent group. We will see in the last part of the course, that solvable groups are related to the solvability of polynomials. 
+
+\begin{definition}{Solvable}
+    A group $G$ is \textbf{solvable} if there exists a finite sequence of subgroups
+    \[
+        \{e\} = G_0 \normaleqin \cdots \normaleqin G_r = G
+    \]
+    s.t. $G_i/G_{i-1}$ is abelian for all $1 \leq i \leq r$.
+\end{definition}
+
+\begin{remark}
+    Equivalently, we can require that each $G_i/G_{i-1}$ should be cyclic, or isomorphic to $\Z/p\Z$ for $p$ prime, in the case where $G$ is finite. This is indeed the case, as subgroups of abelian groups are normal; and applying the \hyperref[thm: structural theorem]{Structural Theorem for Abelian groups} gives the desired result.
+\end{remark}
+
+\begin{example}
+    The following gives some examples for solvable groups:
+    \begin{enumerate}[label=\arabic*)]
+        \item Every abelian group is solvable, by taking $G_1 = G$.
+        \item $D_n$ is solvable since it contains an abelian group of index 2, i.e. the subgroup generated by $\sigma$, using the notation in Remark \ref{rmk: rule of computing dihedral group}.
+        \item For $n \geq 5$, $A_n$ is not solvable, as by Theorem \ref{thm: A_n for n >= 5 is simple} it is simple; but not abelian.
+        \item $S_4$ is solvable as we have the sequence of subgroups $\{e\} \normaleqin K_4 \normaleqin A_4 \normaleqin S_4$.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}\label{prop: relations of solvability}
+    Let $N \subseteq G$. Then
+    \begin{enumerate}[label=\roman*)]
+        \item If $G$ is solvable, then $N$ is solvable.
+        \item If $N \normaleqin G$, and $G$ is solvable, then $G/N$ is solvable.
+        \item If $N \normaleqin G$, and both $N$ and $G/N$ are solvable, then $G$ is solvable.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Verify the assertions respectively:
+    \begin{enumerate}[label=\roman*)]
+        \item Suppose that $G$ is solvable. Then there exists a sequence of subgroups
+        \[
+            \{e\} = G_0 \normaleqin G_1 \normaleqin \cdots \normaleqin G_r = G \quad \text{s.t. $G_i/G_{i-1}$ is abelian for all $1 \leq i \leq r$}
+        \]
+        Now consider the sequence of subgroups of $N$
+        \[
+            \{e\} = G_0 \cap N \normaleqin G_1 \cap N \normaleqin \cdots \normaleqin G_r \cap N = G \cap N = N
+        \]
+        Check that this gives the sequence which satisfies the definition of solvable groups:
+        \begin{itemize}
+            \item $G_{i-1} \cap N \normaleqin G_i \cap N$. This results from $G_{i-1} \normaleqin G_i$ and $N \normaleqin G$; and in particular $G_i \cap N \subseteq G_i$ and $G_i \subseteq G$.
+            \item $(G_i \cap N)/(G_{i-1} \cap N)$ is abelian. Check the map
+            \[
+                \psi: (G_i \cap N)/(G_{i-1} \cap N) \to G_i/G_{i-1} \qquad (G_{i-1} \cap N) x \mapsto G_{i-1} x
+            \]
+            Notice that $\ker \psi \subseteq G_{i-1}$; and by definition $x \in G_i \cap N \subseteq N$. Therefore $\psi$ is injective; and since $G_i/G_{i-1}$ is abelian $(G_i \cap N)/(G_{i-1} \cap N)$ is also abelian.
+        \end{itemize}
+        \item Let $G$ decompose into the same sequence of subgroups. Consider now
+        \[
+            N = G_0 N \leq G_1 N \leq \cdots G_r N = G
+        \]
+        Claim: $G_{i-1} N \normaleqin G_i N$. This holds as $G_{i-1} \normaleqin G_i$, i.e. for all $x \in G_i$, $g \in G_{i-1}$, $xgx^{-1} \in G_{i-1}$. Since $N$ is normal in $G$, and $G_i \subseteq G$, $G_{i-1}N$ has a group structure. Consider the conjugation: for all $n, n' \in N$
+        \[
+            (x n')^{-1} (gn) (xn') = (n')^{-1} x^{-1} g n x n' = (n')^{-1} (x^{-1} g x) (x^{-1} n x) n'
+        \]
+        where all the multiplicands are in $G_{i-1}N$ as a group. 
+
+        For abelianity, consider similarly the map 
+        \[
+            G_i/G_{i-1} \to G_i N/G_{i-1} N, \qquad G_{i-1}x\mapsto G_{i-1}Nx
+        \]
+        which is surjective as for $G_{i-1}Nx \neq e$, $x \notin G_{i-1}N$, which in particular implies that $x \notin G_{i-1}$. Therefore $G_i/G_{i-1}$ being abelian implies that $G_i N/G_{i-1} N$ is abelian.
+        \item Suppose that both $N$ and $G/N$ are solvable. Then we have two sequences
+        \[
+            \begin{cases}
+                \{e\} = N_0 \normaleqin N_1 \normaleqin \cdots \normaleqin N_r = N \\
+                N/N = H_0/N \normaleqin H_1/N \normaleqin \cdots \normaleqin H_s/N = G/N
+            \end{cases}
+        \]
+        Then we have the sequence for $G$:
+        \[
+            \{e\} = N_0 \normaleqin N_1 \normaleqin \cdots \normaleqin N_r \normaleqin H_1 \normaleqin \cdots \normaleqin H_s = G
+        \]
+        with normality and abelianity following from the \hyperref[thm: third isomorphism theorem]{Third Isomorphism Theorem}.
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}
+    Proposition \ref{prop: relations of solvability} i) gives $S_n$ is not solvable for $n \geq 5$, as in particular we have $A_n \leq S_n$, with $A_n$ not abelian but simple for $n \geq 5$.
+\end{corollary}
+
+\begin{definition}[Commutator]
+    Let $G$ be a group. The \textbf{commutator} of $G$ is 
+    \[
+        G^{(1)} := \pair{[x, y] := x y x^{-1} y^{-1} \mid x, y \in G} =: [G, G]
+    \]
+\end{definition}
+
+\begin{remark}\label{rmk: abelianization}
+    $G^{(1)}$ is a characteristic subgroup of $G$, as for all $\sigma \in \Aut(G)$ we have $\sigma([x, y]) = [\sigma(x), \sigma(y)]$. In particular, $G^{(1)}$ is normal in $G$. The \underline{abelianization} of $G$ is the group $G^{\mathrm{ab}} := G/G^{(1)}$ which is abelian since two elements in $G$ do not commute if and only if their commutator is in $G^{(1)}$.
+\end{remark}
+
+\begin{definition}[Derived Series]
+    Given a group $G$, its \textbf{derived series} is defined as
+    \[
+        G^{(0)} = G, \quad G^{(i)} = [G^{(i-1)}, G^{(i-1)}] \quad \text{for all $i > 0$}
+    \]
+\end{definition}
+
+\begin{proposition}\label{prop: group solvable iff derived series terminate}
+    A group $G$ is solvable if and only if there exists $r$ s.t. $G^{(r)} = \{e\}$.
+\end{proposition}
+
+\begin{proof}
+    Proceed via showing implication in both directions:
+    \begin{enumerate}
+        \item[$\Rightarrow$] Suppose that we have a sequence of subgroups
+        \[
+            \{e\} = G_r \normaleqin G_{r-1} \normaleqin \cdots \normaleqin G_0 = G
+        \]
+        s.t. $G_i/G_{i-1}$ is abelian for all $i$. Claim that $G^{(i)} \subseteq G_i$ for all $i$. Suppose that this is true, then $G^{(r)} \subseteq G_r = \{e\} \implies G^{(r)} = \{e\}$. To prove the claim, apply induction on $i$. For $i = 0$ this is clear. For $i > 0$, since $G_{i-1}/G_i$ is abelian, for all $x, y \in G_{i-1}$, $[x, y] \in G_i$, i.e. $[G_{i-1}, G_{i-1}] \subseteq G_i$. Now use the inductive hypothesis to get
+        \[
+            G^{(i)} = [G^{(i-1)}, G^{(i-1)}] \subseteq [G_{i-1}, G_{i-1}] \subseteq G_i
+        \]
+        \item[$\Leftarrow$] The derived series gives the sequence where every subsequent group is normal in the larger group. Further by Remark \ref{rmk: abelianization} every successive quotient is abelian. 
+    \end{enumerate}
+\end{proof}
+
+\clearpage
+\section{Nilpotent Groups}
+
+\begin{definition}[Upper Central Series]
+    Given a group $G$, its \textbf{upper central series} is given by
+    \[
+        Z_0(G) = \{e\} \quad Z_1(G) = Z(G) \normaleqin G \quad Z_i(G)/Z_{i-1}(G) \simeq Z(G/Z_{i-1}(G)) 
+    \]
+\end{definition}
+
+\begin{remark}
+    From the definition of subsequent central series, which is based on the center of the quotient, $Z_i(G) \normaleqin G$; and the inclusion is given by $Z_{i-1}(G) \leq Z_i(G)$, i.e. opposite from the inclusion of derived series.
+\end{remark}
+
+\begin{definition}[Nilpotent]
+    A group $G$ is \textbf{nilpotent} if there exists $r$ s.t. $Z_r(G) = G$. The smallest such $r$ is the \textbf{nilpotent index}.
+\end{definition}
+
+\begin{remark}
+    Every nilpotent group is solvable, as the upper central series gives the corresponding series required for a group to be solvable. In particular, $Z_i(G)/Z_{i-1}(G) \simeq Z(G/Z_{i-1}(G))$ is abelian; and center of a group is a normal subgroup.
+\end{remark}
+
+\begin{example}\label{ex: nilpotent groups}
+    The following gives some (counter-)examples of nilpotent groups:
+    \begin{enumerate}
+        \item $S_3$ is not nilpotent, as $Z(S_3) = \{e\}$.
+        \item Every abelian group is nilpotent with index $\leq 1$.
+        \item Every $p$-group is nilpotent. Recall that by using a divisibility argument in the \hyperref[eq: class equation]{class equation}, any $p$-group has a nontrivial center. \hyperref[thm: Lagrange]{Lagrange} gives that $G/Z(G)$ is either $\{e\}$ or also a $p$-group. The construction can continue as long as $G/Z(G) \neq \{e\}$, which gives a sequence. This must terminate as $G$ is finite; and each subsequent group shrinks in order.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    A group $G$ is nilpotent if and only if there exists a sequence
+    \[
+        \{e\} = G_0 \leq G_1 \leq \cdots \leq G_r = G \quad \text{s.t. $G_i/G_{i-1} \subseteq Z(G/G_{i-1})$ for all $1 \leq i \leq r$}
+    \]
+\end{proposition}
+
+\begin{proof}
+    Verify the implication in both directions:
+    \begin{enumerate}
+        \item[$\Rightarrow$] By definition the upper central series gives a such sequence.
+        \item[$\Leftarrow$] First notice that $G_{i-1} \normaleqin G$ for all $i$, since the inclusion gives $G_i$ is contained in the center of a quotient of $G$. Show inductively that $G_i \leq Z_i(G)$, which implies that $Z_r(G) \geq G_r = G$.
+        
+        For $i = 0$ this is trivial. For $i = 1$ this is clear as we have inclusion instead of equality. Now suppose that $G_i \leq Z_i(G)$ for a fixed $i$. Consider the group homomorphism
+        \[
+            \psi: G/G_i \to G/Z_i(G), \qquad x G_i \mapsto x Z_i(G)
+        \]
+        This is surjective by $G_i \leq Z_i(G)$. Then $\psi(Z(G/G_i)) \subseteq Z(G/Z_i(G))$ as group homomorphism preserves commutativity. Then
+        \[
+            \psi(G_{i+1}/G_i) \subseteq \psi(Z(G/G_i)) \subseteq Z(G/Z_i(G)) \simeq Z_{i+1}(G)/Z_i(G)
+        \]
+        which gives a map from $G_{i+1}$ to $Z_{i+1}$, i.e. $G_{i+1} \leq Z_{i+1}$.
+    \end{enumerate}
+\end{proof}
+
+Similar to Proposition \ref{prop: relations of solvability}, we have the corresponding relations for nilpotent groups. The proof is also similar and is therefore omitted.
+
+\begin{proposition}\label{prop: relations of nilpotent}
+    Let $N \leq G$. Then
+    \begin{enumerate}[label=\roman*)]
+        \item If $G$ is nilpotent, then $N$ is nilpotent. 
+        \item If $N$ is normal in $G$, and $G$ is nilpotent, then $G/N$ is nilpotent.
+        \item If $N \leq Z(G)$, and both $N$ and $G/N$ are nilpotent, then $G$ is nilpotent.
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    Let $G$ be a finite group. Let $p_1, \dots, p_r$ be the primes dividing $\abs{G}$; and $P_1, \dots, P_r$ the corresponding $p$-Sylow subgroups, then the following statements are equivalent:
+    \begin{enumerate}[label=\arabic*)]
+        \item $G$ is nilpotent.
+        \item For all $H < G$, $H < N_G(H)$ (inequality here).
+        \item For all $i$, $P_i \normalin G$.
+        \item $G \simeq P_1 \times \cdots \times P_r$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Proceed via showing the implication cyclically:
+    \begin{itemize}
+        \item \emph{1) \implies 2).} Argue by applying induction on $\abs{G}$. For $\abs{G} = 1$ the statement is clear. For $\abs{G} > 1$, we can assume $\abs{H} > 1$ ($N_G(\{e\}) = G$). Then either
+        \begin{itemize}
+            \item $Z(G) \centernot \subseteq H$. Then for all $a$ there exists $a \in Z(G) \smallsetminus H$ satisfying $a \in N_G(H) \smallsetminus H$.
+            \item $Z(G) \subseteq H$. Proposition \ref{prop: relations of nilpotent} gives $G/Z(G)$ nilpotent, as $Z(G) \normaleqin G$. Further since $G$ is nilpotent, $Z(G)$ is nontrivial, giving $\abs{G/Z(G)} < \abs{G}$. The result follows from applying inductive hypothesis on $H/Z(G) \leq G/Z(G)$.
+        \end{itemize}
+        \item \emph{2) \implies 3).} We need to show that $N_G(P_i) = G$ for all $i$. It suffices to show that $N_G(P_i) = N_G(N_G(P_i))$, and by 2) we have 3).
+        
+        This is indeed true, as by definition $P_i$ is normal in $N_G(P_i)$. By \hyperref[thm: Sylow II]{Sylow II} since $p$-Sylow subgroups conjugate into each other, this is the unique $p$-Sylow subgroup in $N_G(P_i)$. As group automorphisms fix the order the group, $P_i$ is a characteristic subgroup in $N_G(P_i)$. In particular, conjugation in $G$ fixes $P_i$, giving $P_i \normaleqin N_G(N_G(P_i)) \subseteq N_G(P_i)$; and the inclusion in the other direction is by definition.
+        \item \emph{3) \implies 4).} First prove a general result:
+        
+        \begin{parenthesis}
+            Given a group $G$ with $H$ and $K$ its normal subgroups. Then $G \simeq H \times K$ if and only if $H \cap K = \{e\}$, and $G = HK$.
+        \end{parenthesis}
+
+        \begin{proof}
+            Verify using the universal property of product of groups:
+            \begin{enumerate}
+                \item[$\Rightarrow$] Suppose that $G \simeq H \times K$. Then $e_G = (e_H, e_K)$; and for all $G \ni g = (g_H, g_K) = (g_H, e_K) (e_H, g_K)$.
+                \item[$\Leftarrow$] For any two group homomorphisms $\psi_H: L \to H, \qquad \psi_K: L \to K$. This gives a map 
+                \[
+                    \psi: L \to G, \qquad x \mapsto \psi_H(x) \psi_G(x)
+                \]
+                This is well defined, as $H \cap K = \{e\}$ implies that every element in $G$ decomposes uniquely into a product of two elements from $H$ and $K$.
+            \end{enumerate}
+        \end{proof}
+
+        The parenthesis can be easily generalized to the product of finitely many groups. Now use it to prove the implication: notice that for any $i \neq j$, $P_i \cap P_j = \{e\}$ as this is a subgroup whose order divides both $p_i$ and $p_j$. Further $G = P_1 \cdots P_r$, as $P_1 \cdots P_r \subseteq G$; and $\abs{G} = \abs{P_1} \cdots \abs{P_r}$ gives the equality.
+        \item \emph{4) \implies 1).} By Example \ref{ex: nilpotent groups} iii), $P_i$s are all nilpotent. Since $r$ is finite we only need to show that if $H_1$ and $H_2$ are nilpotent, then $H_1 \times H_2$ is nilpotent. This is indeed true, as
+        \begin{itemize}
+            \item $Z(H_1 \times H_2) \simeq Z(H_1) \times Z(H_2)$.
+            \item $(H_1 \times H_2)/Z(H_1 \times H_2) \simeq H_1/Z(H_1) \times H_2/Z(H_2)$.
+        \end{itemize}
+        which allows construction of the sequence for $H_1 \times H_2$ based on the sequences of $H_1$ and $H_2$.
+    \end{itemize}
+\end{proof}
+
+\section{Free Groups$^{\ast}$}
+
+\textstart
+A general in the categorical perspective is, whether its structure can be ``naturally derived'' from its elements.
+
+\begin{definition}[Free Object]
+    Given a category $\catc$, in which objects are sets (probably with extra structure, e.g. groups, modules, etc.). A \textbf{free object} $X$ associated to a set $S$ is an object where we have the identification of morphisms:
+    \[
+        \{X \to Y \text{ morphisms in $\catc$}\} \leftrightarrow \{ \text{map of sets $S \to Y$} \}
+    \] 
+\end{definition}
+
+\begin{example}
+    Let $\catc$ be the category of abelian groups, and $I$ an arbitrary set. The corresponding free objects are $\Z^{(I)}$, which has a $\Z$-basis $\{e_i \mid i \in I\}$, indexed by elements in $I$. 
+
+    If $\catc$ is the category of rings, and $I = \{1, \dots, n\}$, the corresponding free object is $\Z[x_1, \dots, x_n]$.
+\end{example}
+
+\textstart
+The motivation of constructing a free group, is to give a group with only a system of generators $S$ (a set) with ``no other relations''. We need some setup before giving the definition:
+
+\begin{definition}[Word]
+    Given a set $S$, choose a set $S^{-1}$ that has a bijection $\varphi$ with $S$. For $x \in S$, denote $\varphi(x) =: x^{-1} \in S^{-1}$. Choose also a special element $1$ with $1^{-1} = 1$. Define $\widetilde{S}$ as $\widetilde{S} := S \sqcup S^{-1} \sqcup \{1\}$.
+
+    A \textbf{word} (with letters) in $S$ is given by an $\N$-tuple $(x_1, x_2, \dots, x_n, \dots)$ s.t. $x_i \in \widetilde{S}$, and there exists $i_0$ s.t. $x_{i_0} = 1$ for all $i > i_0$ (or equivalently, the tuple is finite; but we need the lagging 1s to define the group operation)
+\end{definition}
+
+\begin{definition}[Reduced Word]
+    A \textbf{reduced word} $(x_1, x_2, \dots)$ is a word satisfying
+    \begin{enumerate}[label=\arabic*)]
+        \item $x_i = 1 \implies x_j = 1$ for all $j > i$.
+        \item For all $i$, $x_{i+1} \neq x_i^{-1}$ unless $x_i = 1$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Free Group]
+    The free group $F(S)$ on set $S$ is the set of reduced words on $S$, with operation given as follows:
+
+    Given $u, v \in F(S)$, write
+    \[
+        u = (u_1, u_2, \dots, u_p \neq 1, 1, 1, \dots) \quad v = (v_1, v_2, \dots, v_q \neq 1, 1, 1, \dots)
+    \]
+    If $w = (u_1, u_2, \dots, u_p, v_1, v_2, \dots, v_q, 1, 1, \dots)$ is a reduced word, then define this as $u \cdot v$. Otherwise, $u_p = v_1^{-1}$. Then replace $w = (u_1, u_2, \dots, u_{p-1}, v_2, \dots, v_q, 1, 1, \dots)$ until it is reduced. This process will terminate as both $p$ and $q$ are finite.
+
+    Associativity is clear. We have the identity $(1, 1, \dots)$; and the inverse of $(x_1, \dots, x_n, 1, 1, \dots)$ is $(x_1^{-1}, \dots, x_n^{-1}, 1, 1, \dots)$.
+\end{definition}
+
+\textstart
+Notice we have the reduced word $(1, 1, \dots)$; and we have the injective map
+\[
+    S \sqcup S^{-1} \to F(S) \quad x \mapsto (x, 1, 1, \dots)
+\]
+i.e. $S$ is a subset of $F(S)$.
+
+Further, if $u = (x_1, \dots, x_n, 1, 1, \dots)$ is a reduced word, then
+\[
+    u = (x_1, 1, \dots) (x_2, 1, \dots) \cdots
+\]
+
+\begin{proposition}\label{prop: map on set induces map on free group}
+    For all group $G$, the following map is a bijection:
+    \[
+        \{ \text{group homomorphisms $F(S) \to G$} \} \to \{ \text{functions $S \to G$} \}, \quad \varphi \mapsto \restr{\varphi}{S}
+    \]
+\end{proposition}
+
+\begin{proof}
+    Let $f: S \to G$ be any function. Since $S$ generates $F(S)$ as a group, the uniqueness of the group homomorphism $\varphi: F(S) \to G$ extending $f$ is clear, via extending in terms of a system of generators. Therefore, we only need to check existence: define
+    \[
+        \varphi: F(S) \to G, \quad \varphi(x_1, \dots, x_n, 1, 1, \cdots) = u(x_1) \cdots u(x_n) \quad \text{where }
+        u_i = \begin{cases}
+            f(x_i) & x_i \in S\\
+            (f(x_i))^{-1} & x_i \in S^{-1}
+        \end{cases}
+    \]
+    This is well defined as 1 is in both $S$ and $S^{-1}$, and clearly this is a group homomorphism. Definition gives $\restr{\varphi}{S} = f$.
+\end{proof}
+
+\begin{remark}
+    Let $\alpha: S \to T$ be any map. Proposition \ref{prop: map on set induces map on free group} gives that there exists a unique group homomorphism $F(\alpha)$ that makes the following diagram commute:
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            S \arrow[rr, "\alpha"] \arrow[dd, hookrightarrow] & & T \arrow[dd, hookrightarrow] \\
+            & & \\
+            F(S) \arrow[rr, "F(\alpha)"] & & F(T)
+        \end{tikzcd}
+    \end{minipage}
+    Moreover, if we have another map $\beta: T \to U$, we have $F(\beta \circ \alpha) = F(\beta) \circ F(\alpha)$; and $F(\alpha)$ is a group isomorphism if $\alpha$ is a bijection. Therefore, $F(S)$ is unique up to isomorphism, and depends only on the cardinality of $S$.
+\end{remark}
+
+\begin{example}
+    The free group is very complex; and we can only clearly classify the free groups with $S$ of small cardinality.
+    \begin{enumerate}[label=\arabic*)]
+        \item $S = \emptyset$. Then $F(S) = \{e\}$.
+        \item $\abs{S} = 1$. Then $F(S) \simeq \Z$.
+        \item $\abs{S} = 2$. Then elements of $F(S)$ take the form of $x^{a_1}y^{a_2}x^{a_3} \dots$ with $a_i \in \Z$.
+    \end{enumerate}
+\end{example}
+
+\textstart
+We have the following theorem whose proof is from topology and is omitted:
+
+\begin{theorem}[Schreier]
+    Every subgroup of a free group is free.
+\end{theorem}
+
+\section{Presentation of Groups$^{\ast}$}
+
+\textstart
+Fix a group $G$ and let $S \subseteq G$ be a subset. Proposition \ref{prop: map on set induces map on free group} gives that there exists a unique group homomorphism $\varphi: F(S) \to G$ extending the inclusion $S \hookrightarrow G$. This is surjective if and only if $\pair{S} = G$. In this case, we would like to understand $\ker \varphi$, as $G \simeq F(S)/\ker \varphi$.
+
+\begin{definition}[Normal Closure]
+    Given any group $H$, and subset $A \subseteq H$, the \textbf{normal closure} of $A$ is defined as
+    \[
+        \bigcap_{A \subseteq H' \normaleqin H}, \quad \text{or equivalently} \quad \{ xax^{-1} \mid x \in H, a \in A \}
+    \]
+    This is the smallest normal subgroup containing $A$.
+\end{definition}
+
+\begin{definition}[Presentation of Group]
+    A \textbf{presentation} of a group $G$ by generators and relations is given by
+    \begin{enumerate}[label=\arabic*)]
+        \item A set $S$ with the group homomorphism $F(S) \to G$ induced by the inclusion $S \to G$ being surjective.
+        \item A subset $R \subseteq F(S)$ s.t. if $K$ is the normal closure of $R$ in $F(S)$, then we have the induced isomorphism $F(S)/K \simeq G$.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    Let $G$ be the dihedral group $D_n$ with $n \geq 3$. Recall that we have the rotation $\sigma$ of order $n$, and symmetry $\tau$ of order 2; and we have the relation $\tau \sigma = \sigma^{n-1} \tau$. Then $G$ is presented by
+    \[
+        \pair{ \sigma, \tau \mid \sigma^n = e, \tau^2 = e, \tau \sigma = \sigma^{n-1} \tau }
+    \]
+    which is indeed the case as the cardinality of the group given by the presentation is at most $2n$.
+\end{example}
+
+\begin{remark}
+    Typically the presentation we give is simpler than the restriction required by the whole group, i.e. $R$ is much smaller than $K$.
+\end{remark}
+\nogap
+\begin{remark}
+    In general, it is very hard to see the group structure with the generators and relations. For example, the isomorphism problem, i.e. given the presentation of $G_1$ and $G_2$, to determine whether $G_1 \simeq G_2$ is undecidable.
+\end{remark}
+
+\begin{definition}[Finitely Presented]
+    A group $G$ is \textbf{finitely presented} if there is a presentation by generators and relations consisting of finitely many generators and relations.
+\end{definition}
+
+\begin{proposition}
+    Every finitely group $G$ is finitely presented.
+\end{proposition}
+
+\begin{proof}
+    Consider $S = G$. This extends to $\varphi: F(S) = F(G) \to G$ surjective. Let $A \subseteq F(G)$ be the set $\{(g_1, g_2, \dots, g_n, 1, \cdots) \mid g_n^{-1} = g_1 \cdots g_{n-1} \}$. $A$ is clearly finite; and $A \subseteq \ker \varphi$. Let $K$ be the normal closure of $A$. This gives a surjective map $\bar{\varphi}: F(G)/K \to G$. Let $B = \{ \bar{g} \in F(G)/K \mid g \in G \}$ which is the presentation. Notice that $\bar{g_1} \bar{g_2} = \overline{g_1 g_2}$, which implies that $(\bar{g})^{-1} = \overline{(g^{-1})}$ for all $g \in G$. Since $B$ is closed on taking inverses and multiplication, $B$ is a subgroup. Further since $B$ generates $F(G)/K$, $B = F(G)/K$. But $\abs{B} \leq \abs{G}$; and together with $\varphi$ surjective we have $\abs{B} = \abs{G}$; and $\varphi$ is a bijection. 
+\end{proof}

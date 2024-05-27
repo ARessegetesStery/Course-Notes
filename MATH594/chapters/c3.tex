@@ -1,0 +1,1507 @@
+\section{Review of Ring Theory}
+
+\textstart
+The Galois Theory originates from the question: Given a polynomial with coefficients in a field (e.g. $\Q$), we want to understand the property of its solutions, and the algebraic structure in which the root lies. This section lays some fundamental notions and results for introducing the whole theory.
+
+Setup the convention. All rings have unit element 1; and all ring homomorphisms map 1 to 1. Inclusion maps, in particular, implies that all subrings of a certain ring must include 1.
+
+\begin{remark}
+    An immediate result is that finite domains that are not the zero ring are fields.
+
+    Recall that a ring $R$ is a domain if and only if zero does not have non-trivial divisors. That is, for all $x, y \in R \smallsetminus \{0\}$, $xy = 0$. For $a \in R$, $a \neq 0$, consider the map 
+    \[
+        \varphi: R \to R \qquad x \mapsto ax
+    \]
+    Since $R$ is a domain $\varphi$ maps nonzero elements to nonzero elements, which implies that there exists some $x_a$ s.t. $a x_a = 1$. This gives an inverse of $a$.
+\end{remark}
+
+\begin{proposition}\label{prop: ring homs from a field are injective}
+    If $f: K \to R$ is a ring homomorphism, and $K$ is a field. Then $R \neq \{0\}$ implies that $f$ is injective.
+\end{proposition}
+
+\begin{proof}
+    Recall that the kernel of a particular ring homomorphism is an ideal. Denote $I = \ker (f) \subseteq K$. Suppose that $a \in I$ s.t. $a$ is nonzero. Then $a^{-1} \in I$ which gives $I = (1) = K \implies f(I) = 0$. But as we requre $f(1) = 1_R \implies 1_R = 0_R$, i.e. $R = \{0\}$ which is a contradiction.
+\end{proof}
+
+\begin{corollary}
+    In particular, ring homomorphisms between fields (field extensions) $K \to L$ are injective. Not all fields have extensions (ring homomorphisms) between them.
+\end{corollary}
+
+\textstart
+A class of extensions of which we are particularly interested in, is the extension which gives polynomial a root. $f \in K[x]$ may not have a root; and by extending it $K[x] \ext L[x]$ we may consider roots of $f \in L[x]$ which may have a root.
+
+\begin{notation}
+    A field extension $k \ext K$ is also denoted as $K/k$. These two notations will be used interchangeably.
+\end{notation}
+
+\begin{proposition}
+    Let $k$ be a field, and $R = k[X]$. Let $f \in R \smallsetminus \{0\}$. Then the followings are equivalent:
+    \begin{enumerate}[label=\arabic*)]
+        \item $f$ is irreducible.
+        \item $(f)$ is a prime ideal.
+        \item $(f)$ is a maximal ideal.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Prove the implications cyclically:
+    \begin{itemize}
+        \item \emph{3) \implies 2).} It is a general fact that maximal ideals are prime. Prove the contrapositive: suppose that an ideal $(f) \subset R$ is not prime, then there exists $a, b \in R$ s.t. $ab \in (f)$ and neither $a$ and $b$ are in $(f)$. Then $(f) \subset (a) \subset R$ which implies that $(f)$ is not maximal.
+        \item \emph{2) \implies 1).} $(f)$ being a prime ideal in $R$ implies that in particular $(f) \neq R$, i.e. $f$ is not invertible. Suppose that there exists $g, h$ not invertible s.t. $f = gh$. Without loss of generality, assume that $g \in (f)$. Then there exists some $u \in R$ s.t. $g = fu$. Multiply on the right by $h$ gives $f = gh = fuh$ which implies that $h$ is invertible, giving a contradiction.
+        \item \emph{3) \implies 1).} $f$ being irreducible implies that $f$ is not invertible, i.e. $(f) \neq R$. Suppose that there exists some maximal ideal $J$ s.t. $(f) \subset J \subset R$. Then since maximal ideals are in particular prime, $J = (g)$ for some $g \in R$. But then this implies that $f = gu$ giving that $u$ is invertible, and therefore $(f) = J$, which is a contradiction.
+    \end{itemize}
+\end{proof}
+
+\textstart
+Recall that two elements $f, g$ are \underline{relative prime} if for all $p \in R$ s.t. $p \mid f$, $p \mid g$, $p$ is invertible. Then we have the following result similar to the case for integer divisibility:
+
+\begin{proposition}\label{prop: divisibility for relative prime polynomials}
+    Let $k$ be a field, and $R = k[x]$. For $f, g, h \in R$ s.t. $f \mid gh$, if $f$ and $g$ are relative prime, then $f \mid h$.
+\end{proposition}
+
+\begin{proof}
+    Since $k$ is a field, $k[x]$ is a PID (as every element in the coefficient is invertible, for $a, b$ relative prime $(a, b) = (1) = k[x]$). Consider $I = (f, g) \subseteq R$. Since $I$ is principal, $I = (p)$ for some $p \in k[x]$. Therefore $p \mid f$, $p \mid g$, which implies that $p$ is invertible. Then $I = R$. This gives that there exists $A, B \in R$ s.t. $Af + Bg = 1$. Multiplying $h$ on the right gives $Afh + Bgh = h$. Since $f$ divides LHS, $f \mid h$.
+\end{proof}
+
+\begin{proposition}
+    Let $k$ be a field, and $R = k[x]$. If $f \in R \smallsetminus \{0\}$, and denoting $d = \deg f$, then there exists field extensions $k \ext L$ and $a_1, \dots, a_d \in L$, $c \in k$ s.t. $f = c(x - a_1)\cdots (x - a_d)$ in $L[x]$.
+\end{proposition}
+
+\begin{proof}
+    The key step is to show that if $f$ is irreducible in $R$, then there exists a field extension $k \ext k'$ s.t. $f$ has a root in $k'$.
+
+    Consider $k' = k[x]/(f)$. Since $f$ is irreducible, $(f)$ is a maximal ideal in $R$, and therefore $k'$ is a field. Since elements in $k$ are of degree 0 in $k[x]$. Considering $k \too k[x] \too k' := k[x]/(f)$ gives the injective ring homomorphism (field extension). Let $a = \overline{x} \in k'$. Then $f(a) = \overline{f(x)} = 0$, which implies that $a$ is a root of $f$.
+
+    Proceed the rest of the proof by induction: 
+    \begin{itemize}
+        \item \emph{$d = 0$.} This is the trivial case.
+        \item \emph{$d = 1$.} Then $f = c(x - a)$ for some $c, a \in k$.
+        \item \emph{$d \geq 2$.} Apply the above steps iteratively. Then there exists some $a \in k'$ s.t. $(x - a) \mid f$, i.e. in $k'[x]$ we have the decomposition $f = (x - a) g$ for some $g \in k'[x]$ with $\deg g = \deg f - 1$. Applying the inductive hypothesis (the results holds in lower degrees) gives the full decomposition in $L := k'$. 
+    \end{itemize}
+\end{proof}
+
+\begin{notation}\label{not: extending field by algebra}
+    Denote the image of the map $(k[y] \to k, y \mapsto a)$ by $k[a]$. This is the smallest $k$-algebra containing $a$.
+\end{notation}
+
+\begin{proposition}\label{prop: existence of field extending root of polynomial}
+    Let $k$ be a field, and $R = k[x]$. Let $f \in R \smallsetminus \{0\}$ be irreducible. Suppose that we have the field extension $k \ext K$, and $a \in K$ is a root of $f$. Then $k[a] \simeq k[x]/(f)$. In particular, $k[a]$ is a field.
+\end{proposition}
+
+\begin{proof}
+    Consider the ring homomorphism $\varphi: k[y] \to K$ s.t. $\varphi(y) = a$. Then by the First Isomorphism Theorem, we have $k[a] = \im \varphi \simeq k[x]/\ker \varphi \simeq k[x]/(f)$ since $f(a) = 0$. 
+\end{proof}
+
+\textstart
+Notice that every field extension $k \ext K$ is a $k$-algebra morphism (ring homomorphisms that are $k$-linear). Since $k$ is a field, this gives $K$ a $k$-vector space structure.
+
+\begin{definition}[Degree]
+    The \textbf{degree} of the field extension $k \ext K$, denoted $[K : k]$, is $\dim_k K \in \Z_{\geq 0}$ or infinite. 
+\end{definition}
+\nogap
+\begin{definition}[Finite]
+    A field extension is \textbf{finite} if the degree of it is finite. 
+\end{definition}
+
+\begin{remark}\label{rmk: degree of minimal polynomial gives degree of extension}
+    If $f \in k[x]$ is irreducible, and $K = k[x]/(f)$, then $[K : k] = \deg f$. More generally, if $g \in k[x]$ is a nonzero polynomial, then $\dim_k(k[x]/(g)) = \deg g$.
+
+    This can be seen via applying the division algorithm (since $K[x]$ is an Euclidean Domain. This can be seen via computing the division). Then for all $P \in k[x]$, there exists unique $Q, R \in k[x]$ s.t. $P = gQ + R$, with $\deg R < \deg g$. Then since $\overline{P} = \overline{R}$ in $k[x]/(g)$, $\{ \bar{1}, \bar{x}, \dots, \overline{x^{\deg g - 1}} \}$ gives a basis of $k[x]/(g)$ over $k$.
+\end{remark}
+
+\section{Multiplicity of Root}
+
+\textstart
+This section provides tools for describing the zeros of a polynomial, and how they in general can look like. The proposition below says that any polynomial can be factored into two parts, with the first part having roots in the field; and the second part requires extension of the field to decompose completely. 
+
+\begin{definition}[Multiplicity]
+    Let $f \in k[x]$ be a nonzero polynomial for $k$ a field, and $a \in R$ a root of $f$, Then $a$ has \textbf{multiplicity} $m$ if $(x - a)^m \mid f$, but $(x - a)^{m + 1} \nmid f$.
+\end{definition}
+
+\begin{proposition}
+    If $f \in R \smallsetminus \{0\}$, and $a_1, \dots, a_r \in k$ are pairwise distinct roots of $f$ s.t. $a_i$ has multiplicity $m_i$. Then we have the decomposition of $f$: 
+    \[
+        f = \prod_{i = 1}^r (x - a_i)^{m_i} g, \qquad g \in R, \text{$g(a_i) \neq 0$ for all $i$}
+    \]
+    In particular, $\sum_{i} m_i \leq \deg f$.
+\end{proposition}
+
+\begin{proof}
+    Apply induction on $r$: 
+    \begin{itemize}
+        \item \emph{Base case.} Then $m_1$ is the maximal integer satisfying the condition that $(x - a_1)^{m_1} \mid f$. Then define $g$ be such that $f = (x - a_1)^{m_1} g$. 
+        \item \emph{Inductive step.} For $r \geq 2$,  denote $f_1$ be the polynomial s.t. $f = (x - a_1)^{m_1} f_1$. Notice that for all $i$ s.t. $2 \leq i \leq r$, we have $(x - a_i)^{m_i} \mid f$. Then since $(x - a_i)$ and $(x - a_1)$ are relative prime (they are both irreducible) by Proposition \ref{prop: divisibility for relative prime polynomials} we have $(x - a_i)^{m_i} \mid f_1$. Then applying inductive hypothesis gives the desired decomposition of $f$. 
+    \end{itemize}
+\end{proof}
+
+\section{Characteristic of a Field}
+
+\textstart
+Recall that in the first section we mentioned that there does not necessarily exist ring homomorphisms between arbitrary fields. This, as we will see in the following, implies some constraints on the structure that a field can have.
+
+Let $S$ be an integral domain. Let $\varphi: \Z \to S$ s.t. $n \mapsto n \cdot 1_S$. This is the unique ring homomorphism between $\Z$ and $S$ due to the constraint the $1$ should be mapped to 1. Since $S$ is a domain, and $\Z$ is a PID, $\ker \varphi = (d)$ for $d$ prime or zero. Then either 
+\begin{enumerate}[label=\arabic*)]
+    \item $\ker \varphi = \{0\}$; or
+    \item $\ker \varphi = p\Z$ for some $p$ prime.
+\end{enumerate}
+
+In case 1), if we suppose further that $S = k$ which is a field, then for all $n \in \Z$ $\varphi(n)$ is invertible. By the universal property of the quotient ring, this induces a ring homomorphism (which is also a field extension) $\Frac(\Z) = \Q \ext S$. 
+
+In case 2), we have an injective ring homomorphism $\Z/p\Z \ext S$ for some $p$ prime. Defining $\F_p = \Z/p\Z$, $S$ becomes an $\F_p$-algebra by the $\varphi$ above. 
+
+\begin{definition}[Characteristic]
+    For a field $k$, the \textbf{characteristic} of $k$ is
+    \[
+        \fchar(k) = 
+        \begin{cases}
+            p, & \text{if $\F_p \ext k$ (case 1)} \\
+            0, & \text{if $\Q \ext k$ (case 2)}
+        \end{cases}
+    \]
+\end{definition}
+
+\begin{remark}
+    If $S$ is an $\F_p$-algebra (case 2), the map $F: S \to S$, $u \mapsto u^p$ is the \underline{Frobenius homomorphism}. Check that this is indeed a ring homomorphism:
+    \begin{itemize}
+        \item $F(uv) = F(u) F(v)$. Clear as field is commutative: $(uv)^p = u^p v^p$.
+        \item $F(u + v) = F(u) + F(v)$. Compute: 
+        \[
+            (u + v)^p = u^p + v^p + \underbrace{\sum_{i = 1}^{p - 1} \binom{p}{i} u^{p-i} v^i}_{\text{divisible by $p$}}
+        \]
+        where the last term vanishes, as $\F_p \ext S$ should map $0$ to $0$; and $\bar{p} = \bar{0} \in \F_p$.
+    \end{itemize}
+\end{remark}
+
+\section{Algebraic Extensions}
+
+\textstart
+The field extensions originating solely from ``including the roots of polynomials'' are the nice ones and deserve a better name. The discussions formalizes the concept of ``algebraic closure'' in elementary discussions of polynomials.
+
+\begin{proposition}\label{prop: degree of composition of field extensions}
+    If $k \ext K \ext L$ is a field extension, then $[L:k] = [L:K][K:k]$.
+\end{proposition}
+
+\begin{proof}
+    First consider the cases where one of the degrees is infinite: 
+    \begin{itemize}
+        \item If $[K : k]$ is infinite, then $[L : k]$ is infinite as $K \subseteq L$ is a $K$-vector subspace of $L$. 
+        \item If $[L : K]$ is infinite, then there exists an infinite set of elements which are linearly independent over $K$, which are also linearly independent over $k$ since $k \subseteq K$.
+    \end{itemize}
+    Now consider the case where both $[L:K]$ and $[K:k]$ are finite. Denote $m = [L:K]$ and $n = [K:k]$. Denote $\{a_1, \dots, a_m\}$ be a basis of $L$ over $K$, and $\{b_1, \dots, b_n\}$ be a basis of $K$ over $k$. Notice that $\{a_i b_j \mid 1 \leq i \leq m, 1 \leq j \leq n\}$ gives a basis for $L$ over $k$, as for all $u \in L$, there exists $\lambda_i \in K$, and thus $\mu_{ij} \in k$ s.t.
+    \[
+        u = \sum_{i = 1}^n \lambda_i b_i = \sum_{i, j} \mu_{ij} a_j b_i, \qquad \text{for $\lambda_i = \sum_{j} \mu_{ij} a_j \mu_{ij}$}
+    \]
+    which is a decomposition. They are further linearly independent, as for $u = 0$, since $b_i$s give a basis, $\lambda_i = 0$ for all $i$, and therefore $\mu_{ij} = 0$ for all $i$ and $j$.
+\end{proof}
+
+\begin{notation}\label{not: extending field by field}
+    Let $k \ext K$ be a field extension, and $A \subseteq K$ a subset. Then we denote
+    \[
+        k(A) := \bigcap_{A \subseteq k'} \left\{ k' \mid k \ext k' \ext K \text{ extension} \right\}
+    \]
+    which is the smallest field sub-extension of $k$ inside $K$ containing $A$. 
+\end{notation}
+
+\begin{remark}
+    It is worth mentioning that this is different from $k[A]$ which is the smallest \emph{$k$-subalgebra} containing $A$:
+    \begin{itemize}
+        \item They are related via $k(A) = \Frac(k[A])$. They are equal in some ``nice'' extensions (see Remark \ref{rmk: algebraic implies k[a] = k(a)} below).
+        
+        By definition we have $k[A] \subseteq k(A)$, as $k[A]$ is only required to be a $k$-algebra instead of a field extension of $k$ (as field extending $k$ can be seen as $k$-vector spaces, which are in particular $k$-algebras). By the universal property of fraction fields, we have $\Frac(k[A]) \subseteq k(A)$, as ring homomorphisms between fields are injective, and by definition for all $f \in k[A]$, $f$ has an inverse in $k(A)$. Further since $A \subseteq \Frac(k[A])$ (also by definition, we have $k(A) = \Frac{k[A]}$).
+        \item Considering multiple elements, we can extend the \hyperref[not: extending field by algebra]{previous notation}, by considering for $A = \{a_1, \dots, a_n\}$, then $k[A] = \im \varphi$ for
+        \[
+            \varphi: k[x_1, \dots, x_n] \to K, \qquad x_i \mapsto a_i
+        \]
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[Finite Generated]
+    A field extension $K/k$ is \textbf{finitely generated} if there exists $a_1, \dots, a_n \in K$ s.t. \newline $k(a_1, \dots, a_n) = K$.
+\end{definition}
+
+\begin{remark}
+    If a field extension $K/k$ is finite, then it is also finitely generated, as $K/k$ being finite implies that there exists some finite basis of $K$ over $k$; and picking one gives the elements that ``finitely generates'' $K$. However, the converse is not true: consider $k \ext k(x) = \Frac(k[x])$ is finitely generated (by $x$) but is not finite (we have the infinite set $\{ x^i \mid i \in \Z \}$ whose elements are linearly independent over $k$)
+\end{remark}
+
+\begin{definition}[Algebraic; Transcendental]
+    Let $k \ext K$ be a field extension. An element $a \in K$ is \textbf{algebraic over $k$} if there exists $f \in k[x] \smallsetminus \{0\}$ s.t. $f(a) = 0$ in $K[x]$. Otherwise $a$ is \textbf{transcendental}. An extension $K/k$ is \textbf{algebraic} if for all $a \in K$, it is algebraic over $k$.
+\end{definition}
+
+\begin{remark}
+    Consider the field extensions $k \ext K \ext L$. Then if $a \in L$ is algebraic over $k$, then $a$ is also algebraic over $K$, as $a$ algebraic over $k$ implies that there exists $f \in k[x]$ s.t. $f(a) = 0$; and by definition we also have $f \in K[x]$.
+\end{remark}
+
+\begin{remark}\label{rmk: kernel of evaluation is prime}
+    Given a field extension $k \ext K$, and $a \in K$. Then $a$ is algebraic if and only if the $\varphi: k[x] \to k, x \mapsto a$ has a non-trivial kernel. This is the direct translation of having a polynomial $f$ with $a$ as its root. Then $\ker \varphi$ is a prime ideal.
+        
+    To prove this, it suffices to show that $k[x]/(\ker \varphi)$ is a domain. This is indeed the case, as $k[x]$ is a domain: for all $g, h \in k[x]$, $g(a) \neq 0$ and $h(a) \neq 0$ implies that $gh(a) \neq 0$, i.e. $gh \notin \ker \varphi$ ($gh \neq \bar{0}$ in $k[x]/(\ker \varphi)$). Therefore, there exists some $f$ s.t. $\ker \varphi = (f)$.
+\end{remark}
+
+\begin{definition}[Minimal Polynomial]
+    $f \in k[x]$ is the \textbf{minimal polynomial} of $a \in K$ if for $\varphi: k[x] \to K$, $x \mapsto a$, $\ker \varphi = (f)$. This is well-defined by the above Remark (Remark \ref{rmk: kernel of evaluation is prime}).
+\end{definition}
+
+\begin{remark}\label{rmk: algebraic implies k[a] = k(a)}
+    For $a$ being algebraic, $f$ is a maximal ideal (by the fact that $k[x]/(\ker \varphi)$ is a domain). Then $k[a] = k[x]/(\ker \varphi)$ is a field. This gives $k[a] = k(a)$.
+\end{remark}
+
+\begin{remark}
+    Given field extension $K/k$, if $a \in K$ is transcendental over $k$, then $k[a] \simeq k[x]$, as since there is no polynomial with root $a$ implies that $k[a]$ can be seen as injecting a formal variable to the field $k[x]$. This further implies $k(a) \simeq k(x)$ (as $k(a) \simeq \Frac(k[a])$; and same for $x$).
+\end{remark}
+
+\begin{example}
+    Suppose that $d \in \Z$ is not a square, and let $a = \sqrt{d}$. Consider the field extension $\Q \to \C$.
+    
+    Since $a$ is not in $\Q$, $a$ cannot be a root of degree 1 polynomials, i.e. the minimal polynomial of $a$ must be of degree at least 2; and we have $a$ as a root of $x^2 - d = 0$, the minimal polynomial of $a$ over $k$ is $x^2 - d = 0$, which also implies that $a$ is algebraic over $\Q$.
+
+    Therefore, $\Q(\sqrt{d})$ can be seen as a $\Q$-vector space, which has a basis $\{1, \sqrt{Q}\}$, i.e. $\Q(\sqrt{d}) = \{ a + b \sqrt{d} \mid a, b \in \Q \}$. In particular we have $\dim_{\Q} \Q(\sqrt{d}) = 2$ as $\deg f = 2$, resulting from Remark \ref{rmk: degree of minimal polynomial gives degree of extension}.
+\end{example}
+
+\begin{proposition}\label{prop: finite extensions are algebraic}
+    Every finite extension $K/k$ is algebraic. 
+\end{proposition}
+
+\begin{proof}
+    Denote $[K : k] = n$ which is finite. Regarding $K$ as a $k$-vector space, for all $a \in K$ the set of elements $\{ 1, a, \dots, a^n \}$ are linearly dependent (as there are $(n+1)$ of them). That is, there exists $c_0, \dots, c_n \in k$ s.t. $c_0 + c_1 a + \cdots + c_n a^n = 0$; and $f = c_0 + c_1 x + \cdots + c_n x^n \in k[x] \smallsetminus \{0\}$. This gives a polynomial $f \in k[x]$ s.t. $f(a) = 0$, i.e. $a$ is algebraic. Since $a \in K$ can be taken arbitrarily, we have $K/k$ being algebraic. 
+\end{proof}
+
+\begin{proposition}\label{prop: finitely generated algebraic extensions are finite}
+    Let $k \ext K$ be a field extension, and $a_1, \dots, a_n \in K$ are algebraic over $k$. Then $k[a_1, \dots, a_n] = k(a_1, \dots, a_n)$; and $k(a_1, \dots, a_n)$ is a finite extension over $k$. 
+\end{proposition}
+
+\begin{proof}
+    Remark \ref{rmk: algebraic implies k[a] = k(a)} gives the case for $n = 1$, $k[a] = k(a)$, and Remark \ref{rmk: degree of minimal polynomial gives degree of extension} (using minimal polynomial) gives that the extension is finite. 
+
+    For $n \geq 2$, repeat the argument with the induction hypothesis. First by definition we have $k[a_1, \dots, a_n] = (k[a_1, \dots, a_{n-1}]) [a_n]$; and the same holds for the field extension version (replace brackets with parentheses). Further finite extensions are transitive, by Proposition \ref{prop: degree of composition of field extensions}. Suppose now that $k' = k[a_1, \dots, a_{n-1}] = k(a_1, \dots, a_{n-1})$ is a finite extension over $k$. Then $k[a_1, \dots, a_n] = k'[a_n] = k'(a_n) = k(a_1, \dots, a_n)$ is finite over $k'$; and by hypothesis we know $k'[a_n]$ is finite over $k$ since $k'$ is. 
+\end{proof}
+
+\begin{corollary}
+    Finitely generated algebraic field extensions are finite.
+\end{corollary}
+
+\begin{proposition}\label{prop: transitivity of algebraic extensions}
+    If $k \ext K \ext L$ are both algebraic field extensions, then so is $k \ext L$.
+\end{proposition}
+
+\begin{proof}
+    Use the above two propositions. Let $a \in L$. Since $L/K$ is algebraic, there exists $f \in K[x] \smallsetminus \{0\}$ s.t. $f(a) = 0$. Let $f = c_0 + c_1 x + \cdots + c_n x^n$, and $k' = k(c_0, \dots, c_n)$. Since all $c_0, \dots, c_n \in K$ are algebraic over $k$, Proposition \ref{prop: finitely generated algebraic extensions are finite} implies that $k'$ is a finite extension over $k$. Further since $a$ is algebraic over $k'$, the extension $k' \ext k'(a)$ is also finite. Proposition \ref{prop: finite extensions are algebraic} implies that the extension $k \ext k'(a)$ is algebraic. That is, $a$ is algebraic over $k$.
+
+    Since this holds for all $a \in L$, the extension $L/k$ is algebraic.
+\end{proof}
+
+\begin{remark}\label{rmk: subextension of algebraic extension is algebraic}
+    Notice that the converse of the statement is also true. If $k \ext L$ is algebraic, then for every element $a \in L$ there exists some $f_a \in k[x]$ s.t. $f_a(a) = 0$. But given extension $k \ext K \ext L$, $k \subseteq K$, which implies $f_a$ is also in $K[x]$; and therefore $L/K$ is algebraic
+\end{remark}
+
+\begin{proposition}\label{prop: algebraic closure is a field}
+    If $k \ext K$ is a field extension, then $k' = \{a \in K \mid \text{$a$ algebraic over $k$}\}$ is a subfield of $K$ containing $k$,
+\end{proposition}
+
+\begin{proof}
+    To prove this we need to check:
+    \begin{itemize}
+        \item $k \subseteq k'$. This is clear from the construction of the field.
+        \item $k'$ is closed under additive and multiplicative inverse. 
+        
+        $a \in k'$ implies $-a \in k'$ as $-a$ is the root of a polynomial via considering the minimal polynomial and inverting the corresponding coefficients. $a \in k' \smallsetminus \{0\}$ implies $a^{-1} \in k' \smallsetminus \{0\}$ since $k[a] = k(a)$ as $k(a)$ is finitely generated, and therefore finite and algebraic. $k(a)$ is a field, implying that $a^{-1} \in k(a)$.
+        \item $k'$ is closed under addition and multiplication. That is, for all $a, b \in k'$, $a + b \in k'$ and $ab \in k'$.
+
+        Consider the field $k(a, b)$. Since both $a$ and $b$ are algebraic over $k$, $k(a, b)/k$ is finite by Proposition \ref{prop: finitely generated algebraic extensions are finite}; and by Proposition \ref{prop: finite extensions are algebraic} the extension is algebraic. By definition $k(a, b) \subseteq k'$; and is the smallest field containing both $a$ and $b$; and therefore both $a + b$ and $ab$ are in $k'$.
+    \end{itemize}
+\end{proof}
+
+\begin{definition}[Algebraic Closure]\label{def: algebraic closure with ambient field}
+    For a field $k$ with field extension $k \ext K$, the field $k' = \{a \in K \mid \text{$a$ algebraic over $k$}\}$ is the \textbf{algebraic closure} of $k$ in $K$. By the above Proposition \ref{prop: algebraic closure is a field}, this is indeed a field.
+\end{definition}
+\nogap
+\begin{definition}[Algebraically Closed]
+    A field $k$ is \textbf{algebraically closed} if every nonzero polynomial over $k$ has a \mbox{root in $k$.}
+\end{definition}
+% using \mbox to suppress newline (otherwise there will be a lagging $k$ in the new line)
+
+\begin{remark}
+    By induction, if $k$ is algebraically closed and $f$ is a nonzero polynomial in $k[x]$ with degree $n$< then there exists $a_1, \dots, a_n \in k$, $c \in k^{\ast}$ s.t. $f = c(x - a_1) \cdots (x - a_k)$. That is, every irreducible polynomial in an algebraically closed field has degree 1.
+\end{remark}
+
+\begin{notation}
+    For a field $k$, the set of invertible (nonzero) elements in it are often denoted as $k^{\ast}$ or $k^{\times}$.
+\end{notation}
+
+\begin{proposition}
+    A field $k$ is algebraically closed if and only if for all field extensions $k \ext K$, for all $a \in K \smallsetminus k$, $a$ is transcendental over $k$.
+\end{proposition}
+
+\begin{proof}
+    Prove implication in two directions:
+    \begin{itemize}
+        \item[$\Rightarrow$:] Suppose that $k$ is algebraically closed, and $a \in K \smallsetminus k$ algebraic over $k$. Then by definition there exists an irreducible polynomial $f \in k[x]$ s.t. $f(a) = 0$. Since $k$ is algebraically closed, the irreducible polynomials are of degree 1, i.e. $\deg f = 1$. Then $a \in k$, which is a contradiction.
+        \item[$\Leftarrow$:] Suppose that for all $a \in K \smallsetminus k$, $a$ is transcendental. Proceed to prove that $k$ is algebraically closed by showing that every irreducible polynomial has a root. 
+        
+        Consider $f \in k[x] \smallsetminus \{0\}$. Consider $K = k[x]/(f)$. Then since $f(\bar{x}) = 0$, $\bar{x}$ is algebraic over $k$. But since all elements in $K \smallsetminus k$ are transcendental, $\bar{x} \in k$. Then in $K$ we have $\bar{x} - a = 0$, for some $a \in k$. Then $f(x) = x - a$ in $K[x]$ which has a root $a$; and as this holds for all $f$, $k$ is algebraically closed.
+    \end{itemize}
+\end{proof}
+
+\textstart
+In summary, a field $k$ being algebraically closed is equivalent to the following conditions:
+\begin{enumerate}[label=\arabic*)]
+    \item For all field extensions $k \ext K$, either $k \simeq K$, or the extension is not algebraic. 
+    \item For all $f \in k[x] \smallsetminus \{0\}$, $f$ factors as a product of polynomials of degree 1.
+    \item Every irreducible $f \in k[x] \smallsetminus \{0\}$ has a root in $k$. 
+\end{enumerate}
+
+Recall that we have the \hyperref[def: algebraic closure with ambient field]{algebraic closure in a specific field}. The following theorem seeks to construct such closure without any ambient structure:
+
+\begin{theorem}\label{thm: algebraic closure exists}
+    Given any field $k$, there exists an algebraic extension $k \ext \bar{k}$ s.t. $\bar{k}$ is algebraically closed. Such an extension is an \underline{algebraic closure} of $k$.
+\end{theorem}
+
+\begin{parenthesis}[Direct Limit (of rings)]\label{pth: direct limit}
+    To provide the construction of an algebraic closure, the main step is to iteratively include the roots of the some irreducible polynomials; and we need to ensure that this process terminates. That is, there exists a field containing all the intermediate fields on which we conducted the extension. This parenthesis formalizes this idea.
+
+    \begin{definition}[Directed Set]
+        $(I, \leq)$ is a \textbf{directed set} if for all $i, j \in I$ there exists $k \in I$ s.t. $i \leq k$ and $j \leq k$.
+    \end{definition}
+
+    \begin{definition}[Direct System]
+        Given a directed set $I$, a \textbf{direct system} $(R_i)_{i \in I}$ is a family of rings $R_i$ satisfying:
+        \begin{itemize}
+            \item For all $i \leq j$ in $I$, there exists a ring homomorphism $\varphi_{ij}: R_i \to R_j$; and $\varphi_{ii} = \Id_{R_i}$.
+            \item For all $i \leq j \leq k$ in $I$, the ring homomorphisms above satisfy $\varphi_{ik} = \varphi_{jk} \circ \varphi_{ij}$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{definition}[Direct Limit]
+        Given a direct system $(R_i)_{i \in I}$, the \textbf{direct limit} of the system, denoted $R = \varinjlim R_i$, together with a family of ring homomorphisms $f_i: R_i \to R$ s.t.
+        \begin{itemize}
+            \item $f_j \circ \varphi_{ij} = f_i$.
+            \item The pair $(R, (f_i)_{i \in I})$ is universal with this property, i.e. every ring homomorphism from $R_i$ for all $i$ factors uniquely through $R$. That is, for any ring $T$ and family of ring homomorphisms $g_i: R_i \to T$ s.t. $g_j \circ \varphi_{ij} = g_i$ (the $g_i$s are compatible w.r.t. the system), there exists a unique ring homomorphism $g: R \to T$ s.t. $g \circ f_i = g_i$ for all $i$.
+        \end{itemize}
+    \end{definition}
+
+    The direct limit exists, by considering the class of elements that are closed along the morphisms of $R_i$s: define $R := \left(\bigsqcup_{i \in I} R_i\right)/\sim$, where the equivalence relation $\sim$ is given by $R_i \ni x_i \sim \varphi_{ij}(x_i)$. The operations are given by for $a_i \in R_i$ and $b_j \in R_j$, finding $k$ s.t. $i \leq k$ and $j \leq k$ (which exists as $I$ is a directed set), and define:
+    \[
+        a_i + b_j := \varphi_{ik}(a_i) + \varphi_{jk}(b_j) \in R_k, \qquad
+        a_i b_j := \varphi_{ik}(a_i) \cdot \varphi_{jk}(b_j) \in R_k
+    \]
+    Existence of inverse, and distributivity are guaranteed by the ring structure of $R_j$. Further see that this is well-defined, as for $k' \neq k$ that we have picked s.t. $i \leq k'$ and $j \leq k'$, since the set is directed there exists $\ell$ s.t. $k \leq \ell$ and $k' \leq \ell$. Now use the equivalence relation with $\varphi_{k\ell}$ and $\varphi_{k'\ell}$; and the fact that $\sim$ is an equivalence relation and is therefore transitive. 
+
+    Further the direct limit of a direct system is unique up to isomorphism. Suppose we have two direct limits $R$ and $R'$, there exists $g: R \to R'$ and $g': R' \to R$, by the universal property of the direct limit s.t. $g \circ f_i = f_i'$, $g' \circ f_i' = f_i$. This implies that $g \circ g' = \Id_{R'}$, and $g' \circ g = \Id_{R}$ by the symmetric argument. This gives the isomorphism.
+
+    The last thing we need to notice is that if all $R_i$s are fields, then $R$ is a field, as in the definition of the operation having multiplicative inverse in $R_k$ induces the multiplicative inverse in $R$.
+\end{parenthesis}
+
+Now we can use the above tools to describe the polynomial with variables indexed by a (possibly infinite) set $I$. Given a commutative ring $R$, a set $I$, the polynomial ring $R[x_i \mid i \in I]$ is defined as follows:
+
+For $J \subset I$ finite subset, denote $R_J := R[x_i \mid i \in J]$. Define $\mathcal{P} := \{\text{finite subsets of $I$}\}$, ordered by inclusion. This is a directed set, as for all $M, N \in \mathcal{P}$, we have $M \subseteq I$ and $N \subseteq I$ by definition.
+
+For $J_1 \subseteq J_2$ in $\mathcal{P}$, we have a morphism of $R$-algebras $\varphi_{J_1 J_2}: R_{J_1} \to R_{J_2}$, $x_i \mapsto x_i$ (embeddings). This gives a direct system of $R$-algebras; and we can define $R[x_i \mid i \in I] := \varinjlim (R_J)_{J \in P}$. Notice:
+
+\begin{itemize}
+    \item All $\varphi_{J_1 J_2}$ are injective (as they are embeddings), and therefore the map $R_J \to R[x_i \mid i \in I]$ is also injective.
+    \item Observe that we have $\bigcup_{J \in \mathcal{P}} R_J$ is a direct limit of the system $(R_J)_{J \in \mathcal{P}}$; and since the direct limit is unique up to isomorphisms for a particular directed system, we have $R[x_i \mid i \in I] = \bigcup_{J \in \mathcal{P}} R_J$.
+\end{itemize}
+
+Now prove the theorem:
+
+\begin{proof}[Proof of Theorem \ref{thm: algebraic closure exists}]
+    As we have mentioned, the idea of the proof is to construct a direct system of fields, where each $\varphi$ (which is a field extension here) includes the roots of irreducible polynomials in the base field; then taking the direct limit of the system gives the desired algebraic closure. 
+
+    The first step is to construct a field extension $k \ext k_1$ s.t. for all $f \in k[x]$ irreducible, there exists $a \in k_1$ s.t. $f(a) = 0$. Define $A = \{ f \in k[x] \mid f \text{ irreducible} \}$. Define $R = k[y_f \mid f \in A]$ and $\underline{a} = (f(y_f) \mid f \in A)$ where $y_f$ are formal variables indexed by polynomials in $A$; and the parenthesis in $\underline{a}$ implies that this is an ideal generated by such elements. 
+
+    Claim that $\underline{a} \neq R$. First observe that by definition $\underline{a} \subseteq R$, as in particular we have $f \in k[y_f] \subseteq k[y_f \mid f \in A] =: R$. Suppose that $\underline{a} = R$. Then the condition is translated to:
+    \begin{equation}\label{eq: condition if a_ = R}
+        \tag{$\ast$}        
+        \exists r \in \Z_{>0},\ f_1, \dots, f_n \in A,\ g_1, \dots, g_n \in R, \qquad \sum_{i = 1}^r \underbrace{g_i}_{\in R} \underbrace{f_i (y_{f_i})} _{\in \underline{a}} = 1
+    \end{equation}
+    as the ideal being equal to the whole ring is the same as the ideal containing 1. By Proposition \ref{prop: existence of field extending root of polynomial}, for all $i$ there exists field extension $k \ext k_i$ s.t. there exists $a_i \in k_i$ satisfying $f_i(a_i) = 0$. Since there finitely many (exactly $r$) polynomials, we can do this iteratively and get a field extension $k \ext K$ s.t. there exists field extensions $k_i \ext K$ for all $i$.
+
+    Let $J \subseteq A$ be the finite subset containing all the $f_i$s, and also containing all polynomials $g$ s.t. $y_g$ appears in some $g_i \in k$. Define $\varphi: k[y_g \mid g \in J] \ext K$. $y_{f_i} \mapsto a_i$ for all $i$, and $y_g \mapsto \varepsilon \in K$ which is some value we do not care about. Recall that $a_i$s are defined s.t. $f_i(a_i) = 0$. This is a $k$-algebra morphism. 
+    
+    Now apply $\varphi$ to Eq. \eqref{eq: condition if a_ = R}. Since $\varphi$ is $k$-linear, we have
+    \[
+        0 = \sum_{i = 1}^r \varphi(g_i) f_i(a_i) = \varphi(1) = 1
+    \] 
+    which is a contradiction, as for a field we require $0 \neq 1$. Therefore $\underline{a} \neq R$. Further since $\underline{a}$ is an ideal in $R$, there exists a maximal ideal $M$ in $R$ s.t. $\underline{a} \subseteq R$. Define $k' = R/M$ which is not trivial since $\underline{a} \neq R$. Denote $k_1 := \{ a \in k' \mid \text{$a$ algebraic over $k$} \}$. By Proposition \ref{prop: algebraic closure is a field} this is a subfield of $k'$, and by definition is algebraic over $k$. Now consider $f \in k[x]$ irreducible, and $\overline{y_f} \in k' = R/M$ a formal variable. By definition of algebraic closure, $f(\overline{y_f}) = 0$ in $\bar{k}$; and since $f(y_f) \in \underline{a} \subseteq M$, $\overline{f(y_f)} = f(\overline{y_f}) = 0 \in R/M$, which implies that $\overline{y_f} \in k_1$. Since $k' = R/M$ with $R$ extending elements in the form of $y_f$, every element in $k'$ is in the same as $\overline{y_f}$ for some $f \in A$; and by the previous argument we know $k \ext k'$ is algebraic. That is, every $f \in k[x]$ irreducible has a root in $k_1$.
+
+    Now repeat the process with $k$ replace by $k_1$. Conducting induction gives that for all $f \in k_i[x]$, there exists $a \in k_{i + 1}$, $f(a) = 0$ in $k_{i+1}[x]$. This gives algebraic extensions
+    \[
+        k \ext k_1 \ext k_2 \ext \cdots
+    \]
+    Now take $\bar{k} := \varinjlim k_i$. This is a field by Parenthesis \ref{pth: direct limit} satisfying $k \ext k_i \ext \bar{k}$, and by the following remark $\bar{j} = \bigcup_{i \geq 1} k_i$. Check:
+    \begin{itemize}
+        \item \emph{$\bar{k}$ is algebraic over $k$.} This results from the fact that each of the intermediate extension is algebraic; and the result follows from Proposition \ref{prop: transitivity of algebraic extensions}.
+        \item \emph{$\bar{k}$ is algebraically closed.} For all $f \in \bar{k}[x]$, there exists $i$ s.t. $f \in k_{i}[x]$. Then $f$ has a root in $k_{i + 1}$ which can be extended to $K$ by universal property of direct limit.  
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    If the field $k$ is infinite, the algebraic closure $\bar{k}$ is of the same cardinality as $k$.
+\end{remark}
+
+To address the uniqueness of $\bar{k}$, we prove the following theorem that is more general:
+
+\begin{theorem}\label{thm: algebraic extension can be extended to algebraical closure}
+    Given two field extensions $k \ext K$ and $k \ext L$ s.t. $K/k$ is algebraic, and $L$ is algebraically closed. Then there is a morphism of $k$-extensions $K \ext L$, where a morphism of $k$-extensions is a morphism of $k$-algebras which is the identity map when restrict to $k$.
+\end{theorem}
+
+To prove the theorem we need Zorn's Lemma:
+\begin{lemma}[Zorn]
+    Given a nonempty ordered set $(A, \leq)$ s.t. every \underline{chain} in $A$ has an \underline{upper bound} in $A$. Then $a$ has a \underline{maximal element}. The terminologies are:
+    \begin{itemize}
+        \item A \underline{chain} is a totally ordered subset.
+        \item An \underline{upper bound} for $B \subseteq A$ is an element $a \in A$ s.t. for all $b \in B, b \leq a$. 
+        \item A \underline{maximal element} in $A$ is some $a \in A$ s.t. for all $a'$ s.t. $a \leq a'$, we have $a' = a$.
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}[Proof of Theorem \ref{thm: algebraic extension can be extended to algebraical closure}]
+    Consider the set $A = \{ (k', \varphi) \}$ where $k'$ is a subfield of $K$ for which there exists extensions $k \ext k' \ext K$; and for $i: k \to k'$, $j: k \to L$ we have $\varphi \circ i = j$. Define the partial order on $A$ be such that $(K', \varphi) \leq (K'', \psi)$ if and only if $K' \subseteq K$, and $\restr{\psi}{k'} = \varphi$.
+
+    Now apply Zorn. Check the followings:
+    \begin{itemize}
+        \item $A$ is non empty. In particular, $(k, j) \in A$.
+        \item Suppose that $B = \{ (K_i, \varphi_i) \mid i \in I \}$ is a chain (totally ordered subset) in $A$, Then $B$ has a maximal element (which also serves as an upper bound) $(K, \varphi)$ given by $K = \bigcup_{i \in I} K_i$ and $\varphi$ be such that $\restr{\varphi}{K_i} = \varphi_i$. Such $\varphi$ exists as $B$ is totally ordered, i.e. for any subset of $B$ the maximal element gives the corresponding $\varphi$.
+    \end{itemize}
+    Then Zorn's Lemma gives that there exists a maximal element $(K', \varphi) \in A$. Then either:
+    \begin{itemize}
+        \item $K' = K$. This gives the desired result. 
+        \item $K' \neq K$. We seek to find a contradiction. Since $K' \subseteq K$, there exists $a \in K \smallsetminus K'$. Since $K/k$ is algebraic by hypothesis, by Remark \ref{rmk: subextension of algebraic extension is algebraic}, $K/K'$ is also algebraic. Let $f \in K'[x]$ be the minimal polynomial of $a$ over $K'$. Try to extend on $a$: 
+        \[
+            K' \ext K'[a] \simeq K'(a) \simeq K'[x]/(f)
+        \]
+        where $K'[a] = K'(a)$ since $a$ is algebraic over $k'$. Since $L$ is algebraically closed, $f$ (considering it in $L[x]$) has a root $b \in L$. Then there exists a unique $K'$-algebra morphism $\varphi': K'(a) \to L$, $a \mapsto b$, which is indeed a $K'$-algebra morphism as any $g \in K[x]$ s.t. $g(a) = 0$ satisfies $f \mid g$, which has $b$ also as a root. But then $(K'(a), \varphi')$ satisfies the condition, which contradicts with the maximality of $(K', \varphi)$.
+    \end{itemize}
+    Therefore $K' = K$ and we have the desired result.
+\end{proof}
+
+\begin{corollary}\label{cor: algebraic closure is unique}
+    The algebraic closure of a given field $k$ is unique up to isomorphism.
+
+    Suppose that we have field extensions $k \ext K$ and $k \ext L$, with both $K$ and $L$ algebraically closed. Then applying the above theorem twice gives field extensions $K \ext L$ and $L \ext K$, which are both injective by Proposition \ref{prop: ring homs from a field are injective}. This gives the desired isomorphism.
+\end{corollary}
+
+\begin{notation}
+    Since the algebraic closures of a specific field $k$ are isomorphic, we can simply refer to it as \emph{the} algebraic closure, and denote it with $\bar{k}$.
+\end{notation}
+
+\begin{remark}\label{rmk: misc results on algebraic closure}
+    We have the following immediate results:
+    \begin{enumerate}[label=\arabic*)]
+        \item If $k \ext K$ is algebraic, and $K \ext \overline{K}$ algebraic closure, then $k \ext \overline{K}$ is also an algebraic closure (by considering $f \in k[x]$ as elements of $K[x]$).
+        \item If we have $k \ext K$ a field extension, and $K$ is algebraically closed. Then for $k' := \{a \in K \mid \text{$a$ algebraic over $k$}\}$ we have $k'/k$ an algebraic closure. This is clearly algebraic by definition; and it is closed as if $f \in k'[x] \smallsetminus \{0\}$, there exists $a \in K$ s.t. $f(a) = 0$ as $K$ is algebraically closed. Then $a$ is algebraic over $k$ \implies $k' \ext k'(a)$ finite \implies $k' \ext k'(a)$ algebraic \implies $k \ext k' \ext k'(a)$ algebraic. But this gives the fact that $a$ is algebraic over $k$, and since $a \in K$ by definition $a \in k'$.  
+    \end{enumerate}
+    Notice that we cannot use the same trick in the proof for Theorem \ref{thm: algebraic closure exists} as in that case the extensions $k \ext k_1$ is not necessarily algebraic.
+\end{remark}
+
+\textstart
+Now we can use the above results to classify finite fields:
+
+Let $K$ be a finite field. Since $\Z \to K$ cannot be injective, $\fchar(K) = p$ for some prime $p$. This gives a field extension $\F_p \ext K$; and since $e = [K : \F_p]$ is finite (since $K$ is finite), $\abs{K} = p^e$ for some $e$. Denote $\overline{K}$ to be the algebraic closure of $K$. By Remark \ref{rmk: misc results on algebraic closure} this is also the algebraic closure of $\F_p$.
+
+\begin{claim}\label{clm: fields with p^e elements}
+    $K = \{u \in \overline{K} \mid u^{p^e} = u\}$. This gives the existence of finite fields with order $p^e$.
+\end{claim}
+
+\begin{proof}
+    Notice that $(K^{\times}, \cdot)$ is a finite group with $(p^e - 1)$ elements. Therefore, for all $u \in L$, $u^{p^e - 1} = 1$, which implies that $u^{p^e} = u$ i.e. $K \subseteq $ RHS. Now consider the polynomial $x^{p^e} - x$ in $\overline{K}[x]$, which has $p^e$ roots since $\overline{K}$ is algebraically closed. $\abs{K} = p^e$ gives the desired equality.
+\end{proof}
+
+\begin{proposition}\label{prop: F_pe are isomorphic}
+    If $K_1$ and $K_2$ are both fields with $p^e$ elements, then $K_1 \simeq K_2$. Without ambiguity we denote such fields as $\F_{p^e}$.
+\end{proposition}
+
+\begin{proof}
+    Consider the extensions:
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            \F_p \arrow[rr, hookrightarrow] \arrow[dd, hookrightarrow] & & K_1\arrow[dd, dashed, hookrightarrow, "\varphi"] \\
+            & & \\
+            K_2 \arrow[rr, hookrightarrow] & & \overline{K_2}
+        \end{tikzcd}
+    \end{minipage}
+
+    This existence of $\varphi$ is guaranteed by Theorem \ref{thm: algebraic extension can be extended to algebraical closure}. Since $\varphi$ is a ring homomorphism between fields, it is injective; and therefore $\abs{\varphi(K_1)} = \abs{K_1} = p^e$ \implies $\varphi(K_1) = \{i \in \overline{K_2} \mid u^{p^e} = u\}$. But this then coincides with $K_2$.
+\end{proof}
+
+\begin{example}\label{ex: f_pe extends to f_pf iff e divides f}
+    There exists a ring homomorphism $\F_{p^e} \to \F_{p^f}$ if and only if $e \mid f$. 
+\end{example}
+    
+\begin{proof}
+    Verify both implications:
+    \begin{itemize}
+        \item[$\Rightarrow:$] Since we have the field extension $\F_{p^e} \ext \F_{p^f}$, we can view $\F_{p^f}$ as a $\F_{p^e}$-vector space. As further we have two fields being finite, $\abs{\F_{p^f}} = \left( \abs{\F_{p^e}} \right)^{\dim_{\F_{p^e}} \F_{p^f}}$. In particular this implies that $e \mid f$.
+        \item[$\Leftarrow:$] By Claim \ref{clm: fields with p^e elements} we know that the elements in the field $\F_{p^f}$ are those in the set $\{ u \in \overline{\F_{p^f}} \mid u^{p^f} = u \}$. Now Consider the roots of the polynomial $f = x^{p^f} - x$ in $\overline{\F_{p^f}}$. Since $\F_{p^f}$ embeds naturally into its algebraic closure, the image is exactly the roots of $f$. Since $e \mid f$, there exists $n$ s.t. $f = ne$. Notice then that $f$ factors as follows:
+        \[
+            f = x^{p^f} - x = \left( x^{p^e} - x \right) \left( \sum_{i = 1}^{n-1} p^{i(p^e - 1)} \right)
+        \]
+        which implies that elements satisfying the relation $u^{p^e} = u$ in particular also satisfy $u^{p^f} = u$; and by Claim \ref{clm: fields with p^e elements} these give the elements in field $\F_{p^e}$. This gives the field extension $\F_{p^e} \ext \F_{p^f} \ext \overline{\F_{p^f}}$ (and also by the uniqueness of algebraic closure (Corollary \ref{cor: algebraic closure is unique}) we have $\overline{\F_{p^e}} = \overline{\F_{p^f}}$).
+    \end{itemize}
+\end{proof}
+    
+\begin{example}
+    Inside the algebraic closure of $\F_p$, $\overline{\F_p}$, for all $e \geq 1$ we have a unique copy of $\F_{p^e}$; and $\overline{\F_p} = \bigcup_{e \geq 1} \F_{p^e}$.
+\end{example}
+
+\begin{proof}
+    Proceed to verify the inclusion in both directions:
+    \begin{enumerate}
+        \item[$\subseteq$] For any element $u \in \overline{\F_p}$, consider its minimal polynomial over $\F_p$. Let $f_u \in \F_p[x]$ be the polynomial of $u$. Then $u \in \F_p(u) \simeq \F_p[x]/(f_u)$. By Remark \ref{rmk: degree of minimal polynomial gives degree of extension} we have $\abs{\F_p(u)} = p^{\deg f} \implies u \in \F_{p^{\deg f}} \subseteq \bigcup_{e \geq 1} \F_{p^e}$. 
+        \item[$\supseteq$] By Example \ref{ex: f_pe extends to f_pf iff e divides f} we have the embedding of $\F_{p^e}$ to its algebraic closure; and also such closures can be identified by the uniqueness of algebraic closure and viewing $\F_{p^n}$ as elements satisfying relation $u^{p^n} = u$ by Claim \ref{clm: fields with p^e elements}.
+    \end{enumerate}
+\end{proof}
+
+\section{The Splitting Field of a Polynomial}
+
+\begin{definition}[Splitting Field]
+    Let $k$ be a field, and $f \in k[x] \smallsetminus \{0\}$. A \textbf{splitting field} of $f$ is a field extension $k \ext K$ s.t. 
+    \begin{enumerate}[label=\arabic*)]
+        \item $f$ factors in $K[x]$ as a product of degree-1 polynomials.
+        \item If there exists $K'$ s.t. $k \subseteq K' \subseteq K$ which also satisfies 1), then $K' = K$,
+    \end{enumerate}
+    Equivalently, for a splitting field of $f$, denoted $K$, we can write $f$ in $K[x]$ as $f = c(x - a_1) \cdots (x - a_n)$ with $c, a_1, \dots, a_n \in K$; and $K = k(a_1, \dots, a_n)$. 
+\end{definition}
+
+\begin{example}
+    $\C$ is the splitting field of $x^2 + 1$. $\Q(\sqrt{2})$ is the splitting field of $x^2 - 2$.
+\end{example}
+
+\textstart
+From what we had proved previously (Corollary \ref{cor: algebraic closure is unique}), we know that algebraic closure is unique up to isomorphism, so we would expect the splitting field to be unique up to isomorphisms as well. The followings use (which will also be the case for most proofs regarding existence of extensions) the algebraic closure to construct such extensions.
+
+\begin{theorem}\label{thm: splitting field is unique}
+    If $f \in k[x] \smallsetminus \{0\}$, then
+    \begin{enumerate}
+        \item There exists a splitting field $k \ext K$ of $f$.
+        \item If we have $k \ext K$, $k \ext K'$ splitting fields of $f$, then $K \simeq K'$ as $k$-extensions.
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    If $K$ is the splitting field of $f \in k[x]$, then $K/k$ is a finite extension, as in particular $K$ is generated (as a $k$-vector space) by finitely many algebraic elements over $k$, namely the roots of $f$. By Proposition \ref{prop: finitely generated algebraic extensions are finite} the extension is then finite.
+\end{remark}
+
+\begin{proof}[Proof of Theorem \ref{thm: splitting field is unique}]
+    Prove the two statements respectively:
+    \begin{enumerate}[label=\arabic*)]
+        \item Consider $k \ext \bar{k}$ the algebraic closure of $k$. Then there exists $c, a_1, \dots, a_n \in \bar{k}$ s.t. $f = c(x - a_1) \cdots (x - a_n)$. Then $K = k(a_1, \dots, a_n)$ is the splitting field of $f$, by definition.
+        \item Let $k \ext K$ and $k \ext K'$ be the splitting fields of $f$. Let $K' \ext \overline{K'}$ be the algebraic closure. By the remark above, $K/k$ is algebraic. Since $\overline{K'}$ is algebraically closed, by Theorem \ref{thm: algebraic extension can be extended to algebraical closure} there exists $\varphi: K \to \overline{K'}$ s.t. $\restr{\varphi}{k} = \Id_k$. Since $K$ and $K'$ are splitting fields of $f$ over $k$, we can write $f = c(x - a_1) \cdots (x - a_n)$ in $K[x]$, and $f = c'(x - a_1') \cdots (x - a_n')$ in $K'[x]$. This gives the similar expression of the fields as in the remark: 
+        \[
+            K = k(a_1, \dots, a_n), \qquad K' = k(a_1', \dots, a_n')
+        \]
+        Consider the ring homomorphism $K[x] \ext K'[x] \subseteq \overline{K'}[x]$ induced by $\varphi$, we have
+        \[
+            f = \varphi(f) = c(x - \varphi(a_1)) \cdots (x - \varphi(a_n))
+        \]
+        since $f \in k[x]$ and $\varphi$ as a morphism between $k$-extensions is the identity map when restricted to $k$. Therefore $\varphi$ permutes $a_i$s, which gives $\varphi(K) \subseteq K'$ and $\varphi(K') \subseteq K$, i.e. $\varphi(K) = K'$, and $\varphi$ is bijection and thus a ring isomorphism.
+    \end{enumerate}
+\end{proof}
+
+\section{Separable Extensions}
+
+\begin{definition}[Separable Extension]\label{def: separable extension}
+    Let $k \ext K$ be an algebraic field extension. An element $a \in K$ is \textbf{separable over $k$} if its minimal polynomial $f \in k[x]$ satisfies any of the following conditions:
+    \begin{enumerate}[label=\arabic*)]
+        \item $a$ is not a multiple root of $f$.
+        \item $f' \neq 0$.
+        \item Either $\fchar(k) = 0$, or $\fchar(k) = p > 0$, and $f \notin k[x^p]$.
+    \end{enumerate}
+    Such a polynomial $f$ is a \textbf{separable polynomial}. A field extension $k \ext K$ is \textbf{separable} if the minimal polynomial of any element in $K$ is separable. 
+\end{definition}
+
+\begin{proposition}
+    The three conditions in Definition \ref{def: separable extension} for separability over a field are equivalent.
+\end{proposition}
+
+\begin{proof}
+    Verify the following implications:
+    \begin{itemize}
+        \item \emph{2) \implies 1).} Prove the contrapositive. Suppose that $a$ is a root of $f$ with multiplicity at least 2. Then we have $(x - a)^2 \mid f \implies (x - a) \mid f'$, i.e. $f'(a) = 0$. Since $f$ is minimal, $f' \mid f$, and yet we require $\deg f' = \deg f$, which implies that $f = 0$.
+        \item \emph{1) \implies 2).} Prove the contrapositive by reversing the logic above. $f$ minimal implies $f'(a) = 0$ if and only if $f \mid f'$. But $f'(a) = 0 \implies (x - a)^2 \mid f$, i.e. $a$ is a multiple root of $f$.
+        \item \emph{3) \implies 2).} If $\fchar(k) = 0$, then $f' = 0$ if and only if $f$ is constant, which cannot be a minimal polynomial. If $\fchar(k) = p$, then if $f' = 0$ either $f$ is constant (which cannot be the case) or every term of $f'$ vanishes because of characteristic-$p$, i.e. $f \in k[x^p]$.
+        \item \emph{2) \implies 3).} Reverse the logic above and verify by the same computation.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    Notice that the condition 2) $f' \neq 0$ does not depend on whether $f$ splits into degree-1 polynomials. Therefore, if $f \in k[x]$ is separable, then $f$ cannot have any multiple roots in any algebraic closure of $k$.
+\end{remark}
+
+\begin{definition}[Perfect Field]
+    A field $k$ is \textbf{perfect} if every extension $k \ext K$ is separable.
+\end{definition}
+
+\begin{proposition}
+    A field $k$ is perfect if and only if $\fchar(k) = 0$, or $\fchar(k) = p$ with $k = k^p$, i.e. the map $\varphi: k \to k, x \mapsto x^p$ is an isomorphism.
+\end{proposition}
+
+\begin{proof}
+    For the case where $k$ is characteristic-0, any minimal polynomial $f$ must be of degree at least 1, giving $f' \neq 0$ which satisfies condition 2).
+
+    Now consider the case where $\fchar{k} = p$. Show the following two implications:
+    \begin{itemize}
+        \item \emph{If there exists $a \in k \smallsetminus k^p$, then $k$ is not perfect.} Let $k \ext \bar{k}$ be an algebraic closure, and let $b \in \bar{k}$ be a root of $f = x^p - a$. Claim that $f$ is irreducible in $k$ (which implies that $b$ is not separable over $k$ as it is a multiple root). In $k[x]$, $f = x^p - a = x^p - b^p = (x - b)^p$ since $\fchar{k} = p$. Therefore, if $f = gh$ in $k[x]$ with $\deg g > 0$ and $\deg h > 0$, $g$ must taken the form of $g = c(x - b)^i$ for $1 \leq i \leq p - 1$. But then consider the coefficient of $x$, which gives $cib \in k$. Since $c, i \neq 0$ in $k$, $b \in k$, which is a contradiction.
+        \item \emph{If $k = k^p$, then $k$ is perfect.} Suppose that we have the algebraic extension $k \ext K$. Choose $u \in K$ arbitrarily, with minimal polynomial $f$. If $u$ is not separable over $k$, then by definition $f \in k[x^p]$, i.e. we can write $f$ as
+        \[
+            f = \sum_{i = 0}^n a_i x^{p^i} = \sum_{i = 0}^n b_i^p x^{p^i} = \left( \sum_{i = 1}^n b_i x^i \right)^p
+        \]
+        where the first equality results from $k = k^p$, and the second equality results from $\fchar{k} = p$. But this contradicts with the irreducibility of $f$.
+    \end{itemize}
+\end{proof}
+
+\begin{example}
+    The followings give some examples of separability of extensions:
+    \begin{enumerate}
+        \item Every field of characteristic 0 is perfect by the proposition above.
+        \item Every algebraically closed field $k$ is perfect, as the only algebraic extension from $k$ is $k \ext k$.
+        \item Every finite field $\F_{p^e}$ is perfect, as Claim \ref{clm: fields with p^e elements} gives that $u \in \F_{p^e} \implies u^{p^e} = u$, i.e. $\left(u^{p^{e-1}}\right)^p = u$; and using the proposition above gives the desired result.
+        \item Fields in the form of $k(x)$ where $\fchar{k} = p > 0$ is not perfect. Suppose that $x \in \left( k(x) \right)^p$, then $x = \left( \frac{f}{g} \right)^p$ for some $f, g \in K[x]$, i.e. $x g^p = f^p$. Counting the degree of the polynomial on both sides, we have $1 \equiv 0 \mod{p}$, which is a contradiction.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}\label{prop: transitivity of separable extensions, backwards}
+    If we have field extensions $k \ext k_1 \ext k_2$ s.t. the extension $k \ext k_2$ is separable, then both $k \ext k_1$ and $k_1 \ext k_2$ are separable. 
+\end{proposition}
+
+\begin{proof}
+    $a \in k_1$ can be considered as an element in $k_2$; and since $k \ext k_2$ is separable, $a$ is not a multiple root of its minimal polynomial over $k$, which implies that $k \ext k_1$ is separable. 
+
+    For the second result, consider $b \in k_2$. Let $g$ be its minimal polynomial over $k$, and $h$ be its minimal polynomial over $k_1$. $h$ being minimal implies that $h \mid g$. Since $k \ext k_2$ is separable, $b$ is not a multiple root of $g$, and therefore is not a multiple root of $h$. Since this holds for all $b \in k_2$, the extension $k_1 \ext k_2$ is also separable.
+\end{proof}
+
+\textstart
+The converse of the proposition above also holds, but we will prove this later.
+
+The following results characterize the ``nice'' feature of a field extension being separable:
+
+\begin{definition}[Primitive Element]
+    Given a field extension $E/F$, $\alpha \in F$ is a \textbf{primitive element} if $E = F(\alpha)$.
+\end{definition}
+\nogap
+\begin{definition}[Simple Extension]
+    A field extension $E/F$ is simple if there exists a primitive element for the extension.
+\end{definition}
+
+\begin{theorem}\label{thm: primitive element theorem}
+    Every finite separable extension is simple. 
+\end{theorem}
+
+\begin{proof}
+    Since $K/k$ is finite, there exists a basis of $K$ seen as a $k$-vector field. In particular there exists $a_1, \dots, a_n \in K$ s.t. $K = k(a_1, \dots, a_n)$. Perform induction on $n$:
+    \begin{itemize}
+        \item \emph{$n = 1$.} Clear.
+        \item \emph{$n \geq 2$.} It suffices to show the case for $n = 2$, as since the extension is finite, recursively apply the result for $n = 2$ will give the general result. Suppose that $K = k(a, b)$ for $a, b \in K$. 
+        
+        If $k$ is a finite field, then $K$ is also finite, which implies that $K^{\times}$ is a cyclic group. Let $c \in K^{\times}$ be a generator of $K^{\times}$. Then we have $K = k(c)$.
+
+        Now suppose that $k$ is finite. We seek to prove a stronger result: if $c_{\lambda} = a \lambda + b$ for $\lambda \in k$, then $c_{\lambda}$ is a primitive element for finitely many $\lambda$. Fix $\lambda \in k$. Suppose that $c_{\lambda}$ is not primitive, i.e. we have $k(c_{\lambda}) \subseteq k(a, b)$ a proper extension. Then we must have $a \notin k(c_{\lambda})$ (as otherwise we get $k(c_{\lambda}) \ni c_{\lambda} - a\lambda = b$). Let $f, g \in k(c_{\lambda})[x]$ be the minimal polynomials of $a$ and $b$ over $k(c_{\lambda})$. Then in the algebraic closure $K \ext \overline{K}$, $f$ and $g$ factors as 
+        \[
+            f = (x - a_1) \cdots (x - a_n), \qquad g = (x - b_1) \cdots (x - b_m)
+        \]
+        Without loss of generality assume that $a = a_1$ and $b = b_1$. Since $a \notin k(c_{\lambda})$, $n \geq 2$. Now consider the extensions $k \ext k(c_{\lambda}) \ext k(a, b)$. Since $k \ext k(a, b)$ is separable, $k \ext k(c_{\lambda})$ is also separable, which by definition implies that all the $a_i$s are distinct. Now consider $\varphi: k(c_{\lambda})(a_1) \isom k(c_{\lambda})(a_2)$ which sends $a_1 \mapsto a_2$. We then have the commutative diagram:
+
+        \begin{minipage}{\linewidth}
+            \centering
+            \begin{tikzcd}
+                k(c_{\lambda}) \arrow[rr, hookrightarrow] \arrow[rrdd, hookrightarrow] & & k(c_{\lambda})(a_1) \arrow[dd, "\varphi"] \arrow[rr, hookrightarrow] & & \bar{k} \arrow[dd, "\psi"] \\
+                & & & & \\
+                & & k(c_{\lambda})(a_2) \arrow[rr, hookrightarrow] & & \bar{k}
+            \end{tikzcd}
+        \end{minipage}
+        This induces an isomorphism $\psi: \bar{k} \to \bar{k}$ via specifying $\psi(b) = \psi(b_1) = b_i$ for some $i$. Since $\psi$ should fix $k(c_[\lambda])$, we require
+        \[
+            a_2 \lambda + b_i = \psi(a \lambda + b) = \psi(c_{\lambda}) = a \lambda + b \implies \lambda = \frac{b_i - b}{a - a_2}
+        \]
+        Such lambda exists since $a \neq a_2$ by the previous result that all $a_i$s are distinct; and there are only finitely many of them as there are finitely many distinct $b_i$s.
+    \end{itemize}
+\end{proof}
+
+\section{Normal Extensions}
+
+\begin{definition}[Normal Extension]\label{def: normal extension}
+    An algebraic extension $K \ext L$ is a \textbf{normal extension} if it satisfies one of the following three conditions:
+    \begin{enumerate}[label=\arabic*)]
+        \item For every $f \in K[x]$ irreducible, if $f$ has a root in $L$, then $f$ factors as degree-1 polynomials in $L[x]$.
+        \item There is a (possibly infinite) family of polynomials $(f_i)_{i \in I}$ in $K[x]$ s.t. $L$ is the splitting field of this family. That is, all $f_i$ factors as a product of degree-1 polynomials in $L[x]$, and there is no $L'$ with $K \subset L' \subset L$ which satisfies the same property. 
+        \item Given an algebraic closure $L \ext \bar{L}$, any ring homomorphism $\sigma: L \ext \bar{L}$ satisfying $\restr{\sigma}{K} = \Id_K$ satisfies $\sigma(L) \subseteq L$.
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    The three conditions in the Definition \ref{def: normal extension} for normal extensions are equivalent. 
+\end{proposition}
+
+\begin{proof}
+    Verify the following implications:
+    \begin{itemize}
+        \item \emph{1) \implies 2).} Choose a family of elements $(a_i)_{i \in I}$ s.t. $L = K(a_i \mid i \in I)$. Since the extension $L/K$ is algebraic, for all $i$, $a_i$ has a minimal polynomial $f_i$. Since $f_i$ has a root $a_i$ in $L$, it factors as
+        \[
+            f_i = (x - a_{i1}) \cdots (x - a_{i n_i}), \qquad \text{where } a_{i1} = a_i,\ a_{ij} \in L
+        \]
+        Then we can write $L = K(a_{ij} \mid i \in I, 1 \leq j \leq n_i)$, which exactly implies that $L$ is the splitting field of $(f_i)_{i \in I}$.
+        \item \emph{2) \implies 3).} If $L$ is the splitting field of $(f_i)_{i \in I}$, then $f_i = (x - a_{i1}) \cdots (x - a_{i n_i})$ with $a_{i1} = a_i$, and $a_{ij} \in L$ for all $i$, $j$. Since $\sigma$ fixes elements in $K$, 
+        \[
+            f_i = \sigma(f_i) = \sigma(c_1) (x - \sigma(a_{i1})) \cdots (x - \sigma(a_{i n_i}))
+        \]
+        Then $\sigma(a_{ij}) \in \{a_{i1}, \dots, a_{i n_i}\} \subseteq L$ for all $j$. Since 2) gives that $L = K(a_{ij} \mid i \in I, 1 \leq j \leq n_i)$, we know $\sigma(L) \subseteq L$ as $\sigma$ fixes $K$ and is thus uniquely determined by its action on $a_{ij}$s.
+        \item \emph{3) \implies 1).} Let $f \in K[x]$ be irreducible, and has a root $a \in L$. Let $L \ext \bar{L}$ be an algebraic closure. Prove by contradiction: suppose that $f$ has a root $b \in \bar{L} \smallsetminus L$. Consider the map $\varphi: K(a) \to K(b)$ fixing $K$ and mapping $a$ to $b$. Since $K(a) \ext L$ is algebraic, and $\bar{L}$ is algebraically closed, by Theorem \ref{thm: algebraic extension can be extended to algebraical closure} there exists a unique $\sigma: L \ext \bar{L}$ extending $\varphi$, i.e. we have the following commutative diagram:
+        
+        \begin{minipage}{\linewidth}
+            \centering
+            \begin{tikzcd}
+                K \arrow[rr, hookrightarrow] \arrow[rrdd, hookrightarrow] & & K(a) \arrow[dd, "\varphi"] \arrow[rr, hookrightarrow] & & L \arrow[dd, dashed, "\sigma"] \\
+                & & & & \\
+                & & K(b) \arrow[rr, hookrightarrow] & & \bar{L}
+            \end{tikzcd}
+        \end{minipage}
+        But then $\sigma(a) = b \notin L$ which gives a contradiction.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    From the proof, if the extension we have $K \ext L$ is a finite normal extension, then there exists finitely many $f_1, \dots, f_r \in K[x]$ s.t. $L$ is the splitting field of $(f_1, \dots, f_r)$ then equivalently $L$ is the splitting field of $f = \prod_{i = 1}^r f_i$.
+\end{remark}
+
+\begin{example}
+    The following gives some examples of normal extensions:
+    \begin{enumerate}
+        \item The algebraic closure $K \ext \bar{K}$ is normal as by definition any ring homomorphism $\sigma$ has the property $\sigma(K) \subseteq K$.
+        \item If $K \ext L$ is a degree-2 extension, then $L/K$ is normal. If $a \in L \smallsetminus K$, and $f$ is the minimal polynomial of $a$, then by Remark \ref{rmk: degree of minimal polynomial gives degree of extension} $\deg f = 2$, i.e. $f = (x-a)(x-b) \in K[x]$. Then since $a \in L$, $b \in L$ as $a + b \in K \subseteq L$. But this implies that $L$ is the splitting field of $f$ and therefore $L/K$ is normal. \
+        \item The extension $\Q \ext \Q(\sqrt[3]{2})$ is normal as $\Q(\sqrt[3]{2})$ does not contain all the roots of $x^3 - 2$.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    Let $K \ext L \ext L'$ be algebraic extensions, and $L'/K$ is normal. Then there exists normal sub-extension $L \ext \tilde{L} \ext L'$ s.t. $\tilde{L}/K$ is normal. This is the \underline{normal closure} of $L$ over $K$.
+\end{proposition}
+
+\begin{proof}
+    Write $L = K(a_i \mid i \in I)$. Denote $f_i \in K[x]$ as the minimal polynomial of $a_i$. Since $L'/K$ is normal, we can factor $f_i = \sigma(f_i) = \sigma(c_1) (x - \sigma(a_{i1})) \cdots (x - \sigma(a_{i n_i}))$ with $a_i = a_{i1}$, and $a_{ij} \in L'$ for all $j$. If we have $L \subseteq \tilde{L} \subseteq L'$ where $\tilde{L}/L$ is normal, then $a_{ij} \in \tilde{L}$, which implies that $K(a_{ij} \mid i \in I, 1 \leq j \leq n_i) \subseteq \tilde{L}$. Since $K \ext K(a_{ij} \mid i \in I, 1 \leq j \leq n_i)$ is the splitting field of the family of polynomials $(f_i)_{i \in I}$, $\tilde{L}/K$ is normal.
+\end{proof}
+
+\begin{remark}
+    If we have $K \ext L \ext L_1'$ and $K \ext L \ext L_2'$ algebraic extensions s.t. $L_1'/L$ and $L_2'/L$ are normal, then the corresponding normal closures of $L$ in $L_1'$ and $L_2'$ are isomorphic as $k$-extensions.
+\end{remark}
+
+\begin{proposition}\label{prop: transitivity of normal extensions, backwards}
+    If $K \ext L \ext L'$ are algebraic extensions, and $L'/K$ is normal, then $L'/L$ is normal.
+\end{proposition}
+
+\begin{proof}
+    Suppose that $f \in L[x]$ is irreducible, and has a root $a \in L'$, then $f$ is a minimal polynomial of $a$ over $L$. Let $g \in K[x]$ be the minimal polynomial of $a$ over $K$. By definition $g(a) = 0$, which implies that $f \mid g$ in $L[x]$. Since $L'/K$ is normal, $g$ factors as a product of degree-1 polynomials in $L'[x]$, which implies that $f$ also factors as a product of degree-1 polynomials in $L'[x]$, which is exactly the definition of $L'/L$ being normal. 
+\end{proof}
+
+\section{Galois Extensions}
+
+\begin{definition}[Galois Group]
+    Let $K \ext L$ be an algebraic extension. The \textbf{Galois Group} of $L/K$ is
+    \[
+        G(L/K) := \{ \sigma \in \Aut(L) \mid \restr{\sigma}{K} = \Id_K \}
+    \]
+    with the group operation defined as composition.
+\end{definition}
+
+\begin{definition}[Galois Extension]
+    A field extension is \textbf{Galois} if it is both normal and separable. 
+\end{definition}
+
+\begin{theorem}\label{thm: degree of ext equals order of galois group}
+    For $K \ext L$ a finite Galois extension, $\abs{G(L/K)} = [L : K]$.
+\end{theorem}
+
+\begin{proof}
+    Since $L/K$ is finite and separable, by Theorem \ref{thm: primitive element theorem} there exists a primitive $a \in L$ s.t. $L = K(a)$. Let $f$ be the minimal polynomial of $a$ over $K$. By Remark \ref{rmk: degree of minimal polynomial gives degree of extension} we know $\deg f = [L : K]$.
+
+    Now consider the algebraic closure $K \ext L \ext \bar{L}$. Then $f$ factors as $f = (x - a_1) \cdots (x - a_n)$ with $a_1 = a$, $a_i \in \bar{L}$ for all $i$, and $n = [L : K]$. Since $L/K$ is normal, $a_i \in L$ for all $i$ as $a \in L$; and since $L/K$ is separable, all $a_i$s are distinct. Further as $f \in K[x]$, for all $\sigma \in G(L/K)$, $f = \sigma(f) = (x - \sigma(a_1)) \cdots (x - \sigma(a_n))$. Then $\sigma(a_i) \in \{a_1, \dots, a_n\}$ for all $i$.
+
+    Define $\varphi: G(L/K) \to \{a_1, \dots, a_n\}$, $\sigma \mapsto \sigma(a_1)$. Check:
+    \begin{itemize}[label=$-$]
+        \item \emph{$\varphi$ is injective.} Since $L = K(a)$, two automorphisms in $G(L/K)$ agreeing on $a$ must be identical as by definition they must fix $K$.
+        \item \emph{$\varphi$ is surjective.} For all $i$, since $f$ is irreducible over $K$, we have $K(a) \simeq K[x]/(f) \simeq K(a_i)$ as $K$-algebras. Extend this to $\sigma: L \to L$, i.e. making the following diagram commute:
+
+        \begin{minipage}{\linewidth}
+            \centering
+            \begin{tikzcd}
+                K(a) \arrow[rr, "\sim"] \arrow[d, equal] & & K(a_i) \arrow[d, symbol=\subseteq] \\
+                L \arrow[rr, dashed, "\sigma"] & & L
+            \end{tikzcd}
+        \end{minipage}
+
+        Notice that $\sigma$ must be surhective, as
+        \[
+            [K(a) : K] = [L : K] = [K(a_i) : K] \leq [\sigma(L) : K]
+        \]
+        which implies that $L \subseteq \sigma(L)$ and therefore $\sigma$ is an automorphism, i.e. is in $G(L/K)$. This gives a pre-image and thus implies that $\varphi$ is surjective. Since $\{a_1, \dots, a_n\}$ is a finite set, $\abs{G(L/K)} = \abs{\{a_1, \dots, a_n\}} = n$.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    With the same notation as in the proof, we have a group homomorphism $G(L/K) \to S_n \simeq S_{\{a_1, \dots, a_n\}}$, $\sigma \mapsto (a_i \mapsto \sigma(a_i))$. Since it is both injective and surjective as given by the proof, the induced action of $G(L/K)$ on $\{a_1, \dots, a_n\}$ is transitive.
+\end{remark}
+
+\begin{corollary}\label{cor: elements of galois group permutes roots of minimal polynomial}
+    Automorphisms in $G(L/K)$ permutes the roots of minimal polynomials of elements in $L$ over $K$. 
+\end{corollary}
+
+\begin{example}
+    The followings give some examples of Galois extensions and the corresponding Galois Group:
+    \begin{enumerate}
+        \item $\R \ext \C$ is a Galois extension of degree 2. It is normal as $\C$ is the splitting field of $x^2 + 1$, and it is separable as $\R$ is characteristic-0. $G(\C/\R) = \{\Id, \sigma\}$ where $\sigma$ is the complex conjugation (corresponding to $S_2$).
+        \item For $d \in \Z_{\geq 0}$ not a perfect square, $\Q \ext \Q(\sqrt{d})$ is a Galois extension of degree 2. It is normal as $\Q(\sqrt{d})$ is the splitting field of $x^2 - d$, and it is separable as $\Q$ is characteristic-0. $G(\Q(\sqrt{d})/\Q) = \{\Id, \sigma\}$ where $\sigma: (a + b\sqrt{d}) \mapsto (a - b\sqrt{d})$.
+        \item $\F_p \ext \F_{p^e}$ is a Galois extension with degree $e$. It is normal as $\F_{p^e}$ is the splitting field of $x^{p^e} - x$; and it is separable as $\F_{p^n}$ is perfect for all $n$. The Galois group is then $G(\F_{p^e}/\F_p) = \pair{\sigma}$ where $\sigma$ is the \underline{Frobenius endomorphism}: $x \mapsto x^p$, with $\sigma^e = \Id$ and $\abs{\pair{\sigma}} = e$.
+        
+        A sidenote is that using this perspective it is clearer that there exists an embedding $\F_{p^e} \ext \F_{p^f}$ if and only if $e \mid f$, as this is equivalent to saying that $\sigma^f = \Id$. 
+        \item The extension $\Q \exth{\deg 3} \Q(\sqrt[3]{2}) \exth{\deg 2} \Q(\sqrt[3]{2}, \omega)$ where $\omega$ is the 3-rd root of unity, is Galois, as it is the splitting field of $x^3 - 2$ (normal) and $\Q$ is perfect (separable). Since $G(\Q(\sqrt[3]{2}, \omega)/\Q)$ is not cyclic, $G(\Q(\sqrt[3]{2}, \omega)/\Q) \simeq S_3$ by cardinality.
+    \end{enumerate}
+\end{example}
+
+\section{Algebraic Independence \& Transcendence Degree$^{\ast}$}
+
+\textstart
+The introduction of transcendental degree seeks to give an invariant that measures how far the an extension $k \ext K$ is from being algebraic. We would denote this as $\trdeg(K/k)$ and give a formal definition later. But we would desire the following properties from it:
+\begin{enumerate}[label=\arabic*)]
+    \item $\trdeg{K/k} = 0$ if the extension $k \ext K$ is algebraic. 
+    \item If $k \ext K = k(x_1, \dots, x_n)$ where $x_1, \dots, x_n$ are formal (not algebraic), then $\trdeg(K/k) = n$.
+    \item Given extensions $k \ext K \ext L$, $\trdeg(L/k) = \trdeg(K/k) + \trdeg{L/K}$.
+\end{enumerate}
+
+\begin{definition}[Algebraic Independence]
+    Given a field extension $k \ext K$, a subset $A \subset K$ is \textbf{algebraically independent} (over $k$) if for all $n$ for every $a_1, \dots, a_n \in A$ distinct, and every $f \in k[x_1, \dots, x_n]$, $f \neq 0$ implies $f(a_1, \dots, a_n) \neq 0$. Otherwise we say that $A$ os \textbf{algebraic dependent}.
+\end{definition}
+
+\begin{remark}
+    We have the following immediate results:
+    \begin{enumerate}[label=\arabic*)]
+        \item For $A = \{a\}$, i.e. containing only one element, then $A$ is algebraically independent if and only if $a$ is not algebraic over $k$. 
+        \item By definition, $A$ is algebraically independent if and only if for all $B \subseteq A$ finite, $B$ is algebraically independent. 
+        \item Given $a_1, \dots, a_n \in k$, they being algebraically independent if and only if for $\varphi: k[x_1, \dots, x_n] \to k$, $x_i \mapsto a_i$ as a $k$-algebra homomorphism satisfies $\ker \varphi = \{0\}$, i.e. $k(a_1, \dots, a_n) \simeq k(x_1, \dots, x_n)$.
+    \end{enumerate}
+\end{remark}
+
+\begin{example}
+    Take $R = k[x, y]/(x^2 + y^2 - 1)$, consider $k \ext R \ext \Frac(R)$, $\bar{x}$ and $\bar{y}$ are algebraically dependent, as we have the relation $(\bar{x})^2 + (\bar{y})^2 = 1$.
+\end{example}
+
+\begin{proposition}\label{prop: transitivity of alg. indep.}
+    Given a field extension $k \ext K$, let $A$ be a set, and $B = A \sqcup \{b\}$ inside field $K$. Then $B$ is algebraically independent over $k$ if and only if $A$ is algebraically independent over $k$, and $b$ is not algebraic over $k(A)$.
+\end{proposition}
+
+\begin{proof}
+    By definition if $B$ is algebraically independent, then $A$ must be algebraically independent. For $b$ not algebraic over the $k(A)$ prove the contrapositive: suppose that $B$ is algebraic over $k(A)$, then there exists $0 \neq P = c_0 + c_1 y + \cdots + c_d y^d \in k(A)[y]$ s.t. $P(b) = 0$. Since $c_i \in k(A)$, we can write $c_i = \frac{f_i (a_1, \dots, a_n)}{g_i (a_1, \dots, a_n)}$ for $f_i, g_i \in k[x_1, \dots, x_n]$ and $a_i \in A$. $P(b) = 0$ implies that $\sum_{i = 0}^d f_i (x_1, \dots, x_n) b^i = 0$. But notice that $P \neq 0$, and $P$ can be viewed as a polynomial in $\{a_1, \dots, a_n, b\}$, which implies that $A$ is not algebraically independent. 
+
+    The other direction is clear by definition.
+\end{proof}
+
+\begin{proposition}\label{prop: existence of max alg. indep. subset}
+    Every algebraically independent subset $A \subseteq K$ over $k$ is contained in a maximal such subset.
+\end{proposition}
+
+\begin{proof}
+    Apply Zorn's Lemma. Show that the set $\mathcal{B} = \{B \subseteq K \mid A \subseteq B, \text{$B$ algebrically independent over $k$}\}$ with order of inclusion satisfies the hypotheses in Zorn's Lemma:
+    \begin{itemize}
+        \item $\mathcal{B}$ is nonempty. In particular, it contains $A$.
+        \item If $(B_i)_{i \in I}$ is a chain in $\mathcal{B}$, it is bounded above by $\overline{B} = \bigcup_{i \in I} B_i \in B$. It is indeed algebraically independent as every finite subset of $\overline{B}$ is contained in some $B_i$ since every two such $B_i$s are comparable (as a chain is totally ordered). 
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}\label{prop: max. alg. indep. iff alg. extension}
+    A subset $A \subseteq L$ is a maximal algebraically independent subset over $k$ of $K$ if and only if $A$ is algebraically independent, and $k(A) \ext K$ is an algebraic extension. 
+\end{proposition}
+
+\begin{proof}
+    By definition, if $A$ is algebraically independent, then it is maximal if and only if for all $b \in K \smallsetminus A$, $b$ is algebraic over $k(A)$ (otherwise by Proposition \ref{prop: transitivity of alg. indep.} we can adjoin an element to this set while keeping its algebraic independence). This is exactly saying that $k(A) \ext K$ is algebraic.
+\end{proof}
+
+\begin{definition}[Transcendental Basis]
+    Given a field extension $K/k$, a \textbf{transcendental basis} of $K/k$ is a maximal algebraically independent subset of $K$ over $k$.
+\end{definition}
+\nogap
+\begin{definition}[Transcendental Degree]
+    Given a field extension $K/k$, the \textbf{transcendental degree}, denoted $\trdeg(K/k)$ is the number of elements of a transcendental basis. It is in $\Z_{\geq 0} \cup \infty$.
+\end{definition}
+
+\textstart
+We are using the similar nomenclature as for vector spaces, so we would expect similar properties for being ``independent'' or ``a basis'':
+
+\begin{theorem}\label{thm: cardinality of max. alg. indep. subset}
+    If given $K/k$ is a field extension, and $a_1, \dots, a_n \in K$ s.t. $k(a_1, \dots, a_n) \ext K$ is algebraic (i.e. this is a maximal algebraically independent set), then for all $\{b_1, \dots, b_m\}$ algebraically independent over $k$, $m \leq n$.
+\end{theorem}
+
+\begin{proof}
+    After reordering the elements, we may assume that $a_i = b_i$ for all $1 \leq i \leq r$. If $r = m$ then this is exactly hat we need.
+
+    Now suppose that $r < m$. It is enough to show that there exists $i > r$ s.t. the extension $k(a_1, \dots, a_{i-1}, a_{i+1}, \dots, a_n, b_{r+1}) \ext K$ is algebraic. If that is the case, then after finitely many steps we will get the set $b_n$s (as we can identify $a_1, \dots, a_r, a_{r+1}$ with the corresponding elements in $b$ and apply the argument recursively). This then implies that $r = m$.
+
+    Since $b_{r+1}$ is algebraic over $k(a_1, \dots, a_n)$, there exists nonzero $f \in k(a_1, \dots, a_n)[y]$ s.t. $f(b_{r+1}) = 0$. Getting rid of the denominators of the polynomial we can without loss of generality assume that the coefficients of $f$ are in the form of $P(a_1, \dots, a_n)$, i.e. we have nonzero $g \in k[x_1, \dots, x_n, y]$ s.t. $g(a_1, \dots, a_n, b_{r+1}) = 0$ via evaluating $f$ on $b_{r+1}$ on the coefficients given by $g$. Since $b_1, \dots, b_{r}, b_{r+1}$ are algebraically independent over $k$. Without loss of generality we can assume that $x_n$ appears with nonzero coefficient in $g$. Now write
+    \[
+        g = \sum_{i = 0}^p g_i(x_1, \dots, x_{n-1}, y) x_n^i
+    \]
+    If there exists $j$ s.t. $g_j(a_1, \dots, a_{n-1}, b_{r+1}) \neq 0$, then $a_n$ is algebraic over $k(a_1, \dots, a_{n-1}, b_{r+1})$. This gives the algebraic extension
+    \[
+        k(a_1, \dots, a_{n-1}, b_{r+1}) \ext k(a_1, \dots, a_n, b_{r+1}) \ext K
+    \]
+    Otherwise there exists $g_j \neq 0$ s.t. $g_j(a_1, \dots, a_{n-1}, b_{r+1}) = 0$. Repeat the process with $g$ replaced with $g_j$. This process must terminate as $g \neq 0$.
+\end{proof}
+
+\begin{corollary}
+    Every two transcendental basis of $K$ over $k$ have the same number of elements (or are in bijection, for the infinite case).
+\end{corollary}
+
+\begin{proposition}
+    If $K = k(a_1, \dots, a_n)$, then there exists a subset $A \subseteq \{a_1, \dots, a_n\}$ that is a transcendental basis over $k$. In particular, $\trdeg(K/k) \leq n$.
+\end{proposition}
+
+\begin{proof}
+    Let $A \subseteq \{a_1, \dots, a_n\}$ be the maximal subset which is algebraically independent (which exists by Proposition \ref{prop: existence of max alg. indep. subset}). But by Proposition \ref{prop: transitivity of alg. indep.} this implies that if $a_i \notin A$, then $a_i$ is algebraic over $k(A)$. Therefore, $k(A) \ext K = k(a_1, \dots, a_n)$ is algebraic, i.e. $A$ is a transcendental basis. 
+\end{proof}
+
+\begin{proposition}\label{prop: trdeg is additive}
+    If we have $k \ext K \ext L$ field extensions, then $\trdeg(L/k) = \trdeg(K/k) + \trdeg(L/K)$.
+\end{proposition}
+
+\begin{proof}
+    First deal with the cases where RHS is infinite:
+    \begin{itemize}[label=$-$]
+        \item If $\trdeg(K/k)$ is infinite, then a transcendental basis for $K/k$ is part of a transcendental basis of $L/k$ as $L$ can be viewed as a vector space over $K$. 
+        \item If $\trdeg(L/K)$ is infinite, then in a transcendental basis for $L/K$ are in particular algebraically independent over $k$, which implies that $\trdeg(L/k)$ is infinite.
+    \end{itemize}
+    Now we may assume that we have a finite transcendental basis $a_1, \dots, a_m$ for $K/k$ and $b_1, \dots, b_n$ for $L/K$. Claim that $\{a_1, \dots, a_m, $ $b_1, \dots, b_n\}$ gives a transcendental basis of $L/k$. Verify the followings:
+    \begin{enumerate}[label=\arabic*)]
+        \item The sub-extensions are algebraic since $a_i$s and $b_i$s are transcendental bases for the corresponding extensions (by Theorem \ref{prop: max. alg. indep. iff alg. extension})
+        \[
+            k(a_1, \dots, a_m, b_1, \dots, b_n) \ext K(b_1, \dots, b_n) \ext L
+        \]
+        By Proposition \ref{prop: transitivity of algebraic extensions} we have the extension $L/k(a_1, \dots, a_m, b_1, \dots, b_n)$ being algebraic. 
+        \item The set $\{a_1, \dots, a_m, b_1, \dots, b_n\}$ is algebraically independent over $k$. Proceed to show by induction on $i$ for $0 \leq i \leq n$ that $\{a_1, \dots, a_m, b_1, \dots, b_i\}$ are algebraically independent over $k$:
+        
+        For $i = 0$ the result is clear by hypothesis. For the inductive step it suffices to show that $b_{i+1}$ is not algebraically dependent on $\{a_1, \dots, a_m, b_1, \dots, b_i\}$, then by Proposition \ref{prop: transitivity of alg. indep.} we have the set $\{a_1, \dots, a_m, b_1, \dots, b_i, b_{i+1}\}$ algebraically independent over $k$. This is clear as $b_j$s give a transcendental basis over $K$, and are therefore algebraically independent over $k$. Taking $i = n$ gives the algebraic independence over $k$. 
+    \end{enumerate}
+\end{proof}
+
+Verify that we indeed have the desired properties of transcendental degree as mentioned in the beginning of the section:
+\begin{enumerate}[label=\arabic*)]
+    \item $\trdeg(K/k) = 0$ if and only if the extension $k \ext K$ is algebraic. This comes as a corollary of Proposition \ref{prop: max. alg. indep. iff alg. extension}.
+    \item $K = k(a_1, \dots, a_n)$ if and only if $\trdeg(K/k) \leq n$, with equality if and only if $a_i$s are algebraically independent. This results from Theorem \ref{thm: cardinality of max. alg. indep. subset}.
+    \item The proposition above (Proposition \ref{prop: trdeg is additive}) gives the additivity of transcendental degree.
+\end{enumerate}
+
+\begin{remark}
+    The results above implies that $k(x_1, \dots, x_m) \simeq k(x_1, \dots, x_n)$ as $k$-algebras (where $x_i$s are formal variables) if and only if $m = n$. Notice that for $m \neq n$ they can still be isomorphic as fields: take $k = \Q(x_1, x_2, \dots)$ (with infinitely many variables) and let $m = 0$ and $n = 1$, with the isomorphism $x_i \mapsto x_{i+1}$. But this is clearly not $k$-linear. 
+\end{remark}
+
+\begin{definition}[Purely Transcendental]
+    A finitely generated field extension $K/k$ is \textbf{purely transcendental} if $K \simeq k(x_1, \dots, x_n)$ as $k$-algebras for some $n$. 
+\end{definition}
+
+This is somewhat related to ring theory: we state without proof the following results:
+
+\begin{definition}[Dimension (Ring)]
+    Given a commutative ring $R$, its \textbf{dimension} is defined as
+    \[
+        \dim R := \sup_n \{ n \mid \exists\ p_0 \subsetneqq \cdots \subsetneqq p_n, \text{ $p_i \subseteq R$ prime ideals} \}
+    \]
+\end{definition}
+
+\begin{theorem}
+    Given a field $k$ and a domain $R$, if $R$ is a finitely generated $k$-algebra, then $\dim R = \trdeg(\Frac(R)/k)$.
+\end{theorem}
+
+\section{The Fundamental Theorem of Galois Theory}
+
+\textstart
+We now return to the discussion of Galois Theory. We have introduced the \underline{Galois Group} of a field extension $k \ext K$:
+\[
+    G(K/k) := \{ \sigma \in \Aut(K) \mid \sigma(u) = u, \forall u \in k \}
+\]
+The following section seeks to establish the relation between the structure of the Galois Group and the corresponding field extension. 
+
+\begin{proposition}
+    If $K = k(\alpha)$, then $\abs{G(K/k)} \leq [K : k]$ with equality if and only if $K/k$ is normal, and $\alpha$ is separable over $k$.
+\end{proposition}
+
+\begin{proof}
+    Every $k$-algebra homomorphism $\sigma: K \ext \bar{K}$ is uniquely determined by $\sigma(\alpha)$; and if $f \in k[x]$ is the minimal polynomial of $\alpha$, by Corollary \ref{cor: elements of galois group permutes roots of minimal polynomial} $\sigma$ permutes the roots of $f$ in $\bar{K}$. Then we have the chain of inequalities:
+    \[
+        \abs{G(K/k)} \leq \abs{\{\sigma: K \to \bar{K} \mid \text{$\sigma$ is a morphism of $k$-algebra}\}} \leq \text{\# distinct roots of $f$} \leq \deg f = [K : k]
+    \]
+    and we have equalities when $f$ is separable, and $K$ is the splitting field of $f$. 
+\end{proof}
+
+\begin{theorem}[Fundamental Theorem of Galois Theory]\label{thm: fundamental theorem of galois theory}
+    Let $K/k$ be a finite Galois extension. Then we have two maps:
+    \begin{minipage}{\linewidth}
+        \centering
+        \vspace{1em}
+        \begin{tikzcd}
+            \{k \ext L \ext K\} \arrow[rr, shift left, "\Phi"] & & \{\text{subgroups of $G = G(K/k)$}\} \arrow[ll, shift left, "\Psi"]
+        \end{tikzcd}
+        \vspace{1em}
+    \end{minipage}
+    where $\Phi(L) = G(K/L)$, and for $H \leq G$, $\Psi(H) = K^{H} := \{u \in K \mid \sigma(u) = u, \forall \sigma \in H\}$. They further satisfy the following two properties:
+    \begin{enumerate}[label=\arabic*)]
+        \item $\Phi$ and $\Psi$ are order-reversing, inverse bijections.
+        \item $H \leq G$ is a normal subgroup if and only if $k \ext K^H$ is a normal extension. In this case, the group homomorphism
+        \[
+            G(K/k) \to G(K^H/k), \qquad \sigma \mapsto \restr{\sigma}{K^H}
+        \]
+        induces an isomorphism $G/H \simeq G(K^H/k)$. 
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    We first consider some simple examples of such correspondence:
+    \begin{enumerate}[label=\arabic*)]
+        \item The correspondence is \emph{order-reversing}: If $H_1 \leq H_2 \leq G$, then $K^{H_2} \subseteq K^{H_1}$ (as $H_2$ fixes fewer elements); and for $k \ext L_1 \ext L_2 \ext K$, $G(K/L_2) \leq G(K/L_1)$.
+        \item For simplicity in the followings we will write $K^H$ for $\Psi(H)$. Notice for $H \leq G$, $H \leq G(K/K^H)$, as $K^H$ by definition is the set of elements fixed by $H$; and in the other direction for extensions $k \ext L \ext K$, $G(K/L)$ fixes $L$. We need to prove the equality. 
+    \end{enumerate}
+\end{remark}
+
+\textstart
+Before proving the main theorem we need some more tools to describe $[K : K^H]$ for $H \leq G(K/k)$:
+
+\begin{proposition}
+    Given a field $K$ and a group $G$, any mutually distinct group homomorphisms $\chi_1, \dots, \chi_n: G \to K^{\times}$ are linearly independent as elements of $\Func(G;K)$ as a $K$-vector space.
+\end{proposition}
+
+\begin{proof}
+    Prove by contradiction. Suppose that we have a relation $\sum_{i = 1}^n a_i \chi_i = 0$, with not all $a_i$s being zero. Without loss of generality, assume $n$ is minimal, i.e. all $a_i$s are nonzero. Separate the cases:
+    \begin{itemize}
+        \item $n = 1$. Then $a_1 \chi_1 = 0$; but since $\chi_1 \in K^{\times}$ which cannot be zero, $a_1 = 0$. Contradiction.
+        \item $n > 1$. By definition we have
+        \begin{equation}\tag{$\ast$}\label{eq: lin indep. of Func(G;K)}
+            \sum_{i = 1}^n a_i\chi_i(g) = 0 \quad \forall g \in G
+        \end{equation}
+        Since $\chi_i$s are distinct, there exists $h \in G$ s.t. $\chi_1(h) \neq \chi_n(h)$. Fix $h$, and choose $g \in G$ arbitrarily. Since $\chi_i$s are group homomorphisms, we have by linear independence
+        \[
+            \sum_{i = 1}^n a_i \chi_i(hg) = 0 = \sum_{i = 1}^n a_i \chi_i(h) \chi_i(g) \qquad \forall g \in G
+        \]
+        Multiplying $\chi_1(h)$ on the right of Eq. \eqref{eq: lin indep. of Func(G;K)}, and subtract the RHS of the equality above, we have
+        \[
+            \sum_{i = 0}^n a_i \underbrace{(\chi_i(h) - \chi_1(h))}_{\text{zero iff $i = 1$}} \chi_i(g) = 0 \qquad \forall g \in G
+        \]
+        which contradicts the minimality of $n$.
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}\label{cor: distinct gp homs in Aut(K) are lin. indep.}
+    If $\sigma_1, \dots, \sigma_n \in \Aut(K)$ are distinct group homomorphisms, and $K$ is a field, then $\sigma_1, \dots, \sigma_n$ are linearly independent in $\Func(K; K)$ viewed as a $K$-vector space.
+\end{corollary}
+
+\begin{proof}
+    $\restr{\sigma_1}{K^{\times}}, \cdots, \restr{\sigma_n}{K^{\times}}$ are distinct group automorphisms on $K^{\times}$. Apply the above proposition.
+\end{proof}
+
+\begin{proposition}
+    Let $K$ be a field, and $A \subseteq \Aut(K)$ a subset. For $L = \{u \in K \mid \sigma(u) = u, \forall u \in A\}$, $[K : L] \geq \abs{A}$.
+\end{proposition}
+
+\begin{proof}
+    May assume that $[K : L] = n$ is finite, and $u_1, \dots, u_n$ is a basis of $K$ over $L$ (as a $L$-vector space). 
+
+    Argue by contradiction: suppose that we have $\sigma_1, \dots, \sigma_{n+1} \in A$ distinct. Consider the system of linear equations over $L$:
+    \[
+        \sum_{i = 1}^{n+1} \sigma_i(u_j) x_i = 0, \qquad 1 \leq j \leq n
+    \]
+    This is a system with $n$ equations and $(n+1)$ variables, which must exist a nontrivial solution $(a_1, \dots, a_{n+1})$. Since $u_i$s give a basis of $K$ over $L$, this is equivalent to having
+    \[
+        \sum_{i = 1}^{n+1} a_i \sigma_i(u_j) = 0\ (\forall j) \implies \sum_{i = 1}^{n+1} a_i \sigma_i = 0
+    \]
+    contradicting Corollary \ref{cor: distinct gp homs in Aut(K) are lin. indep.}.
+\end{proof}
+
+\begin{proposition}\label{prop: degree of subext equals order of galois subgroup}
+    If $A \subseteq \Aut(K)$ is a finite group, with the same notation as above we have equality $[K : L] = \abs{A}$.
+\end{proposition}
+
+\begin{proof}
+    It is already proven that $[K : L] \geq \abs{A}$. Now suppose that $[K : L] > \abs{A}$ for $A = \{\sigma_1, \dots, \sigma_d\}$. Then there exists elements $u_1, \dots, u_{d+1} \in K$ that are linearly independent over $L$. 
+
+    Apply the similar strategy as before. Consider the linear system of equations over $K$: 
+    \[
+        \sum_{i = 1}^{d+1} \sigma_j(u_i) x_i = 0, \qquad 1 \leq j \leq d
+    \]
+    As there are $d$ equations with $d+1$ variables, there exists a nontrivial solution $(a_1, \dots, a_{d+1})$ s.t.
+    \[
+        \sum_{i = 1}^{d+1} a_i \sigma(u_i) = 0 \qquad \forall \sigma \in A
+    \]
+    In particular we can ignore all nonzero $a_i$s and get $L$-linearly independent elements $u_1, \dots, u_m$ in $K$ s.t. 
+    \begin{equation}\tag{$\ast$}\label{eq: lin indep. in K/L}
+        \sum_{i = 1}^m a_i\sigma(u_i) = 0 \qquad \text{$a_i \neq 0\ (\forall i)$, $m$ minimal}
+    \end{equation}
+    Then either
+    \begin{itemize}
+        \item $m = 1$. $a_1 \sigma(u_1) = 0$. Take in particular $\sigma = \Id$, this gives $a_1 u_1 = 0 \implies u_1 = 0$ but this contradicts with $\{u_1\}$ being linearly independent. 
+        \item $m > 1$. Multiply Eq. \eqref{eq: lin indep. in K/L} by $a_1^{-1}$ on the left, we can assume that $a_1 = 1$. Further take $\sigma = \Id$ in Eq. \eqref{eq: lin indep. in K/L}, we have $\sum_{i = 1}^m a_i u_i = 0$. Suppose that all $a_i$s are nonzero. Since $u_i$s are linearly independent over $L$, after reordering we may assume that $a_m \notin L$ (otherwise $\{u_m\}$ is not linearly independent). Then there exists $\tau \in A$ s.t. $\tau(a_m) \neq a_m$. Applying $\tau$ to Eq. \eqref{eq: lin indep. in K/L} gives (recalling that $\tau$ is a group homomorphism)
+        \[
+            \sum_{i = 1}^m \tau\underset{\text{runs through $A$}}{(a_i) \underbrace{\tau \sigma}(u_i)} = 0\ (\forall \sigma \in A) \implies \sum_{i = 1}^m \tau(a_i) \sigma(u_i) = 0 \ (\forall \sigma \in A)
+        \]
+        Subtracting Eq. \eqref{eq: lin indep. in K/L} gives (recalling that without loss of generality we may assume $a_1 = 1$, and $\tau$ is an automorphism on $K$)
+        \[
+            \sum_{i = 1}^m \underbrace{\left(\tau(a_i) - a_i\right)}_{\text{zero iff $i = 1$}} \sigma(u_i) = 0 \qquad \forall \sigma \in A
+        \]
+        which contradicts the minimality of $m$. 
+    \end{itemize}
+\end{proof}
+
+\textstart
+We now use the above results to prove the main theorem:
+\begin{proof}[Proof of Theorem \ref{thm: fundamental theorem of galois theory}]
+    Verify the two extra conditions respectively:
+    \begin{enumerate}[label=\arabic*)]
+        \item Suppose that we have $H \leq G$. This corresponds to the field extensions $k \ext K^H \ext K$. Proposition \ref{prop: degree of subext equals order of galois subgroup} gives $[K : K^H] = \abs{H}$. Since $k \ext K$ is Galois, $K^H \ext K$ is Galois (use Proposition \ref{prop: transitivity of separable extensions, backwards} for separability and Proposition \ref{prop: transitivity of normal extensions, backwards} for normality). Apply Theorem \ref{thm: degree of ext equals order of galois group} we have $G(K/K^H) = [K : K^H] = \abs{H}$. Since $H \subseteq G(K/K^H)$ and they have the same cardinality, $H = G(K/K^H)$. Now for any extension $k \ext L \ext K$ s.t. $H = G(K/L) \leq G$, Theorem \ref{thm: degree of ext equals order of galois group} gives $\abs{H} = [K : L]$ since $K/L$ is Galois by the same reasoning. Consider the extension $L \ext K^{G(K/L)} = K^H \ext K$. The extension indeed exists as $G(K/L)$ in particular is a subgroup of itself. Use the previous result gives $[K : K^H] = \abs{H} = [K : L]$, which implies $K^H = L$.
+        \item Prove the implication in both directions:
+        \begin{itemize}
+            \item[$\Rightarrow$] Suppose that we have the extensions $k \ext L \ext K$ with both of them normal and separable. Take $H = G(K/L) \leq G$, we want to show that $H$ is normal. 
+            
+            Proceed via constructing a group homomorphism whose kernel is $H$. For any $\sigma \in G$, consider its restriction to $L$ $\restr{\sigma}{L}: L \to K \subseteq \bar{K}$. Since $L/k$ is normal, by \hyperref[def: normal extension]{3) in the definition for normal extensions} $\restr{\sigma}{L}(L) \subseteq L$. This implies that by restricting $\sigma$ to $L$ we have a ring homomorphism $G = G(K/k) \to G(L/k)$, $\sigma \mapsto \restr{\sigma}{L}$. Notice that the kernel of it is $H$($=G(K/L)$, which fixes $L$). This implies that $H$ is normal in $G$. It remains to show that the map is surjective. For any $\tau \in G(L/k)$ this induces a group homomorphism $K \to \bar{L}$:
+
+            \vspace{1em}
+            \begin{minipage}{\linewidth}
+                \centering
+                \begin{tikzcd}
+                    k \arrow[rr, hookrightarrow] \arrow[rrdd, hookrightarrow] & & L \arrow[dd, hookrightarrow, "\tau"] \arrow[rr, hookrightarrow] & & K \arrow[dd, dashed, "\bar{\tau}"] \\
+                    & & & & \\
+                    & & L \arrow[rr, hookrightarrow] & & \bar{L}
+                \end{tikzcd}
+            \end{minipage}
+            \vspace{1em}
+
+            Since the extension $k \ext K$ is also normal, and we have the natural extension $K \ext \bar{L}$ (by Theorem \ref{thm: algebraic extension can be extended to algebraical closure}), apply again \hyperref[def: normal extension]{3) of normal extensions} $\bar{\tau}(K) \subseteq K$, which gives a pre-image for any automorphism in $G(L/k)$. Apply the first isomorphism theorem gives $G/H \simeq G(L/k)$.
+            \item[$\Leftarrow$] Suppose now we have $H \normaleqin G$. We want to show that the corresponding field extensions $k \ext K^H \ext K$ is normal.
+            
+            Since $k \ext K$ is Galois it suffices to show that $k \ext K^H$ is normal. Suppose that we have a morphism of $k$-algebras $\tau: K^H \to \bar{K}$. This can be extended to $\sigma: K \to \bar{K}$ via forcing the commutative condition as above. Since $k \ext K$, $\sigma$ fixes $k$ and preserves $K$, i.e. $\sigma \in G = G(K/k)$. Therefore to show that the extension is normal we need to show that for all $\sigma \in G(K/k)$, $\sigma(K^H) \subseteq K^H$. 
+
+            Let $u \in K^H$, we need to show that for all $\tau \in H$, $\tau \sigma(u) = \sigma(u)$. $H \normaleqin G$ implies $\sigma^{-1} \tau \sigma(u) = u$ (recall $K^H$ consists of elements in $K$ fixed by $H$). Applying $\sigma$ on both sides gives the desired result. 
+        \end{itemize}
+    \end{enumerate}
+\end{proof}
+
+\section{Norm and Trace Maps}
+
+\textstart
+This section introduces the norm and trace of any extension $K \ext L$. They are natural extension of norm amd trace of linear maps, as in particular $L$ can be viewed as a $K$-vector space. These two maps characterize the extension.
+
+\begin{definition}[Norm; Trace]
+    Let $K$ be a field, $A$ a commutative $K$-algebra, with $\dim_K(A)$ finite. Define for $a \in A$ the $K$-linear map $\varphi_a: A \to A, x \mapsto ax$. Define
+    \begin{itemize}
+        \item The \textbf{norm} $\Norm_{A/K}(a) = \det(\varphi_a) \in K$.
+        \item The \textbf{trace} $\Tr_{A/K}(a) = \tr(\varphi_a) \in K$.
+    \end{itemize}
+\end{definition}
+
+\begin{example}
+    Consider the following examples for the norm and trace map:
+    \begin{enumerate}[label=\arabic*)]
+        \item If $a \in K$, $\varphi_a = a \cdot \Id_K$. Let $n = \dim_K A$, then $\Norm_{A/K}(a) = a^n$, $\Tr_{A/K}(a) = na$.
+        \item Let $d \in \Z$ be not a square. Consider the field extension $K = \Q \ext L = \Q(\sqrt{d})$. $L$ as a $K$-vector space has a basis $\{1, \sqrt{d}\}$. For $a = a_1 + a_2 \sqrt{d}$, we have
+        \[
+            \varphi_a = 
+            \begin{pmatrix}
+                a_1 & d a_2 \\
+                a_2 & a_1
+            \end{pmatrix}
+            \qquad \text{with}\ 
+            \Norm_{A/K}(a) = a_1 - d a_2^2,\ \Tr_{A/K}(a) = 2a_1
+        \]
+        \item If $a \in A$ is nilpotent, then $\varphi_a$ is a nilpotent operator, which implies that $\Norm_{A/K}(a) = 0$, $\Tr_{A/K}(a) = 0$.
+    \end{enumerate}
+\end{example}
+
+\begin{remark}\label{rmk: props of norm and trace maps}
+    The norm and trace have similar properties as the determinant and trace of matrices:
+    \begin{enumerate}[label=\arabic*)]
+        \item $\Tr_{A/K}: A \to K$ is $K$-linear. If $a_1, a_2 \in A$, $\lambda_1, \lambda_2 \in K$, then $\varphi_{\lambda_1 a_1 + \lambda_2 a_2} = \lambda_1 \varphi_{a_1} + \lambda_2 \varphi_{a_2}$; and taking trace of a matrix (i.e. the map $\tr: M_n(K) \to K$) is $K$-linear.
+        \item $\Norm_{A/K}(a_1 a_2) = \Norm_{A/K}(a_1) \cdot \Norm_{A/K}(a_2)$. For all $a_1, a_2 \in A$, $\varphi_{a_1 a_2} = \varphi_{a_1} \circ \varphi_{a_2}$; and the determinant $\det: M_n(K) \to K$ is multiplicative. If $A = L$ is a field, then $N_{L/K}: L^{\times} \to K^{\times}$ is a group homomorphism.
+        \item We have the \underline{transitive formula}: given a field extension $k \ext A$, we have
+        \[
+            \Norm_{A/k} = \Norm_{K/k} \circ \Norm_{A/K}, \qquad \Tr_{A/k} = \Tr_{K/k} \circ \Tr_{A/K}
+        \]
+        \begin{proof}
+            
+            Write out the basis for the corresponding algebras. Choose $e_1, \dots, e_m$ a basis for $K$ as a $k$-vector space, and $f_1, \dots, f_n$ a basis for $A$ as a $K$-vector space. Then $(e_i f_r)$ for $1 \leq i \leq n$, $1 \leq r \leq m$ gives a basis of $A$ as a $k$-vector space. Fix $a \in A$, define $(c_{ij}) \in K$ and $(\gamma_{ijrs}) \in k$ as 
+            \[
+                a f_j = \sum_{i = 1}^n c_{ij} f_i, \qquad c_{ij} e_s = \sum_{r = 1}^m \gamma_{ijrs} e_r
+            \]
+            Verify the equality of both sides:
+            \[
+                \mathrm{RHS} = \Tr_{K/k} \circ \Tr_{A/K}(a) = \sum_{i = 1}^n \Tr_{K/k} (c_{ii}) = \sum_{i = 1}^n \sum_{r = 1}^m \gamma_{iirr}
+            \]
+            while $\varphi_a$ in the basis for $A$ over $k$ can be expressed as
+            \[
+                a f_j e_s = \sum_{i = 1}^n c_{ij} f_i e_s = \sum_{i = 1}^n \sum_{r = 1}^m \gamma_{ijrs} f_i e_r \quad \implies \quad \mathrm{LHS} = \Tr_{A/K}(a) = \sum_{i = 1}^n \sum_{r = 1}^m \gamma_{iirr}
+            \]
+        \end{proof}
+        \item Given $K \ext K'$ a field extension, we have $\Tr_{(A \tensor_K K')/K'}(a \tensor 1) = \Tr_{A/K}(a)$.
+        \begin{proof}
+            Notice that for $e_1, \dots, e_n$ a basis of $A$ over $K$, $e_1 \tensor 1, \dots, e_n \tensor 1$ gives a basis of $A \tensor_K K'$ over $K'$. The matrix representation of $\varphi_{a \tensor 1}$ and $\varphi_a$ are the same; and therefore the traces are identical.
+        \end{proof}
+        \item For $A = A_1 \times A_2$, via considering the trace and determinant for block matrices we have
+        \[
+            \Tr_{A/K}(a_1, a_2) = \Tr_{A_1/K}(a_1) + \Tr_{A_2/K}(a_2) \qquad \Norm_{A/K}(a_1, a_2) = \Norm_{A_1/K}(a_1) \cdot \Norm_{A_2/K}(a_2)
+        \]
+    \end{enumerate}
+\end{remark}
+
+\textstart
+The trace uniquely characterizes separable extensions:
+
+\begin{theorem}\label{thm: ext separable iff trace nonzero}
+    Given $K \ext L$ a finite field extension, $L/K$ is separable if and only if $\Tr_{L/K} \neq 0$.
+\end{theorem}
+
+\begin{proof}
+    To prove the proof we need the following intermediate results:
+    \begin{lemma}\label{lem: simple ext of separable elem gives nonzero trace}
+        Suppose that we have $K \ext K' = K(\alpha)$ where $\alpha$ is separable over $K$. Then $\Tr_{K'/K} \neq 0$.
+    \end{lemma}
+    \nogap
+    \begin{lemma}\label{lem: simple ext of nilpotent elem gives zero trace}
+        Suppose that we have $K \ext K' = K(\alpha)$ where $\fchar(K) = p$, $\alpha \notin K$, $\alpha^p \in K$. Then $\Tr_{K'/K} = 0$.
+    \end{lemma}
+    These two implies the theorem:
+    \begin{itemize}
+        \item If $L/K$ is not separable, then there exists $\alpha \in L$ that is not separable over $K$. Let $f$ be the minimal polynomial of $\alpha$. By \hyperref[def: separable extension]{3) in the definition} $f \in k[x^p]$, i.e. $f = g(x^p)$ for $g \in k[x]$. Consider the chain of extensions
+        \[
+            K \ext K(\alpha^p) = K[x]/(g) \ext K(\alpha) = K[x]/(f) \ext L
+        \]
+        Lemma \ref{lem: simple ext of nilpotent elem gives zero trace} gives $\Tr_{K(\alpha)/K(\alpha^p)} = 0$. Remark \ref{rmk: props of norm and trace maps} 3) gives 
+        \[
+            \Tr_{L/K} = \Tr_{K(\alpha^p)/K} \circ \underbrace{\Tr_{K(\alpha)/K(\alpha^p)}}_{= 0} \circ \Tr_{L/K(\alpha)} = 0
+        \]
+        \item If $L/K$ is separable, \hyperref[thm: primitive element theorem]{Primitive Element Theorem} gives $L = K(\alpha)$ for $\alpha \in L$. Apply Lemma \ref{lem: simple ext of separable elem gives nonzero trace} gives $\Tr_{L/K} \neq 0$.
+    \end{itemize}
+    Now prove the two lemmas:
+    \begin{proof}[Proof of Lemma \ref{lem: simple ext of separable elem gives nonzero trace}]
+        Let $K \ext \bar{K}$ be the algebraic closure, and $A = K' = K(\alpha)$. By Remark \ref{rmk: props of norm and trace maps} 4), $\Tr_{A \tensor_K \bar{K}/\bar{K}} = 0$ if and only if $\Tr_{A/K} = 0$. Applying with $A = K(\alpha)$ gives
+        \[
+            A \tensor_K \bar{K} = K(\alpha) \tensor_K \bar{K} = K[x]/(f) \tensor_K\bar{K}
+        \]
+        where $f$ is the minimal polynomial of $\alpha$ over $K$, and $K[\alpha] \simeq K[x]/(f)$ (via considering the ring homomorphism $K[x] \to K$, $x \mapsto \alpha$). Since $\alpha$ is separable over $K$, $f$ splits in $\bar{K}$, i.e. we have
+        \[
+            K' \tensor_K K\simeq \bar{K}[x]/(f) = \bar{K}[x]/(x - a_1) \cdots (x - a_n) \simeq \prod_{i = 1}^{n}\bar{K}[x]/(x - a_i) \simeq \left( \bar{K} \right)^n
+        \]
+        where all $a_1, \dots, a_n \in \bar{K}$ are distinct, and $n = \deg f$. Then $\Tr_{A/K} = \Tr_{K' \tensor_K \bar{K}/\bar{K}}(a_1, \dots, a_n) = a_1 + \cdots + a_n \neq 0$.
+    \end{proof}
+    \begin{proof}[Proof of Lemma \ref{lem: simple ext of nilpotent elem gives zero trace}]
+        Let $\beta = \alpha^p \in K$. Then the minimal polynomial of $\alpha$ is $x^p - \beta$. The minimal polynomial cannot be of lower degree: suppose the minimal polynomial is $g$ with $\deg g < p$, then the gcd of $g(0)$ and $\beta$ must also be in $K$. Further since $\beta = \alpha^p$, $g(0) = \alpha^q$ for $q \nmid p$. But this implies that $\alpha \in K$ which is a contradiction.
+
+        Similarly by Remark \ref{rmk: props of norm and trace maps} 4),
+        \[
+            K' \tensor_K \bar{K} \simeq K[x]/(x^p - \beta) \tensor_K \bar{K} \simeq \bar{K}[x]/(x^p - \beta) \simeq \bar{K}[x]/(x - \alpha)^p
+        \]
+        A basis of $K' \tensor_K \bar{K}$ as a $\bar{K}$-vector space is $\{\bar{1}, \overline{x - \alpha}, \cdots, \overline{(x - \alpha)^{p-1}}\}$, and is of dimension $p$. To compute $\Tr_{K'/K}$ we only need to compute $\Tr_{(K' \tensor_K \bar{K})/\bar{K}}$ on the basis elements, but
+        \begin{itemize}
+            \item $\Tr_{(K' \tensor_K \bar{K})/\bar{K}}(1) = \dim_{\bar{K}} (K' \tensor_K \bar{K}) = p = 0$.
+            \item $\Tr_{(K' \tensor_K \bar{K})/\bar{K}}(\overline{(x - \alpha)^i}) = 0$ since $\overline{(x - \alpha)^i}$ is nilpotent. 
+        \end{itemize}
+    \end{proof}
+    This finishes the whole proof.
+\end{proof}
+
+Recall that in Proposition \ref{prop: transitivity of separable extensions, backwards} we proved the if the large extension is separable, then the intermediate extensions are also separable. With the theorem above the converse is straightforward:
+
+\begin{corollary}\label{prop: transitivity of separable extensions, forwards}
+    If $K_1 \ext K_2 \ext K_3$ are field extensions, and $K_3/K_2$ and $K_2/K_1$ are separable, then $K_3/K_1$ is separable. 
+\end{corollary}
+
+\begin{proof}
+    $\Tr_{K_3/K_1} = \Tr_{K_2/K_1} \circ \Tr_{K_3/K_2} \neq 0$ where by Theorem \ref{thm: ext separable iff trace nonzero} $\Tr_{K_2/K_1}$ and $\Tr_{K_3/K_2}$ are nonzero. Apply the theorem again gives that $K_3/K_1$ is separable. 
+\end{proof}
+
+\begin{remark}
+    The reasoning can be conducted backwards to get the previous result (Proposition \ref{prop: transitivity of separable extensions, backwards}) as well. 
+\end{remark}
+
+\begin{corollary}\label{cor: extension generated by separable elements is separable}
+    Given a field extension $K \ext L = K(a_i \mid i \in I)$. If $a_i$s are algebraic and separable over $K$. Then $L/K$ is a separable algebraic extension.
+\end{corollary}
+
+\begin{proof}
+    For all $a \in L$, it must lie in $K(a_i \mid i \in I_0)$ for some $I_0$, where $I_0$ is finite. Therefore, it suffices to deal with the finite case.
+
+    Suppose that $I$ is finite. Then we can write $L = K(a_1, \dots, a_n)$. Apply induction on $n$: 
+    \begin{itemize}
+        \item For $n = 1$, Lemma \ref{lem: simple ext of separable elem gives nonzero trace} gives $\Tr_{K(a_1)/K} \neq 0$. Apply Theorem \ref{thm: ext separable iff trace nonzero} gives $K \ext K(a_1)$ separable. 
+        \item Inductive step. Consider the field extensions
+        \[
+            K \ext K' = K(a_1, \dots, a_{n-1}) \ext K(a_1, \dots, a_{n}) = K'(a_n)
+        \]
+        Inductive hypothesis gives that the first extension is separable, and the argument for $n = 1$ gives that the second extension is separable. Proposition \ref{prop: transitivity of separable extensions, backwards} gives that the whole extension is separable. 
+    \end{itemize}
+\end{proof}
+
+\textstart
+With the theorem and results in corollary we can discuss a bit further about separable extensions:
+
+\begin{proposition}
+    Let $K \ext L$ be an algebraic extension, then $L' := \{ \alpha \in L \mid \alpha \text{ separable over $K$}\} \subseteq L$ is a subfield of $L$ containing $K$.
+\end{proposition}
+
+\begin{proof}
+    By Corollary \ref{cor: extension generated by separable elements is separable}, $K \ext K(L')$ is separable. But $K(L') = L'$: $L'$ contains $K(L')$ as in particular $L'$ contains $K$; and the inclusion in the other direction is clear.
+\end{proof}
+
+\begin{definition}[Separable Closure]
+    $L' := \{ \alpha \in L \mid \alpha \text{ separable over $K$}\} \subseteq L$ is the \textbf{separable closure} of $K$ in $L$. A separable closure of a field $K$ is its separable closure in an algebraic closure $K \ext \bar{K}$.
+\end{definition}
+\nogap
+\begin{definition}[Purely Inseparable]
+    An algebraic extension $K \ext L$ is \textbf{purely inseparable} if for any element $\alpha \in L \smallsetminus K$, the minimal polynomial of $\alpha$ over $K$ is not separable. 
+\end{definition}
+
+\section{Solvability by Radicals}
+
+\textstart
+As we wrap up the discussion of Galois Theory, we would like to see how the Galois group is related to the solvability of polynomials. Towards the end of this section we will relate this to the solvability of the Galois group, which connects to the first part of this course.
+
+\begin{definition}[Compositum]
+    Given a field extension $K \ext L$, with subextensions $K \ext K_1 \ext L$ and $K \ext K_2 \ext L$. The \textbf{compositum} of extensions $K_1K_2$ is the smallest subfield of $L$ containing both $K_1$ and $K_2$
+\end{definition}
+
+\begin{remark}
+    By definition, we have $K_1 K_2 = K_1(K_2) = K_2(K_1)$.
+\end{remark}
+
+\begin{proposition}
+    If the field extension $K_1/K$ is finite and Galois, then $K_1 K_2/K_2$ is Galois; and we have a group isomorphism $G(K_1K_2/K_2) \simeq G(K_1/K_1\cap K_2)$, given by $\sigma \mapsto \restr{\sigma}{K_1}$.
+\end{proposition}
+
+\begin{proof}
+    Since $K_1/K$ is separable, by the \hyperref[thm: primitive element theorem]{Primitive Element Theorem} there exists $a \in K_1$ s.t. $K_1 = K(a)$. Let $f$ be the minimal polynomial of $a$ over $K$. Since $K_1/K$ is normal and separable, $f$ has distinct roots $a_1 = a, \dots, a_n \in K_1$. Then $K_1 K_2 = K_2(K_1) = K_2(a)$ is Galois if and only if the minimal polynomial of $a$ over $K_2$ $g$ has distinct roots in $K_1 K_2$. This is indeed the case as we have the field extension $K \ext K_2$, $g \mid f$ (since $g(a) = f(a) = 0$), where in particular all roots of $g$ are roots of $f$ and are therefore distinct. 
+
+    Now consider the group homomorphism
+    \[
+        \varphi: G(K_1 K_2/K_2) \to G(K_1/K_1 \cap K_2), \qquad \sigma \mapsto \restr{\sigma}{K_1}
+    \]
+    By definition of Galois group, $\restr{\sigma}{K_2} = \Id_{K_2}$. Restricting it further to $K_1$ gives $\restr{\sigma}{K_1 \cap K_2} = \Id_{K_1 \cap K_2}$. Restricting a ring homomorphism is clearly a group homomorphism. Now check that this gives an isomorphism:
+    \begin{itemize}
+        \item \emph{Injectivity.} For $\sigma \in \ker \varphi$, we have $\restr{\sigma}{K_1} = \Id_{K_1}$. Further by the definition of Galois group, $\restr{\sigma}{K_2} = \Id_{K_2}$. Therefore $\sigma$ fixes elements in the field generated by $K_1$ and $K_2$, which is exactly the compositum of $K_1$ and $K_2$, i.e. $\sigma = \Id_{K_1 K_2}$.
+        \item \emph{Surjectivity.} Let $H = \im \varphi$. We want to show that $H = G(K_1/K_1 \cap K_2)$. Consider the field extensions
+        \[
+            ^{\text{(1)}}K \ext K_1 \cap K_2 \ext K_1^H \ext K_1 \qquad ^{\text{(2)}}K_2 \ext K_1^H K_2 \ext K_1 K_2
+        \]
+        where
+        \[
+            K_1^H = \{u \in K_1 \mid \sigma(u) = u, \forall \sigma \in H\}
+        \]
+        Then for all $\sigma \in G(K_1 K_2/K_2)$, by definition $\restr{\sigma}{K_2} = \Id_{K_2}$; and $\restr{\sigma}{K_1^H} = \Id_{K_1^H}$ as by definition of $\varphi$, $\restr{\sigma}{K_1} \in H$. By the same reasoning as for injectivity, $\restr{\sigma}{K_1^H K_2} = \Id_{K_1^H K_2}$. By applying \hyperref[thm: fundamental theorem of galois theory]{Fundamental Theorem of Galois Theory 2)} extension (2), the kernel of the map $G(K_1 K_2/K_2) \to G(K_1^H K_2/K_2)$ given by restriction to $K_1^H K_2$ has the whole group as the kernel, which implies that $K_1^H K_2 \subseteq K_2$, i.e. $K_1^H \subseteq K_1 \cap K_2$. Apply the same result on extenson (1) gives for $G = G(K_1/K_1 \cap K_2)$, $G/H \simeq G(K_1^H/K_1 \cap K_2) = \{e\}$, i.e. $H = G(K_1/K_1 \cap K_2)$.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    The previous result shows that if $K_1/K$ and $K_2/K$ are finite Galois extensions, then $K_1 K_2/K$ is also a finite Galois extension. Further $G(K_1 K_2/K)$ can be described using $G(K_1/K)$ and $G(K_2/K)$. Further notice that the isomorphism between Galois group resembles the Second Isomorphism Theorem.
+\end{remark}
+
+\textstart
+We now turn to associating Galois extensions with polynomials, seeking to describe the field ``generated via adding its roots'':
+
+\begin{definition}[Galois Group of a Polynomial]
+    Let $K$ be a field, and $f \in K[x]$ with $\deg f \geq 1$ and $f$ separable. If $K \ext L$ is the splitting field of $f$, then $L/K$ is a finite Galois extension. The corresponding Galois group $G(L/K)$ is the \textbf{Galois group of $f$}.
+\end{definition}
+
+\textstart
+\label{goto: order of galois group bounded by order of Sn}
+Consider the algebraic closure $K \ext \bar{K}$, with $a_1, \dots, a_n \in \bar{K}$ roots of $f$. Then $L = K(a_1, \dots, a_n)$. For $\sigma \in G(L/K)$, since $f$ has coefficients in $K$, and $\restr{\sigma}{K} = \Id_K$, each $\sigma(a_i)$ is a root of $f$, i.e. $\sigma$ permutes the roots of $f$. This gives a group homomorphism
+\[
+    \varphi: G(L/K) \to S_n, \qquad \sigma \mapsto (i \mapsto j \text{ for $\sigma(a_i) = a_j$})
+\]
+As is shown in the previous introduction to Galois extensions, $\varphi$ is injective, as for $\sigma \in \ker \varphi$, $\sigma(a_i) = a_i$ for all $i$. By definition $\sigma$ fixes $K$, and therefore fixes $L = K(a_1, \dots, a_n)$, i.e. $\sigma = \Id_L$. This implies that $\abs{G(L/K)} \leq \abs{S_n} = n!$. We have also seen that in general $\varphi$ is not surjective.
+
+Consider now the case where $\varphi$ is actually an isomorphism. Let $F$ be a field, and $L = F(x_1, \dots, x_n)$ where all the $x_i$s are formal variables. Notice that for all $\sigma \in S_n$, the universal property of $F[x_1, \dots, x_n]$ gives a ring homomorphism
+\[
+    g_{\sigma}: F[x_1, \dots, x_n] \to F[x_1, \dots, x_n], \qquad x_1 \mapsto x_{\sigma(1)}
+\]
+Further by definition we have $g_{\sigma\tau} = g_{\sigma} g_{\tau}$. This implies that each $g_{\sigma}$ is an $F$-algebra automorphism. This induces 
+\[
+    \widetilde{g_{\sigma}}: F(x_1, \dots, x_n) \to F(x_1, \dots, x_n) = L
+\]
+which is a ring homomorphism fixing $F$. We then have a group homomorphism $S_n \to G(F(x_1, \dots, x_n)/F)$ (notice that the extension $F \ext F(x_1, \dots, x_n)$ is not necessarily Galois). It is injective as for $g_{\sigma} = \Id$, $g_{\sigma}(x_i) = x_i$ for all $i$, i.e. $\sigma(i) = i$ for all $i$. This gives a subgroup of $G(F(x_1, \dots, x_n)/F)$ isomorphic to $S_n$.
+
+Now consider $K = \{u \in F(x_1, \dots, x_n) \mid \widetilde{g_{\sigma}}(u) = u, \forall \sigma \in S_n\}$. By \hyperref[thm: fundamental theorem of galois theory]{Fundamental Theorem of Galois Theory 2)} we have the field extensions $F \ext K \ext L$. By hypothesis $G(L/K) \simeq S_n$, which by Proposition \ref{prop: degree of subext equals order of galois subgroup} the degree of the extension $L/K$ is equal to $\abs{S_n} = n!$.
+
+Define $S_1, \dots, S_n \in F[x_1, \dots, x_n]$ s.t. 
+\[
+    \prod_{i = 1}^n (x - x_i) = x^n - S_1(x) x^{n-1} + \cdots + (-1)^n S_n(x)
+\]
+where
+\[
+    \left.
+    \begin{array}{l}
+        S_1(x) = x_1 + \cdots + x_n \\
+        S_2(x) = \sum_{i < j} x_i x_j\\
+        \cdots \\
+        S_n(x) = x_1 \cdots x_n
+    \end{array}
+    \ \ 
+    \right\}
+    \quad
+    \text{\underline{elementary symmetric functions} in } x_1, \dots, x_n
+\]
+Notice that since $\sigma \in G(L/K)$ permutes only the roots of the polynomial, $S_1, \dots, S_n \in K$. This results in the field extension
+\[
+    F \ext F(S_1, \dots, S_n) \ext \underbrace{K \ext L}_{\deg = n!}
+\]
+where $L$ is the splitting field of $f \in F(S_1, \dots, S_n)[x]$. \hyperref[goto: order of galois group bounded by order of Sn]{Previously} we have $\abs{L/F(S_1, \dots, S_n)} \leq \abs{S_n} = n!$. This gives the conclusion $K = F(S_1, \dots, S_n)$ if $\varphi: G(L/K) \to S_n$ is an isomorphism.
+
+\begin{remark}
+    One can also show that for $F$ an infinite field, for $c_1, \dots, c_n \in F$ \underline{in genenral} the polynomial $g = x^n + c_1 x^{n-1} + \cdots + c_n \in F[x]$ also has the property that there exists an isomorphism between the Galois group of $g$ and $S_n$, where \underline{in general} means that there exists $h \in F[x_1, \dots, x_n]$ of degree at least 1 s.t. $h(c_1, \dots, c_n) \neq 0$.
+\end{remark}
+
+\textstart
+Now we introduce the relation between solvability of Galois groups and solvability of polynomials:
+
+\begin{definition}[Root Extension]
+    Given a field $K$, an extension $K \ext K'$ is a \textbf{root extension} if there exists a sequence of field extensions
+    \[
+        K = K_1 \ext K_2 \ext \cdots \ext K_r = K'
+    \]
+    s.t. for all $2 \leq i \leq n$, $K_i = K_{i-1}(a_i)$ where $a_i^{m_i} \in K_{i-1}$ for some $m_i \in \Z_{\geq 0}$. Notice that $K_i$ is not required to contain all the roots of $a_i^{m_i}$.
+\end{definition}
+\nogap
+\begin{definition}[Resolved by Radicals]
+    Let $K$ be a field, and $f \in K[x]$ with $\deg f \geq 1$. Then $f$ is \textbf{resolved by radicals} if inside the algebraic closure $\bar{K}$ of $K$, the splitting field $L$ of $f$ lies inside a root extension $K'$ of $K$.
+\end{definition}
+
+\begin{theorem}\label{thm: solvable by radicals iff galois group is solvable}
+    Let $K$ be a field that is characteristic-0. Then $f \in K[x]$ is resolved by radicals if and only if its Galois group is solvable. 
+\end{theorem}
+
+\textstart
+Recall that a group is solvable if there exists a chain
+\[
+    \{e\} = G_0 \normaleqin \cdots \normaleqin G_r = G, \qquad \text{$G_i/G_{i-1}$ abelian}
+\]
+For $G$ finite and solvable, $G_i/G_{i-1}$ is finite and abelian. Applying the Structural Theorem implies that $G_i/G_{i-1}$ is cyclic. 
+
+\begin{example}
+    Recall that we discussed about the solvability of symmetric groups of small order:
+    \begin{enumerate}
+        \item If $\deg (f) \leq 4$, $f$ is solvable by radicals: the case is trivial for $S_1$ and $S_2$; and we have
+        \[
+            \{e\} \normaleqin \pair{\sigma} \normaleqin S_3 \qquad \{e\} \normaleqin K_4 \normaleqin A_4 \normaleqin S_4
+        \]
+        \item For $n = \deg(f) \geq 5$, $S_n$ is not solvable, which implies that there exists $f$ that is not solvable by radicals (Abel's Theorem).
+    \end{enumerate}
+\end{example}
+
+\textstart
+We omit the proof of the theorem, and instead show some results that are helpful with the proof of theorem.
+\begin{proposition}
+    Let $K$ be a field, and $m \in \Z_{\geq 0}$, satisfying either $\fchar(K) = 0$, or $\fchar(K) = p \nmid m$; and $K$ contains $m$-th root of unity in $\bar{K}$.
+    \begin{enumerate}[label=\arabic*)]
+        \item If $K \subseteq K' = K(a)$ s.t. $a^m = b \in K$, then $G(K'/K) \simeq \Z/m'\Z$ with $m' \mid m$.
+        \item If $K \ext L$ Galois, s.t. $G(L/K) \simeq \Z/m\Z$, then there exists $a \in L$ s.t. $L = K(a)$ and $a^m \in K$.
+    \end{enumerate}
+\end{proposition}
+
+\textstart
+The proof is related to Kummer Theory, and is omitted.
+
+\begin{lemma}
+    If $\fchar(K) = 0$, and $\zeta$ is a primitive $n$-th root of unit. Then $G(K(\zeta)/K)$ is abelian.
+\end{lemma}
+\begin{proof}
+    To get an automorphism, consider $\sigma$ where $\sigma(\zeta)$ is also a primitive $n$-th root of unit. Then $\sigma(\zeta) = \zeta^j$ for $j$ relative prime with $n$. This gives $G(K(\zeta)/K) \simeq (\Z/n\Z)^{\times}$ which is abelian.
+\end{proof}

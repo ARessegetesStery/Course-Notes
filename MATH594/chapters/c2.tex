@@ -1,0 +1,1025 @@
+\section{Complex Representation}
+
+\textstart
+The motivation of introducing the representation of $G$ is to have a linearized version of group action on sets. Recall that we have the correspondence between action of $G$ on a set $X$ and group homomorphism $G \to S_x$ where $S_x$ is the group of bijective maps on $S$, with the operation defined as composition. Explicitly, this is given by
+\[
+    \varphi: G \times X \to X \quad \rightsquigarrow \quad G \to S_x,\ g \mapsto \varphi(g, -) : (X \to X) 
+\]
+We now give the formal definition on vector spaces:
+
+\begin{definition}[Representation]
+    A \textbf{(complex) representation} of a group $G$ is a vector space $V$ over $\C$, together with a group homomorphism 
+    \[
+        \rho: G \to \GL(V) := \{ \varphi: V \to V \mid \varphi \text{ $\C$-linear isomorphism} \}
+    \]
+    Equivalently, a representation of $G$ is a vector space $V$ over $\C$ with an action of $G$ on it $\rho: G \times V \to V$ s.t. for all $g \in G$, the induced map $\rho(g, -)$ is $\C$-linear.
+\end{definition}
+
+\begin{notation}
+    The map $\rho(g, -): V \to V$ is often abbreviated as $\rho_g$. The representation is denoted by $V$ or $\rho$, with $V$ emphasizing the vector space structure.
+\end{notation}
+
+\begin{definition}[Degree of Repr.]
+    The \textbf{degree} of a representation $V$ of $G$ is $\dim_{\C}V$. 
+\end{definition}
+
+\textstart
+For most of the time, we will only consider the representation of finite groups on finite-dimensional vector spaces.
+
+\begin{remark}
+    In general, one can consider representations over other fields than $\C$. The reasons why $\C$ is chosen are the followings:
+    \begin{enumerate}[label=\arabic*)]
+        \item If $G$ is finite, then $\abs{G} \in \C$ is always invertible.
+        \item $\C$ is algebraically closed. The implications include, for example, every linear map has an eigenvalue.
+    \end{enumerate}
+    These specialties will often appear in subsequent proofs. 
+\end{remark}
+
+\begin{definition}[Morphism of Repr.]
+    Given two representations of $G$, $V$ and $W$, a \textbf{morphism of representations} (or simply \textbf{$G$-morphism}) is a linear map $f: V \to W$ s.t. $f(gv) = g(f(v))$ for all $g \in G$, $v \in V$. This is an \textbf{isomorphism} if $f$ is further bijective.  
+\end{definition}
+
+\begin{remark}
+    Following from the definitions we have the immediate results:
+    \begin{enumerate}[label=\arabic*)]
+        \item If $V_1 \tooh{f} V_2 \tooh{g} V_3$ are morphisms of representation, then so is $g \circ f$ since $g(f(hv)) = g(hf(v)) = h(g(f(v)))$ for all $h \in G$, $v \in V$. This gives the morphisms of objects, which implies that representations of $G$ give a category.
+        \item If $f: V \to W$ is an isomorphism of representations, then so is $f^{-1}$ (simply by writing the equation for definition in the inverse order).
+        \item If $V$ and $W$ are representations of $G$, then $\{ f : V \to W \mid f \text{ is a $G$-morphism} \} \subseteq \Hom_{\C}(V, W)$ gives a $\C$-vector subspace. This is clear as by the fact that $f$ is linear, $V$ as a representation is closed under addition and scalar multiplication.
+    \end{enumerate}
+\end{remark}
+
+\begin{remark}\label{rmk: repr isom iff conjugate}
+    Given a finite-dimensional representation $\rho: G \to \GL(V)$, choosing a basis $\{e_1, \dots, e_n\}$ of $V$ gives us an isomorphism $V \simeq \C^n$, i.e. we have the description of representations in matrices
+    \[
+        \rho: G \to \GL(V) \simeq \GL_n(\C), \qquad g \mapsto \rho_g = (a_{ij}(g))
+    \]
+    Let $A$ be the matrix representation of a morphism of representations $f$ (which is also a linear map on $V$). Denote the corresponding linear map of $g$ in two representations by $\rho_g$ and $\rho_g'$, respectively. Since it is required that a morphism of representations should be compatible with application of $g \in G$, we have $A \circ \rho_g = \rho_g' \circ A$. This implies that $\rho_g' = A \circ \rho_g \circ A^{-1}$, i.e. two representations are isomorphic if and only if they are conjugate in matrix presentation of the map represented by the same group element $g$; and the matrix that describes the conjugation is the same for all elements $g \in G$.
+\end{remark}
+
+\begin{definition}[Sub-representation]
+    Given a representation $V$ of $G$, a \textbf{sub-representation} of $V$ is a vector space $W \subseteq V$ s.t. $gv \in W$ for all $v \in W, g \in G$. 
+\end{definition}
+
+\begin{remark}
+    In particular, for $W$ a sub-representation of $V$, it is itself a representation with the map $\rho'$ being $\restr{\rho(-)}{W}$. The inclusion $W \hookrightarrow V$, $v \mapsto v$ is a morphism of representation. This clearly commutes with actions of $g \in G$ as this is identity on $W$.
+\end{remark}
+
+\section{Interpretation via the Group Algebra}
+
+\textstart
+Similar to the case of group action where we interpreted the structure of group action by the group homomorphism $G \to S_x$, we would like to have some equivalence to structures that are more explicit, and easier to analyze. This utilizes the following definitions:
+
+\begin{definition}[Group Algebra]
+    Let $G$ be a group. Then the \textbf{group algebra over $\C$}, denoted $\C[G]$, is a vector space with a basis $\{ \alpha(g) \mid g \in G \}$ in bijection with elements in $G$ (formally). Endow it with a multiplication $\alpha(g) \cdot \alpha(h) = \alpha(gh)$ compatible with the group structure gives the desired ring structure.
+\end{definition}
+
+\begin{remark}
+    Verifying the ring axioms, we have the fact that the identity in $\C[G]$ to be $\alpha(e)$. This is in fact a $\C$-algebra, with the associated morphism given by $\C \to \C[G]$. Since the image of it are multiples of the identity element, it is clearly in the center of the group. 
+\end{remark}
+
+\textstart
+Notice that $G$ is not necessarily a finite group. Therefore the vector space can be infinite-dimensional, where we have imposed the requirement that every element should be a finite sum of linear combination of basis. In the following deduction, denote $\sum'$ to be the finite sum. 
+
+\begin{proposition}
+    The group algebra is well-defined.
+\end{proposition}
+
+\begin{proof}
+    This is clear for the cases where $G$ is finite. Consider the case where $G$ is infinite. Then by definition of the group algebra, for all $u, v \in \C[G]$, we have their decomposition into elements in the basis:
+    \[
+        u = \sum_{g \in G}' a_g \alpha(g), \qquad v \in \sum_{g \in G}' b_g \alpha(g)
+    \]
+    Multiplying these two terms together gives
+    \[
+        u \cdot v = \sum_{g \in G} \left( \sum_{g_1 g_2 = g}  (a_{g_1} b_{g_2}) \right) \alpha(g)
+    \]
+    Furthermore there are only finitely many such $a_g$s and $b_g$s being nonzero, implying that there are only finitely many nonzero such products. 
+\end{proof}
+
+\begin{notation}
+    If $G$ is abelian, and the correspondence of elements in $G$ and in $\C[G]$ is written additively. Instead of $\alpha(g)$ one usually writes $\chi^g$ (with the convention that $\chi^g \cdot \chi^h = \chi^{g + h}$).
+\end{notation}
+
+\begin{remark}
+    $\C[G]$ is a commutative ring if and only if $G$ is an abelian group. ``Only if'' is clear as if $\C[G]$ is commutative implies for all $g, h \in G$, they commute. ``If'' results from the fact that for every element in $x \in \C[G]$ there exists a scalar $\lambda$ s.t. $\lambda x = \alpha(g)$ for some $g \in G$ as $\C$ is a field.
+\end{remark}
+
+\begin{example}
+    If $G = (\Z, +)$, identifying $x \leftrightarrow \chi^x$ for $x \in \Z$, we have $\C[G] \simeq \bigoplus_{m\in \Z} \C\chi^m \simeq S^{-1}\C[x]$ for $S = \inner{x} = \{1, x, x^2, \dots\}$. These are the \underline{Laurent Polynomials}. 
+    
+    If $G = (\Z/n\Z, +)$, we have the identification $x^n = 1$, giving $\C[G] \simeq \C[x]/(x^n - 1)$.
+\end{example}
+
+\begin{proposition}\label{prop: repr of G identifiable with C[G]-modules}
+    We have the identification between representations of $G$ and $\C[G]$-modules. Morphisms and sub-objects (sub-representations and submodules) are also in correspondence.
+\end{proposition}
+
+\begin{proof}
+    It suffices to verify 1), as identifications in 2) and 3) are induced by 1). 
+    
+    Suppose that $V$ is a representation of $G$, Then $V$ has a structure of $\C[G]$-module, whose addition is the same as in the vector space, and scalar multiplication is given by
+    \[
+        \left( \sum_{g \in G} (a_g \cdot \alpha(g)) \right) \cdot v = \sum_{g \in G} (a_g \cdot g(v))
+    \]
+    where the sums are finite. Conversely, if $M$ is a $\C[G]$-module, then it has a $\C$-vector space structure via considering the scalar multiplication as the action $\C \hookrightarrow \C[G]$ which acts on $M$; and the $\C$-linear map associated to each group element $g$ is given by $(g, -)$, where $(g, x) \mapsto \alpha(g) \cdot x$ as specified by the $\C[G]$-module. The linearity is guaranteed by the linearity of scalar multiplication in modules.
+\end{proof}
+
+\begin{corollary}\label{cor: kernel and image of morphism of repr. is repr.}
+    If $F: V \to W$ is a morphism of $G$-representations, then $\ker f \subseteq V$ and $\im f \subseteq W$ are sub-representations. This can be seen via using Proposition \ref{prop: repr of G identifiable with C[G]-modules} to identify representations with $\C[G]$-modules, and see that the kernel and image of a morphism of $R$-modules are both submodules. 
+\end{corollary}
+
+\begin{remark}
+    In general, for a representation over a field $\mathbb{F}$ of $G$, it can be identified with $\mathbb{F}[G]$.
+\end{remark}
+
+\section{Examples of Representations}
+
+\textstart
+The following gives some common examples of representations:
+\begin{enumerate}[label=\arabic*)]
+    \item Suppose that $G$ acts on a set $X$. Let $V$ be the free $\C$-vector space associated to $X$, with basis $\{ \alpha(u) \mid u \in X \}$ in bijection with $X$. Define $G \tooh{\rho} \GL(V), g \mapsto \rho_g$, with $\rho_g(\alpha(u)) = \alpha(gu)$. This is the \underline{permutation representation} associated with $X$ where action of elements in the group corresponds to a permutation of the set. This is essentially just the group action, as the representation is completely fixed via specifying its behavior on elements in $X$ (i.e. with coefficient 1). 
+    \item Example 1) applied to the action of $G$ on itself, $G \times G \to G$, $(g, h) \mapsto (gh)$ induces a representation $\C[G]$. This is the \underline{regular representation} of $G$. Viewed under the context of Proposition \ref{prop: repr of G identifiable with C[G]-modules}, this is the standard left $\C[G]$-module structure of itself (rings are left-modules over itself). 
+    \item Direct sum of representations. If $\rho_V: G \to \GL(V)$ and $\rho_W: G \to \GL(W)$ are representations of $G$, then we can get a representation $\rho: G \to \GL(V \oplus W)$, given by 
+    \[
+        \rho_g = (\rho_g^V, \rho_g^W): G \times (V \oplus W) \to (V \oplus W), \quad (g, (v, w)) \mapsto (gv, gw)
+    \]
+    Under the context of Proposition \ref{prop: repr of G identifiable with C[G]-modules}, this corresponds to the direct sum of modules. 
+    \item Tensor product of representations. Suppose that we have $\rho: G \to \GL(V)$ and $\rho': G \to \GL(V')$ two representations of $G$. Then we can have
+    \[
+        \widetilde{\rho} = \rho \tensor \rho': G \to \GL(V \tensor_{\C} V'), \quad g \mapsto (\rho_g \tensor \rho_g')
+    \]
+    This is indeed a group homomorphism, as tensor product of maps behave functorially. That is, it commutes with composition of maps by the universal property of tensor product:
+    \[
+        (f \tensor g) \circ (f' \tensor g') = (f \circ f') \tensor (g \circ g')
+    \]
+\end{enumerate}
+
+\section{Irreducible Representations}
+
+\textstart
+Similar to the introduction of simple groups in group theory, we would like to have some simple objects in terms of representation, such that for any representation it can be decomposed into the ``combination'' of these simple objects, and understanding these simple objects provides understanding of the whole object. 
+
+Consider the simplest case of representation of $G$, where the associated vector space is 1-dimensional, i.e. is given explicitly by $G \to \GL_1(\C) \simeq \C^{\ast}$ as a group homomorphism. The composition of $\C^{\ast}$ is the multiplication, as here $\C^{\ast}$ is considered as the 1-by-1 complex matrix (1-dimensional linear map). Since $\C^{\ast}$ is commutative, this is the same as the representation $\bar{\rho}: G^{\ab} \to \C^{\ast}$. By Remark \ref{rmk: repr isom iff conjugate}, two representations are isomorphic if and only if they are conjugate; and since $\C^{\ast}$ is commutative, this implies that two representations on $\C$ are isomorphic if and only if they are identical.
+
+The following gives some tools for properly define the concept of ``simple'' objects in terms of representations, and decompose complex objects to those simple ones. From now on, we will consider only $G$ being finite groups, and all representations are finite-dimensional.
+
+\begin{parenthesis}\label{pth: equiv in v.s. for internal sum and projection}
+    Let $V$ be a vector space, and $W \subseteq V$ a linear subspace. Then giving the followings are equivalent:
+    \begin{enumerate}[label=\arabic*)]
+        \item A vector subspace $W' \subseteq V$ s.t. $V = W \oplus W'$ which is the \underline{internal direct sum}, i.e. every element in $V$ can be uniquely decomposed into the sum of an element in $W$ and an element in $W'$; and the two vector subspaces $W$ and $W'$ are linearly independent, i.e. $W \cap W' = \{0\}$.
+        \item A linear map $p: V \to V$ s.t. $p^2 = p$, and $\im p = W$.
+    \end{enumerate}
+\end{parenthesis}
+
+\begin{proof}
+    Consider implication in two directions:
+    \begin{itemize}
+        \item \emph{1) \implies 2).} Given $V = W \oplus W'$, we know that for all $v \in V$, there exists unique $w \in W$ and $w' \in W'$ s.t. $v = w + w'$. Define $p: V \to W$ s.t. $p(v) = w \in W$ with $w$ the same as in the decomposition above. It is then clear that $p^2 = p$.
+        \item \emph{2) \implies 1).} Define $W = p(V)$, and $W' = \ker p$. Check: $W \cap W' = \{0\}$, as $v \in W' \implies p(v) = 0$; and $v \in W \implies p(v) = v$, which gives $W \cap W' = \{0\}$; and the decomposition can be seen by $v \mapsto (p(v), v - p(v))$.
+    \end{itemize}
+    It is further clear that these two transforms are inverse to each other, which proves the assertion.
+\end{proof}
+
+\textstart
+The general result above is also true for representations:
+\begin{theorem}\label{thm: decomposition of repr.}
+    Let $G$ be a finite group. Let $V$ be a finite-dimensional $\C$-representation of $G$, and $W \subseteq V$ a sub-representation. Then there exists another sub-representation $W'$ of $V$ s.t. $V = W \oplus W'$.
+\end{theorem}
+
+First show that we have similar identifications as in the scenario for vector spaces: 
+\begin{proposition}
+    For $V$ a representation of $G$, and $W \subseteq V$ a sub-representation, then
+    \[
+        \text{Giving $W'$ sub-repr. s.t. $V = W \oplus W'$} \quad \Longleftrightarrow \quad \text{Giving $p: V \to V$ morphism of repr. s.t. $p^2 = p$, and $\im p = W$}
+    \]
+\end{proposition}
+\begin{proof}
+    Prove the equivalence in two directions:
+    \begin{itemize}
+        \item[$\Rightarrow$:] For $W'$ being a sub-representation, it is in particular a vector subspace of $V$. Then by Parenthesis \ref{pth: equiv in v.s. for internal sum and projection} we have $p: V \to V$ linear map which satisfies the desired conditions. Further verify that this is a morphism of representation: for all $v \in V, g \in G$ we have
+        \[
+            g(p(v)) = g(p(w + w')) = g(p(w)) = g(w) = p(g(w))
+            \]
+            where the last equality results from the fact that $g(w) \in W$ as $W$ is a sub-representation of $V$. 
+        \item[$\Leftarrow$:] The decomposition is clear from the result when considering $V, W, W'$ as vector spaces; and the fact that $W'$ is a sub-representation results from the result that $W' = \ker p$ and kernel of morphism of representations is still a representation (Corollary \ref{cor: kernel and image of morphism of repr. is repr.}).
+    \end{itemize}
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm: decomposition of repr.}]
+    Approach the proof via providing the construction in RHS. For $W \subseteq V$ being a sub-representation, by Parenthesis \ref{pth: equiv in v.s. for internal sum and projection} we have a linear map $p: V \to V$ s.t. $p^2 = p$ and $\im p = W$. Now seek using $p$ to construct a morphism of representations: Define 
+    \[
+        \tilde{p}: V \to V, \quad v \mapsto \frac{1}{\abs{G}} \sum_{g \in G} g^{-1} p(gv)
+    \]
+    Verify that this is a morphism of representations. For all $v \in V$ and $h \in G$, we have
+    \begin{align*}
+        \tilde{p}(hv)
+        & = \frac{1}{\abs{G}} \sum_{g \in G} g^{-1} p(ghv) = h \left( \frac{1}{\abs{G}} \sum_{g \in G} h^{-1} g^{-1} p(ghv) \right) \\
+        & = h\left(\frac{1}{\abs{G}} \sum_{g' \in G} (g')^{-1} p(g'v) \right) & (\text{Apply substitution $g' = gh$}) \\
+        & = h(\tilde{p}(v))
+    \end{align*}
+    Check that $\tilde{p}$ also satisfies the other two conditions, i.e. $\tilde{p}^2 = \tilde{p}$, and $\im \tilde{p} = W$. Notice $\tilde{p(hv)} = h\left(\frac{1}{\abs{G}} \sum_{g' \in G} (g')^{-1} p(g'v) \right)$, where $p(g'v) \in W$, and for elements in $W$ RHS evaluates to be exactly $hv$; and linear combination of elements in $W$ still remains in $W$. Further $W$ is a sub-representation gives the fact that $W$ is invariant under $g$-actions. Let $W' = \ker \tilde{p}$ finishes the proof.
+\end{proof}
+
+\begin{remark}
+    In general linear maps between vector spaces, or even endomorphisms on a specific vector space, are not morphisms of representations, as $\rho_g$ as a linear map in general does not commute with $p$ (which is required by the definition of morphism of representations).
+\end{remark}
+
+\begin{remark}\label{rmk: counterexample for nonzero char. field or infintie group}
+    It is also vital that we require $G$ to be finite; and the field is of characteristic zero. Otherwise the ``averaging'' process where we divide the sum of all possible representations by the order of $G$ is not valid; and in general Theorem \ref{thm: decomposition of repr.} is \emph{not} true for representations over positive-characteristic fields, or for infinite groups.
+    
+    A good example given in the homeworks is the followings: take $A = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$ acting on $K^2 = V$ for $K$ some field, and consider the representation $\rho: G \to \GL(V)$. Such projection $p$ (as in the proof) does not exist for the following cases:
+    \begin{itemize}
+        \item $K = \C$, $G = \Z$, and $\rho(1) = A$.
+        \item $K = \Z/2\Z$, $G = \Z/2\Z$, and $\rho(\bar{1}) = A$.
+    \end{itemize}
+    where the sub-representation is the vector subspace of $V$ preserved by $A$. 
+\end{remark}
+
+\begin{remark}
+    By Proposition \ref{prop: repr of G identifiable with C[G]-modules} we have the identification between $G$-representations on $V$ and $\C[G]$-module structure on $V$. This implies that for $G$ finite, $W \subseteq V$ (finite-dimensional as a $\C$-vector space) being a $\C[G]$-submodule implies that there exists another $\C[G]$-submodule $W'$ s.t. $V = W \oplus W'$.
+\end{remark}
+
+\begin{definition}[Irreducible]
+    A representation $V$ of $G$ is \textbf{irreducible} if
+    \begin{itemize}
+        \item $V \neq \{0\}$.
+        \item For every representation $W \subseteq V$, either $W = \{0\}$ or $W = V$.
+    \end{itemize}
+\end{definition}
+
+\begin{corollary}
+    By applying iteratively Theorem \ref{thm: decomposition of repr.} for $V$ any representation of a finite group we have the irreducible decomposition $V = W_1 \oplus \dots \oplus W_r$ for $W_i$s irreducible decompositions.
+\end{corollary}
+
+\begin{remark}
+    In general irreducible representations do not have to be degree-1. The examples provided in Remark \ref{rmk: counterexample for nonzero char. field or infintie group} are good counterexamples. 
+\end{remark}
+
+\begin{remark}\label{rmk: decomposition of repr. unique up to isom}
+    The $W_i \subseteq V$ as sub-representations of $G$ are not necessarily unique. For example let $V$ being the trivial representation with degree greater than 1; then any decomposition of $V$ into 1-dimensional subspaces gives the irreducible decompositions, and they are not unique as they can be any linearly-independent subspaces.
+
+    However they are unique up to isomorphisms, i.e. given any irreducible representation $W$, and $V = \bigoplus_{i \in I} W_i$, $\#\{ i \mid W_i \simeq W \}$ and $\sum_{W_i \simeq W} W_i$ are independent of the decomposition. That is, the ``subspace'' that can be represented by $W$ (up to isomorphism) is fixed in for a given $V$. 
+\end{remark}
+
+\textstart
+The following lemma gives important foundation for computing morphisms between irreducible representations:
+
+\begin{lemma}[Schur]\label{lem: Schur}
+    Suppose that $V$ and $W$ are irreducible representations of $G$; and $f: V \to W$ morphism of representations. Then
+    \begin{itemize}
+        \item If $V \nsimeq W$, then $f = 0$.
+        \item If $V \simeq W$, then $f = \lambda\cdot\Id$ for some $\lambda \in \C$.
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}
+    Use the result from Corollary \ref{cor: kernel and image of morphism of repr. is repr.}, that kernel and image of morphism of representations are also representations. Consider $\ker f$ and $\im f$. Since $V$ is irreducible, either $\ker f = V$ (where $f = 0$) or $\ker f = \{0\}$. Similarly either $\im f = \{0\}$ or $\im f = W$.
+    
+    Since a morphism of representations is in particular a linear map, $\dim \ker f + \dim \im f = \dim V$; and in particular we cannot have both $\im f = \{0\}$ and $\ker f = \{0\}$. Therefore if $\ker f = \{0\}$, $\im f = W$, which implies that $f$ is an isomorphism. Since $\C$ is algebraically closed, we know that $f$ (as a linear map) has an eigenvalue $\lambda$, i.e. $f - \lambda \cdot \Id$ is not injective. But by the fact that $W$ is irreducible, $f - \lambda \cdot \Id = 0$, i.e. $f = \lambda \cdot \Id$. 
+\end{proof}
+
+\textstart
+Now we seek to prove the first assertion in Remark \ref{rmk: decomposition of repr. unique up to isom}. First we need to introduce the structure of representations on the linear maps $\Hom_{\C}(V, W)$.
+
+We have seen that $\Hom_{\C}(V, W)$ obtains a vector space structure with addition and scalar multiplication given by the corresponding operation on the output of the map in $W$. Now suppose that $V$ and $W$ are both $G$-representations. Then there exists a natural $G$-representation structure in $\Hom_{\C}(V, W)$, given by 
+\[
+    (g \varphi)(v) := g\left( \varphi(g^{-1}(v)) \right)
+\]
+It is clear that this is linear. Check that this is a group homomorphism:
+\[
+    ((g_1 g_2) \varphi)(v) = (g_1 g_2) (\varphi ( g_2^{-1} g_1^{-1}(v) )) = g_1\left( g_2 (\varphi(g_2^{-1}(g_1^{-1}(v)))) \right) = (g_1 (g_2 \varphi))(v)
+\]
+
+\begin{remark}
+    For $V$ any $G$-representation, define $V^G := \{ v \in V \mid gv = v,\ \forall g \in G \}$ which is the largest trivial sub-representation of $G$. Then representations of $\Hom_{\C}(V, W)^G$ (as a $\C$-vector space) can be identified with $\{ \varphi: V \to W \mid \varphi \text{ morphism of repr.} \}$. This follows directly from the fact that $g\varphi(g^{-1} -) = \varphi(-)$ (LHS is the representation defined on $\Hom_{\C}(V, W)^G$) implies that $g^{-1}\varphi(-) = \varphi(g^{-1}-)$ which is exactly the definition of morphism of representations.
+\end{remark}
+
+\begin{corollary}[Result 1 in Remark \ref{rmk: decomposition of repr. unique up to isom}]
+    If $V$ is a $G$-representation with irreducible decompositions $V = W_1 \oplus \dots \oplus W_r$. Then $\#\{ i \mid W_i \simeq W \} = \dim_{\C}\left( \Hom_{\C}(V, W)^G \right)$
+\end{corollary}
+
+\begin{proof}
+    By the structure of representations in $V$, we have the isomorphism of representations:
+    \[
+        \Hom_{\C}(W, V)^G \simeq \Hom_{\C}(W, W_1) \oplus \dots \oplus \Hom_{\C}(W, W_r)
+    \]
+    Schur (Lemma \ref{lem: Schur}) gives 
+    \[
+        \dim_{\C}(W, W_i)^G = 
+        \begin{cases}
+            0, & W \nsimeq W_i \\
+            1, & W \simeq W_i
+        \end{cases}
+    \]
+    Since we are in the context of vector spaces, we have
+    \[
+        \dim_{\C}(W, V) = \sum_{i = 1}^r \dim \Hom_{\C} (W, W_i)
+    \]
+    and summing up the dimensions gives the desired result.
+\end{proof}
+
+\section{Character Theory}
+
+\begin{definition}[Character]
+    Fix a representation $\rho: G \to \GL(V)$, with $g \mapsto \rho_g$, the \textbf{character} of $\rho$ is a function
+    \[
+        \chi_{\rho}: G \to \C, \quad g \mapsto \Tr(\rho_g)
+    \]
+\end{definition}
+
+\begin{remark}
+    The definition of character is invariant w.r.t. choice of basis as the trace of a linear map is independent of the choice of basis. 
+\end{remark}
+
+\begin{notation}
+    $\chi_{\rho}(g) \in \C$ is sometimes abbreviated to be $\chi_{\rho_g}$ as is in the notation of representation.
+\end{notation}
+
+\textstart
+The following gives some immediate properties of trace function:
+\begin{enumerate}[label=\arabic*)]
+    \item If $\rho \simeq \rho'$, then $\chi_{\rho} = \chi_{\rho'}$. Recall that by Remark \ref{rmk: repr isom iff conjugate}, $\rho \simeq \rho'$ if and only if there exists some linear map $A$ s.t. for all $g \in G$. $\rho_g = A \circ \rho_g' \circ A^{-1}$, i.e. they are similar. Then the equality in character results directly from the fact that similar matrices have identical trace.
+    \item An immediate corollary to 1) is the fact that each $\chi_{\rho}$ is a \underline{class function}, i.e. takes constant value on the conjugacy class of any $g \in G$. This can be seen via taking $A = \rho_g$, and apply the fact that $\rho$ is a group homomorphism, i.e. $\rho_{g^{-1}} = \rho_g^{-1}$.
+    \item $\chi_{\rho}(e) = \Tr(\Id) = \dim_{\C} V$.
+\end{enumerate}
+
+\textstart
+The following results are also quite useful but are not so immediate, so we formalize them as propositions:
+\begin{proposition}\label{prop: character of inverse of conjugate of character}
+    Let $\rho$ be a representation of a finite group $G$. Then $\chi_{\rho}(g^{-1}) = \overline{\chi_{\rho}(g)}$.
+\end{proposition}
+
+\begin{proof}
+    Since we have $V \simeq \C^n$, we have the identification of $\rho$ as $\rho: G \to \GL(\C^n)$. Gram-Schmidt gives a basis in which the matrix representation of $\rho_g$ is upper-triangular, i.e. in the form of 
+    $\left(
+    \begin{smallmatrix}
+        \lambda_1 & & \ast \\
+        & \ddots & \\
+        & & \lambda_n
+    \end{smallmatrix}\right)
+    $
+    with $\lambda_i$s the eigenvalues. It is clear then that the inverse must also be in the form of 
+    $\left(
+    \begin{smallmatrix}
+        \lambda_1^{-1} & & \ast \\
+        & \ddots & \\
+        & & \lambda_n^{-1}
+    \end{smallmatrix}\right)
+    $
+    . This gives
+    \[
+        \Tr(\rho_g) = \sum_{i = 1}^n \lambda_i, \quad \Tr(\rho_{g^{-1}}) = \sum_{i = 1}^n \lambda_1^{-1}
+    \]
+    But since we have the requirement that $\rho$ is a group homomorphism, and as $\abs{G} = m$ we have the constraint $\rho_{g^{\abs{G}}} = \Id$, i.e. in matrix form
+    \[
+        \begin{pmatrix}
+            \lambda_1 & & \ast \\
+            & \ddots & \\
+            & & \lambda_n
+        \end{pmatrix}^m = 
+        \begin{pmatrix}
+            \lambda_1^{m} & & \ast \\
+            & \ddots & \\
+            & & \lambda_n^{m}
+        \end{pmatrix} = \Id \implies \lambda_i^m = 1\ \ \forall i
+    \]
+    In particular we have $\abs{\lambda_i} = 1$, which gives $\lambda_i^{-1} = \overline{\lambda_i}$. Summing together gives the desired result.
+\end{proof}
+
+\begin{proposition}\label{prop: character of direct sum and tensor product}
+    The characters of direct sum of representations, and tensor product of representations have the following relations:
+    \begin{itemize}
+        \item For $\rho = \rho_1 \oplus \rho_2$, $\chi_{\rho} = \chi_{\rho_1} + \chi_{\rho_2}$.
+        \item For $\rho = \rho' \tensor \rho''$, $\chi_{\rho} = \chi_{\rho'} \cdot \chi_{\rho''}$.
+    \end{itemize}
+\end{proposition}
+
+\begin{proof}
+    Choose an appropriate basis for the vector space, and express the representations in that correspondingly.
+
+    Let $V_1$ and $V_2$ be the corresponding vector spaces of $\rho_1$ and $\rho_2$. Then given bases in both $V_1$ and $V_2$, we have a basis of $V = V_1 \oplus V_2$, and the corresponding matrix representation of $\rho$:
+    $
+    \left(\begin{array}{@{}c|c@{}}
+        (\rho_1)_g & \\ \hline
+        & (\rho_2)_g \\
+      \end{array}\right)
+    $
+    which is block diagonal. The trace corresponding to the character can then be computed via
+    \[
+        \Tr(\rho) = \Tr((\rho_1)_g) + \Tr((\rho_2)_g)
+    \]
+
+    For the case with tensor product, consider the representations to be $\rho': G \to \GL(V_1)$ and $\rho'': G \to \GL(V_2)$. Choose bases $e_1, \dots, e_n$ for $V_1$, and $f_1, \dots, f_m$ for $V_2$. Let $(a_{ij})_{n \times n}$ and $(b_{kl})_{m \times m}$ be the corresponding matrix representations for $\rho'$ and $\rho''$. Then $V_1 \tensor V_2$ has a basis $e_i \tensor f_j$. Compute the matrix representation for $\rho$:
+    \begin{align*}
+        \rho_g(e_j \tensor f_{\ell})
+        & = \rho_g'(e_j) \tensor \rho_g'' (f_{\ell}) \\
+        & = \left( \sum_{i = 1}^n a_{ij} e_i \right) \tensor \left( \sum_{k = 1}^m b_{k\ell} f_k \right) \\
+        & = \sum_{i, k} a_{ij} b_{k\ell} \left( e_i \tensor f_k \right)
+    \end{align*}
+    Then
+    \[
+        \Tr(\rho_g) = \sum_{i = j, k = \ell} a_{ij} b_{k\ell} (e_i \tensor f_k) = \sum_{i, k} a_{ii} b_{kk} (e_i \tensor f_k) = \left( \sum_{i} a_{ii} \right) \left( \sum_{k} b_{kk} \right) = \Tr(\rho_g')\cdot\Tr(\rho_g'')
+    \]
+\end{proof}
+
+\textstart
+The character of a representation gives information on its properties, e.g. checking whether a given set of sub-representations gives a decomposition, or checking whether a representation is irreducible, etc. To utilize this concept we need some extra tools on the object:
+
+\begin{notation}
+    Define $\Func(G) := \{ f: G \to \C \}$. This gives a $\C$-vector space of $\dim \abs{G}$. Explicitly, for $G = \{g_1, \dots, g_m\}$ we have the isomorphism $\Func(G) \simeq \C^m$, $f \mapsto (f(g_1), \dots, f(g_m))$.
+\end{notation}
+
+\begin{definition}[Inner Product of Functions]
+    Let $f, g \in \Func(G)$. Define 
+    \[
+        \inner{f, g} := \frac{1}{\abs{G}} \sum_{x \in G} f(x) \overline{g(x)}
+    \]
+\end{definition}
+
+\begin{remark}
+    The inner product gives a Hermitian product on $\Func(G)$. Recall that Hermitian product needs to satisfy $\C$-linearity in the first entry, conjugate $\C$-linear in the second entry, and positive-definite, i.e. for all $f \neq 0, \inner{f, f} > 0$.
+\end{remark}
+
+\textstart
+The following is the main theorem for character of representations, that is the character of a representation uniquely characterizes a representation up to isomorphism:
+
+\begin{theorem}\label{thm: inner product of irred repr.}
+    Let $\rho$ and $\rho'$ be irreducible representations, then $\inner{\chi_{\rho}, \chi_{\rho'}} = 1$ if they are isomorphic, and $\inner{\chi_{\rho}, \chi_{\rho}} = 0$ otherwise.
+\end{theorem}
+
+\textstart
+The tools we have for such situations are Schur's result (Lemma \ref{lem: Schur}), and the averaging process which makes a linear map into a morphism of representations used in the proof of Theorem \ref{thm: decomposition of repr.}. The general strategy is to notice that we have application of $g$ both in the domain and image in the ``averaged'' representation, and $\chi(g^{-1}) = \overline{\chi(g)}$ gives the conjugacy and thus the desired form of the inner product.
+
+\begin{notation}
+    In the proof we use $(a_{ij})_{m \times n}$ to denote the matrices, with the indices dropped if apparent; and $a_{ij}$ (without the parenthesis) to denote entries in the matrix. 
+\end{notation}
+
+\begin{proof}[Proof of Theorem \ref{thm: inner product of irred repr.}]
+    Assume that $\rho: G \to \GL_n(\C)$ and $\rho': G \to \GL_m(\C)$ are the representations. Denote the matrix representations for $\rho_g, \rho_{g}'$ and $\rho_{g^{-1}}' = (\rho_{g}')^{-1}$ to be $(a_{ij})_{n \times n}$, $(b_{ij})_{m \times m}$ and $(c_{ij})_{m \times m}$, correspondingly. Consider a linear map $\varphi: V \to V'$ with matrix representation $(\varphi_{ij})_{m \times n}$, and the induced morphism of representations $\psi: V \to V'$ given by
+    \[
+        \psi(v) := \sum_{g \in G} g^{-1}(\varphi(gv))
+    \]
+    For proof of this being indeed a representation check Proof of Theorem \ref{thm: decomposition of repr.}. Now consider the matrix representation of $\psi(v)$:
+    \begin{itemize}
+        \item Consider $\rho \nsimeq \rho'$. Then by Schur's Lemma (Lemma \ref{lem: Schur}), we have $\psi = 0$. In particular, every entry of matrix representation of $\psi$ is 0, which gives
+        \[
+            \psi_{ik} = \sum_{g \in G} \left( \sum_{j, \ell} c_{ij}(g) \varphi_{j \ell} a_{\ell k} \right)
+        \]
+        Since this holds for all $\varphi: V \to V'$, decomposing $\varphi$ into the basis given by each entry in the $m$-by-$n$ matrix i.e. with
+        \[
+            \varphi_{j\ell} = 
+            \begin{cases}
+                1, & j = j',\ \ell = \ell' \\
+                0, & \text{otherwise}
+            \end{cases}
+        \]
+        we have for all $i, j', \ell', k$, $\sum_{g \in G} (\sum_{i, k} c_{i j'} a_{\ell' k}(g)) = 0$. In particular, we can take $i = j'$ and $\ell' = k$, and summing up along the diagonal entries, which gives
+        \[
+            0 = \sum_{g \in G} \left( \sum_{i = 1}^n c_{ii} \right) \left( \sum_{k = 1}^n a_{kk} \right)
+            = \sum_{g \in G} \chi_{\rho'}(g^{-1}) \cdot \chi_{\rho} (g) = \sum_{g \in G} \overline{\chi_{\rho'}(g)} \cdot \chi_{\rho} (g) = \inner{\chi_{\rho}, \chi_{\rho'}}
+        \]
+        \item Now consider the case where $\rho = \rho'$, i.e. $V \simeq V'$. Then Schur (Lemma \ref{lem: Schur}) gives that there exists $\lambda_{j \ell}$ s.t. for $\varphi_{j'\ell'}$ as defined in the previous case
+        \[
+            \psi_{j'\ell', ik} = \sum_{g \in G} c_{ij'}(g) a_{\ell' k}(g) = \lambda_{j', \ell'} \delta_{i, k}
+        \]
+        Now consider $\varphi = \Id$, i.e. $\varphi_{ij} = \delta_{i, j}$. Taking $i = j$ and $k = \ell$ we have
+        \[
+            \sum_{g \in G} \left( \sum_{i, k} c_{ii}(g) a_{kk}(g) \right) = \sum_{i, k} \lambda_{i, k} \delta_{i, k} = \sum_{q} \lambda_{q, q}
+        \]
+        But $\lambda_{i, i} = 1$ for all $i$, which gives
+        \begin{align*}
+            \abs{G} = \sum_{k} \lambda_{k, k}
+            & = \sum_{g \in G} \left( \sum_{i, k} c_{ii}(g) a_{kk}(g) \right) \\
+            & = \sum_{g \in G} \left( \sum_{i} c_{ii}(g) \right) \left( \sum_k a_{kk}(g) \right) \\
+            & = \sum_{g \in G} \chi_{\rho}(g) \cdot \chi_{\rho}(g^{-1}) = \sum_{g \in G} \chi_{\rho}(g) \cdot \overline{\chi_{\rho}(g)} \\
+            & = \sum_{g \in G} \inner{\chi_{\rho}, \chi_{\rho}}
+        \end{align*}
+        where dividing both sides by $\abs{G}$ gives the desired result.
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}\label{cor: inner prod. of repr.}
+    From the theorem we have the following immediate results:
+    \begin{enumerate}[label=\arabic*)]
+        \item The number of isomorphism classes of irreducible representations is bounded above by $\dim_{\C} \Func(G) = \abs{G}$. Notice that if $\rho_1, \dots, \rho_r$ are pairwise non-isomorphic irreducible representations, then by Theorem \ref{thm: inner product of irred repr.} $\inner{\chi_i, \chi_j} = 0$ for all $i \neq j$, i.e. they are orthonormal, and in particular linearly independent. But $\dim_{\C} \Func(G) = \abs{G}$, so there are at most $\abs{G}$ of them. 
+        \item Let $V$ be any representation of $G$, and $W$ an irreducible representation of $G$, then for irreducible decomposition of $V$: $V = \bigoplus_{i = 1}^r W_i$, $\#\{ i \mid W_i \simeq W \} = \inner{\chi_V, \chi_W}$. 
+        \begin{proof}
+            To see this, by Proposition \ref{prop: character of direct sum and tensor product} we have $\chi_V = \sum_{i = 1}^r \chi_{W_i}$. Then
+            \[
+                \inner{\chi_V, \chi_W} = \inner{\sum_{i = 1}^r \chi_{W_i}, \chi_W} = \sum_{i = 1}^r \inner{\chi_{W_i}, \chi_W}
+                \]
+                where since both $W_i$ and $W$ are irreducible, we have $\inner{\chi_{W_i}, \chi_W} = 1$ if and only if $W \simeq W_i$; and 0 otherwise.
+        \end{proof}
+        \item A representation $V$ of $G$ is irreducible if and only if $\inner{\chi_V, \chi_V} = 1$.
+        \begin{proof}
+            The ``only if'' part is prove in the theorem above. To see the ``if'' part, consider the decomposition of $V$:
+            \[
+                V \simeq W_1^{\oplus a_1} \oplus \dots \oplus W_r^{\oplus a_r}, \quad \chi_V = \sum_{i = 1}^r a_i \chi_{W_i}
+            \]
+            Then use the formula given in the theorem, we have $\inner{\chi_V, \chi_V} = \sum_{i = 1}^r a_i^2$, which is 1 if and only if $r = 1$ and $a_1 = 1$. But this is exactly paraphrasing of the $V$ being irreducible.
+        \end{proof}
+        \item For every representation $V$, we have $V \simeq W$ if and only if $\chi_V = \chi_W$.
+        \begin{proof}
+            The ``only if'' part results from Remark \ref{rmk: repr isom iff conjugate}, where representations are isomorphic if and only if they are conjugate; but conjugate matrices have the same trace, i.e. the representations have the same character.
+
+            To see the ``if'' part, since $\chi_V = \chi_W$, in particular for every irreducible $G$-representation $W'$ we have $\inner{\chi_V, \chi_{W'}} = \inner{\chi_W, \chi_{W'}}$. Testing this through all non-isomorphic irreducible $G$-representations gives the irreducible decomposition of $V$ and $W$, which are the same as the inner products which gives the powers ($a_i$s as in part 3) are the same. This implies that they are actually isomorphic. 
+        \end{proof}
+    \end{enumerate}
+\end{corollary}
+
+\textstart
+The following provides an application of the theorem above and immediate results to the regular representation of a group, which provides a view on all the irreducible $G$-representations.
+
+Recall the regular representation is defined as $\rho^{\mathrm{reg}}: G \to \GL(\C[G])$, where $\C[G] := \bigoplus_{g \in G} \C \alpha(g)$ where $\alpha$ is a formal bijection on the group $G$. The operation is given by $\rho^{\mathrm{reg}}_h (\alpha(g)) := \alpha(gh)$.
+
+\begin{lemma}
+    The character of the regular representation is $\chi_{\rho^{\mathrm{reg}}}(g) = 0$ if $g \neq e$; and $\chi_{\rho^{\mathrm{reg}}}(e) = \dim_{\C}\C[G] = \abs{G}$.
+\end{lemma}
+
+\begin{proof}
+    Recall that the basis of $\C[G]$ is given by all the elements in $G$. In terms of matrix representations, this implies that $\rho^{\mathrm{reg}}_h$ corresponds to the $h$-$gh$ entry being 1 in the matrix for all $h \in G$. In particular, these entries contribute to the trace if and only if $gh = h$, i.e. $g = e$, in which case we have $1$s on the diagonal, giving $\Tr(\rho^{\mathrm{reg}}(g)) = \dim_{\C}(\C[G]) = \abs{G}$.
+\end{proof}
+
+\begin{proposition}\label{prop: decomposition of regular repr.}
+    Let $\rho_1, \dots, \rho_r$ be all the (non-isomorphic) irreducible $G$-representations, with their corresponding degree $d_i$. Then 
+    \[
+        \rho^{\mathrm{reg}} \simeq \bigoplus_{i = 1}^r \rho_i^{\oplus d_i}
+    \]
+\end{proposition}
+
+\begin{proof}
+    Use the result in the lemma above, we have by definition
+    \[
+        \inner{\chi_{\rho^{\mathrm{reg}}}, \chi_{\rho_i}} := \frac{1}{\abs{G}} \sum_{g \in G} \chi_{\rho^{\mathrm{reg}}}(g) \overline{\chi_{\rho_i}(g)} = \frac{1}{\abs{G}} \chi_{\rho^{\mathrm{reg}}}(e) \overline{\chi_{\rho_i}(e)} = d_i
+    \]
+    since $\chi_{\rho^{\mathrm{reg}}}$ is zero except at the identity, where it evaluates to the dimension of the vector space; and as the representation $\rho_i$ is a group homomorphism, we have $\rho_i(e) = \Id$, i.e. $\chi_{\rho_i}(e) = \Tr(\Id) = d_i$. The number of copies are then given by the decomposition according to Corollary \ref{cor: inner prod. of repr.} 2).
+\end{proof}
+
+\begin{corollary}\label{cor: check whether obtained all irred repr.}
+    Taking dimensions on the result of Proposition \ref{prop: decomposition of regular repr.} gives
+    \[
+        \abs{G} = \sum_{i = 1}^r d_i^2
+    \]
+    for $d_i$ being the degree of irreducible representation $\rho_i$. A \hyperref[thm: character of irred repres gives a basis of C(G)]{theorem in the next section} gives the fact that the number of $G$-representations is the same as the number of conjugacy classes of $G$. This equation, together with that theorem gives a tool to check whether we have found of all $G$-representations given a group $G$. 
+\end{corollary}
+
+\begin{corollary}
+    By the formula for computing the character for direct sum of representations (Proposition \ref{prop: character of direct sum and tensor product}), we have 
+    \[
+        \chi_{\rho^{\mathrm{reg}}} = \sum_{i = 1}^r d_i \chi_{\rho_i} \implies \sum_{i = 1}^r d_i \chi_{\rho_i}(g) = 0\ (\forall g \neq e)
+    \]
+\end{corollary}
+
+\section{Counting Irreducible $G$-Representations}
+
+\textstart
+As we have seen in the previous section, since the trace of a function is preserved through conjugation, the characters of an irreducible representation of $G$ evaluated at $g$ is determined uniquely by the conjugacy class that $g$ is in. This, together with the formula in Corollary \ref{cor: check whether obtained all irred repr.} provide the tool for finding all irreducible $G$-representations. This section is devoted to the introduction of the formulation of the above process.
+
+\begin{definition}[Class Function]
+    The \textbf{class functions} of $G$ is a subset of $\operatorname{Func}(G)$, where its elements $\varphi: G \to \C$ satisfies the property that it evaluates to the same value on conjugate elements in $G$. The set of class functions in $G$ is denoted as $\mathcal{C}(G)$. 
+\end{definition}
+
+\begin{remark}
+    Considering $\mathcal{C}(G)$ as a $\C$-vector space where the addition and scalar multiplication is applied to the result of evaluation of the class functions, $\dim_{\C} \mathcal{C}(G)$ is the number of conjugacy classes of $G$.
+\end{remark}
+
+\textstart
+For objects that are invariant w.r.t. the action of conjugation, the most straightforward ones are $G$-representations and characters. The following theorem seeks to describe the relation between these objects:
+
+\begin{theorem}\label{thm: character of irred repres gives a basis of C(G)}
+    Let $\rho_1, \dots, \rho_r$ are the irreducible $G$-representations, and $\chi_1, \dots, \chi_r$ be the corresponding characters. Then $\chi_i$s give an orthonormal basis of $\mathcal{C}[G]$. In particular $r$ is the number of conjugacy classes of $G$.
+\end{theorem}
+
+\textstart
+Before proving the theorem, we first prepare some notations for the class functions. This generalizes the common ``averaging'' technique making a linear map a morphism of representations, or preserving the structure of morphisms of representation (for example, cf. Theorem \ref{thm: decomposition of repr.}):
+
+\begin{notation}
+    Given $f \in \mathcal{C}(G)$, and $\rho: G \to \GL(V)$ a representation, denote
+    \[
+        \rho_f := \sum_{g \in G} f(g) \rho_g \in \End_{\C}(V)
+    \]
+    That is, identify the class function $f$ with the element $\sum_{g \in G} f(g) g \in \C[G]$. Notice that this sums over all $g \in G$ and therefore is determined solely by the function $f$ and the $G$-representation.
+\end{notation}
+
+\textstart
+Then we have the following immediate results:
+\begin{enumerate}[label=\arabic*)]
+    \item For $\rho = \rho' \oplus \rho''$, $\rho_f = \rho_f' \oplus \rho_f''$.
+    \item $\rho_f$ gives a morphism of $G$-representations. By definition, we only need to check that for all $h \in G$, $v \in V$, we have $\rho_f(hv) = h \rho_f (v)$. But this is indeed the case, as 
+    \[
+        \rho_f(hv) = \sum_{g \in G} f(g) g(hv) = \sum_{g \in G} f(g) h(h^{-1}gh)(v) = h \left( \sum_{h^{-1}gh \in G} f(h^{-1}gh) (h^{-1}gh)(v)\right) = h(\rho_f(v))
+    \]
+    where the penultimate equality uses the fact that $f$ is a class function, where in particular for all $g, h \in G$ we have $f(g) = f(h^{-1}gh)$.
+\end{enumerate}
+
+\begin{proposition}
+    If $\rho$ is irreducible, then $\rho_f = \lambda \cdot \Id$ where
+    \begin{equation}\label{eq: coeff of repr of func.}\tag{$(\ast)$}
+        \lambda = \frac{\abs{G}}{\deg(\rho)} \inner{f, \overline{\chi_{\rho}}}
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    Express the trace of $\rho_f$ in two ways. $\rho_f = \lambda \Id \implies \Tr(\rho_f) = \lambda \cdot \deg(\rho)$. For the other expression, since $\rho_f = \sum_{g \in G} f(g) \rho_g$, we have
+    \[
+        \Tr_{\rho_f} = \sum_g \in G f(g) \Tr(\rho_g) = \sum_{g \in G} f(g) \chi_{\rho}(g) = \abs{G} \cdot \inner{f, \overline{\chi_{\rho}}}
+    \]
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm: character of irred repres gives a basis of C(G)}]
+    By Theorem \ref{thm: inner product of irred repr.} we know that $\{\chi_1, \dots, \chi_r\}$ gives an orthonormal subset of $\mathcal{C}(G)$. This implies that $\overline{\chi_{1}}, \cdots, \overline{\chi_{r}}$ are all linearly independent, i.e. we can express $\mathcal{C}(G)$ as
+    \[
+        \mathcal{C}(G) = \linspan(\overline{\chi_{1}}, \cdots, \overline{\chi_{r}}) \oplus \linspan(\overline{\chi_{1}}, \cdots, \overline{\chi_{r}})^{\perp}
+    \]
+    Therefore, to conclude the proof, we only need to show that the second part of the direct sum vanishes; that is, if $f \in \mathcal{C}(G)$ s.t. $\inner{f, \overline{\chi_i}} = 0$ for all $i$, then $f = 0$. First notice that by Eq. \eqref{eq: coeff of repr of func.} we have $\lambda = 0$; and $(\rho_i)_f = \lambda \cdot \Id$ this implies that $(\rho_i)_f = 0$. Given any representation $\rho$, writing it as a direct sum of irreducible decompositions gives $\rho_f = 0$.
+
+    Now apply this for $\rho = \rho^{\text{reg}}$:
+    \[
+        (\rho^{\text{reg}})_f = \sum_{g \in G} f(g) \rho^{\text{reg}}_g, \quad (\rho^{\text{reg}}_f) (\alpha(e)) = \sum_{g \in G} f(g) \underbrace{(\rho^{\text{reg}}_g) (\alpha(e))}_{\alpha(g)}
+    \]
+    where the second equality is zero by hypothesis. Then $f(g) = 0$ for all $g$ since $\{\alpha(g) \mid g \in G\}$ is a basis for the group algebra.
+\end{proof}
+
+\begin{notation}[Character Table]
+    The \textbf{character table} gives information on the character evaluated on conjugacy classes of a group:
+    \[
+        \begin{array}{c|ccc}
+            & \chi_1 & \cdots & \chi_r \\
+            \hline
+            g_1 & & & \\
+            \vdots & & \chi_i(g_j) & \\
+            g_r & & &
+        \end{array}
+    \]
+    where the columns are the character of irreducible representations of $G$; and rows are system of representatives for conjugacy classes of $G$. Summing over the rows by squares give the order of $G$, by Corollary \ref{cor: check whether obtained all irred repr.}
+\end{notation}
+
+Since character is a class function, it is related to the cardinality of the conjugacy classes: Fix $h \in G$, and consider its conjugacy class:
+\[
+    \varphi: G \to \C, \qquad g \mapsto 
+    \begin{cases}
+        1, & g, h \text{ conjugate} \\
+        0, & \text{otherwise}
+    \end{cases}
+\]
+It is clear that $\varphi \in \mathcal{C}(G)$. By Theorem \ref{thm: character of irred repres gives a basis of C(G)} we can write $\varphi = \sum_{i = 1}^r a_i \chi_i$. Then we can write
+\[
+    a_i = \inner{\varphi, \chi_i} = \frac{1}{\abs{G}} \sum_{g \in G} \varphi(g) \overline{\chi_i(g)} = \frac{c(h)}{\abs{G}} \overline{\chi_i(h)}
+\]
+where $c(h)$ is the cardinality of the conjugacy class of $h$. Taking $\varphi = \chi_i$ we have
+\begin{enumerate}[label=\arabic*)]
+    \item If $g$ and $h$ are not conjugate, then $\sum_{i = 1}^r \chi_i(g) \overline{\chi_i(h)} = 0$ (taking $h = e$ gives the previous result).
+    \item If $g$ and $h$ are conjugate, then
+    \[
+        1 = \inner{\chi_i, \chi_i} = \frac{c(h)}{\abs{G}} \sum_{i = 1}^r \chi_i(h) \overline{\chi_i(h)} \implies \frac{\abs{G}}{c(h)} = \sum_{i = 1}^r \abs{\chi_i(h)}^2
+    \]
+\end{enumerate}
+
+\begin{proposition}
+    $G$ is abelian if and only if all $G$-representations have degree 1.
+\end{proposition}
+
+\begin{proof}
+    If $G$ is abelian, then all conjugacy classes of $G$ have 1 element, i.e. there are $\abs{G}$ conjugacy classes. Let $d_1, \dots, d_n$ for $n = \abs{G}$ be the degree of $G$-representations. By Corollary \ref{cor: check whether obtained all irred repr.} we have $\abs{G} = \sum_{i = 1}^r d_i^2$, giving that all $d_i$s are 1. For the other direction letting $d_i = 1$ for all $i$ gives that there are $\abs{G}$ conjugacy classes, i.e. $G$ is abelian. 
+\end{proof}
+
+\begin{example}
+    Suppose that $G = \Z/n\Z$, we have seen that 1-dimensional $G$-representations corresponds to $\lambda \in \C$ s.t. $\lambda^n = 1$. Notice also, that for $\Z/m\Z \times \Z/n\Z \to \C^{\ast}$, since $\C^{\ast}$ is abelian it is equivalent to giving both $\Z/m\Z \to \C^{\ast}$ and $\Z/n\Z \to \C^{\ast}$. In general, 1-dimensional representations of $\Z/n_1\Z \times \cdots \times \Z/n_d \Z$ corresponds to $\{ (\lambda_1, \dots, \lambda_d) \in (\C^{\ast})^d \mid \lambda_i ^{n_i} = 1, \forall i \}$.
+\end{example}
+
+\begin{example}
+    Use the result from Corollary \ref{cor: check whether obtained all irred repr.} to construct part of the character table of $G = S_3$. The conjugacy classes of $G$ are the identity, 2-cycles and 3-cycles. Then there are 3 irreducible representations:
+    \begin{itemize}[label=$-$]
+        \item The identity 1-dimensional representation $\rho: S_3 \to \C^{\ast}$ identically 1.
+        \item The sign permutation $S_3 \to \{\pm 1\}$, with $\sigma \mapsto \varepsilon(\sigma)$.
+        \item Corollary \ref{cor: check whether obtained all irred repr.} implies that there exists an irreducible representation of degree 2. This is the \underline{standard representation}, given by $S_3$ permuting the entries in $\{ (x_1, x_2, x_3) \in \C^3 \mid x_1 + x_2 + x_3 = 0 \} \subseteq S_3$.
+    \end{itemize}
+    Then we have the character table
+    \[
+        \begin{array}{r|ccc}
+            & \chi_1 & \chi_2 & \chi_3 \\
+            \hline
+            e & 1 & 1 & 2 \\
+            (1 2) & 1 & -1 & 0 \\
+            (1 2 3) & 1 & 1 & -1
+        \end{array}
+    \]
+\end{example}
+
+\section{Induced Representations}
+
+\textstart
+Recall that we have by Proposition \ref{prop: repr of G identifiable with C[G]-modules} the identification of $G$-representations and $\C[G]$-modules. As in module theory we have the extension of scalars, where given a ring homomorphism $R \to S$ (often an inclusion or embedding), we have the extension $\catlmod{R} \to \catlmod{S}$. We can have similar construction in the representation theory.
+
+Let $G$ a finite group, and $H \leq G$ a subgroup. Let $\rho: G \to \GL(V)$ be a $G$-representation. We have a representation of $H$ simply by restriction: $\restr{\rho}{H}: H \to \GL(V)$. This is often written $\restr{\rho}{H} = \Res_H^G (\rho)$. It is clear from definition that $\chi_{(\restr{\rho}{H})} = \restr{\chi_{\rho}}{H}$. Further we can similarly restrict a morphism of $G$-representations to get a morphism of $H$-representations. The goal is find the construction in the inverse direction, i.e. find out how an $H$-representation induces a $G$-representation.
+
+\begin{remark}
+    As a review of the extension of scalars, we have an injective of $\C$-algebras $\varphi: \C[H] \hookrightarrow \C[G]$. This enables viewing $\C[G]$-modules as $\C[H]$-modules, given by $a \cdot u := \varphi(a) u$ for all $a \in \C[H]$, $u \in V$ (considered as a $\C[G]$-module). In particular, this gives the result of restriction of representations as above.
+\end{remark}
+
+\begin{proposition}\label{prop: relation of dim of irred repr of group and that of subgroup}
+    If every irreducible representation of $H$ has dimension at most $r$, then every irreducible representation of $G$ has dimension at most $r \cdot (G : H)$.
+\end{proposition}
+
+\begin{example}\label{ex: abelian subgp gives dim repr on group the index of subgp}
+    If $H$ is abelian, then since $H$ is finite every element must be mapped to the unit circle, i.e. all $H$-representations are irreducible if and only if it is of dimension 1; and then every irreducible $G$-representation has dimension at most $(G : H)$.
+\end{example}
+
+\textstart
+To prove the proposition above we need some further results:
+
+\begin{notation}
+    The left congruence classes of $H$ in $G$ is denoted as $(G : H)_{\ell} = (G/H)_{\ell} := \{gH \mid g \in G\}$, 
+\end{notation}
+
+\begin{lemma}\label{lem: repr decompose as direct sum of left cong classes}
+    Let $V$ be a $G$-representation, $W \subseteq V$ be a $H$-representation (for $H \leq G$). Pick $\sigma \in (G : H)_{\ell}$, i.e. $\sigma = gH$ for some $g \in G$. Denote $W_{\sigma} := \{ gw \mid w \in W \}$.
+
+    If $V$ is an irreducible $G$-representation, then $V = \bigoplus_{\sigma \in (G : H)_{\ell}} W_{\sigma}$.
+\end{lemma}
+
+\begin{proof}
+    Notice that for $\sigma \in (G : H)_{\ell}$, $W_{\sigma}$ depends only on $\sigma$. Written explicitly, if $gH = g'H = \sigma$, then $g^{-1} g' \in H$. In terms of representation this gives
+    \[
+        \{ g' w \mid w \in W \} = \{ g (g^{-1} g')w \mid w \in W \} = \{ g((g^{-1} g') w) \mid w \in W \} = \{ gw \mid w \in W \}
+    \]
+    Since $W$ is an $H$-representation; and $g^{-1} g' \in H$ induces an automorphism on $W$.
+
+    Further for all $g' \in G$ we have $W_{(g' \sigma)} = g' W_{\sigma}$. This can be seen via first consider by definition $g'(W_{\sigma}) \subseteq W_{(g' \sigma)}$. The inclusion in the other direction is also clear as $gW = W$ implies that $g$ induces an automorphism on $W$; or more explicitly, apply the previous result with $(g')^{-1}$, which gives
+    \[
+        (g')^{-1} W_{g' \sigma} \subseteq W_{\sigma} \implies W_{g' \sigma} \subseteq (g') W_{\sigma}
+    \]
+    Therefore, $\sum_{\sigma \in (G : H)_{\ell}} W_{\sigma}$ gives a $G$-subrepresentation of $V$. Moreover, since all such $\sigma$s are disjoint (by the fact that the left equivalence classes are disjoint), this gives the direct sum decomposition.
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{prop: relation of dim of irred repr of group and that of subgroup}]
+    Use Lemma \ref{lem: repr decompose as direct sum of left cong classes}: if $\dim_{\C}(V) \leq r$, for $V$ being irreducible we have $V = \sum_{\sigma \in (G : H)_{\ell}}$, and in particular
+    \[
+        \dim_{\C}(V) \leq \sum_{\sigma} \dim_{\C}(W_{\sigma}) \leq \dim_{\C}(W) \cdot (G : H) \leq r \cdot (G : H)
+    \]
+\end{proof}
+
+\textstart
+The following recalls results of extension of scalars in ring theory.
+
+Fix $K$ to be a field, and $R$ a $K$-algebra. Left $M$ and $N$ be a right and left $R$-module, respectively. In particular, both $M$ and $N$ are $K$-vector spaces. Given the tensor product on vector spaces, we have the induced tensor product in $R$-modules:
+
+\begin{notation}
+    Denote $M \tensor_R N := M \tensor_K N / \{\text{linear subspaces spanned by $(ua \tensor_K v - u \tensor_K av) \mid u \in M, v \in N, a \in R$}\}$. $u \tensor_R v$ is the image of $u \tensor_K v$ in the quotient in RHS above.
+\end{notation}
+
+\begin{remark}
+    Since $M \tensor_K N$ has a natural $K$-vector space structure, and the subspace vanishing in the quotient is a linear subspace, $M \tensor_R N$ is also a $K$-vector space.
+\end{remark}
+
+\begin{definition}[Balanced]
+    If $P$ is a vector space over $K$, and $M, N$ a right, left $R$-module, respectively; where $R$ is a $K$-algebra. a $K$-bilinear map $\varphi: M \times N \to P$ is \textbf{$R$-balanced} if $\varphi(u, av) = \varphi(ua, v)$ for all $u \in M, a \in R, v \in N$.
+\end{definition}
+
+\begin{proposition}[Universal Property of $M \tensor_R N$]
+    For all $P$ $K$-vector space, and $\psi: M \times N \to P$ $R$-balanced map, there exists a unique $K$-linear map $f: M \tensor_R N \to P$ s.t. $f \circ \varphi = \psi$ for $\varphi$ the induced map of tensor product $\varphi: M \times N \to M \tensor_R N$.
+\end{proposition}
+
+\begin{example}
+    The following gives some simple example of tensor product:
+    \begin{enumerate}[label=\arabic*)]
+        \item $M = R$ has the canonical right $R$-module structure. Then we have the the isomorphism $M \tensor_R N \simeq N$ as $K$-vector spaces (for $R$ as a $K$-algebra).
+        \item If $M$ is a free $R$-module with basis $e_1, \dots, e_n$, then $M \tensor_R N \simeq N^n$ via the map
+        \[
+            N^n \to M \tensor_R N, \quad (v_1, \dots, v_n) \mapsto \sum_{i = 1}^n e_i \tensor_R v_i
+        \]
+        \item Suppose that we have $f: R \to S$ a morphism of $K$-algebras; we have the \underline{restriction of scalars}: for $M$ an $S$-module, $f$ also gives it an $R$-module structure, by specifying that for all $a \in R, u \in M$, $a \cdot u := f(a) \cdot u$. 
+        
+        The inverse direction, \underline{extension of scalar}, can be constructed for $N$ a left $R$-module, by considering $S \tensor_R N$, which has a left $S$-module structure. Here $S$ is viewed as a right $R$-module, via $u \cdot a := u \cdot f(a)$ for all $u \in S, a \in R$. For all $b \in S$, we can define an $R$-balanced map
+        \[
+            S \times N \mapsto S \tensor_R N, \quad (u, v) \mapsto bu \tensor_R v
+        \]
+        which by universal property of tensor product induces a map $u \tensor_R v \mapsto bu \tensor_R v$, which defines the scalar multiplication by $b$
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}[Universal Property of Extension of Scalar]\label{prop: Universal Property of Extension of Scalar}
+    For all left $S$-module $M$ and left $R$-module $N$, we have a bijection
+    \[
+        \Hom_R(N, M) \simeq \Hom_S(S \tensor_R N, M), \quad f \circ (v \mapsto 1 \tensor_R v) \mapsfrom f, g \mapsto (a \tensor_R v \mapsto a \cdot g(v))
+    \]
+\end{proposition}
+
+\textstart
+Now we formalize the induced representation. Suppose that $G$ is a finite group, $H \leq G$ a subgroup, and $i: \C[H] \to \C[G]$ the inclusion map. If $W$ is a representation of $H$, i.e. can be identified with a $\C[H]$-module, then this induces a $G$-representation (in turns of group algebra)
+\[
+    \Ind_H^G (W) := \C[G] \tensor_{\C[H]} W
+\]
+
+\begin{claim}
+    $\C[G]$ is a free right $\C[H]$-module, with basis $\{ \alpha(a) \mid a \in R \}$ where $R \subseteq G$ is a system of representations of $(G/H)_{\ell}$.
+\end{claim}
+
+\begin{proof}
+    By definition every $u \in \C[G]$ can be uniquely written as $u = \sum_{g \in G} c_g \alpha(g)$; and $g = ah$ for $a \in R, h \in H$. Then
+    \[
+        u = \sum_{g \in G} c_g \alpha(g) = \sum_{a \in R} \sum_{h \in H} c_{ah} \alpha(a) \alpha(h) = \sum_{a \in R} \alpha(a) \underbrace{\left( \sum_{u \in H} c_{ah} \alpha(h) \right)}_{\in \C[H]}
+    \]
+\end{proof}
+
+This allows explicitly writing out the induced representation: with the same setting as above, if $W$ is an $H$-representation, then 
+\[
+    \C[G] \tensor_{\C[H]} W = \bigoplus_{a \in R} (\alpha(a) \tensor W) = \bigoplus_{a \in R} \{ \alpha(a) \tensor w \mid w \in W \}
+\]
+In particular, we have an injective map $W \hookrightarrow V$, $w \mapsto 1 \tensor w = \alpha(e) \tensor w$. Then this gives $W \isom W_e = W_H$, $w \mapsto 1 \tensor w$ an isomorphism of $H$-representations, since we have
+\[
+    h (1 \tensor w) = \alpha(g) \tensor w = 1 \tensor \alpha(h) w = 1 \tensor hw
+\]
+which agrees with the earlier notation $W_{gH} = g W_H$ for all $g$ (in Lemma \ref{lem: repr decompose as direct sum of left cong classes}), as $g(1 \tensor w) = \alpha(g) \tensor w$.
+
+\begin{proposition}[Induced Character]\label{prop: induced character}
+    Let $G$ be a finite group, $H < G$, and $R = (G/H)_{\ell}$ system of representatives. Let $W$ be an $H$-representation, with $V$ its induced $G$-representation. Then
+    \[
+        \chi_V (g) = \frac{1}{\abs{H}} \sum_{u \in G, u^{-1}gu \in H} \chi_W (u^{-1} g u)
+    \]
+\end{proposition}
+
+\begin{proof}
+    Write out explicitly the representation, given by
+    \[
+        V = \bigoplus_{u \in R} \{ \alpha(u) \tensor w \mid w \in W \} =: \bigoplus_{u \in R} W_{uH}
+    \]
+    Then the action of $g$ is given by $(gu) H = v H$ for $v \in R$, implying that $v^{-1} g u \in H$. Then the corresponding map on $W$ is given as follows:
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            & \alpha(u) \tensor w \arrow[rr, mapsfrom] & & u \\
+            \alpha(u) \tensor w \arrow[dd, mapsto] & W_{uH} \arrow[rr, symbol=\simeq] \arrow[dd] & & W \arrow[dd] \\
+            & & & \\
+            \alpha(gu) \tensor w \arrow[rd, equal] & W_{vH} \arrow[rr, symbol=\simeq] & & W \\
+             & \alpha(v) \tensor (v^{-1} gu w) \arrow[rr, mapsto] & & (v^{-1} g u) \cdot w
+        \end{tikzcd}
+    \end{minipage}
+    In particular, setting $v = u$, action of $g$ gives $\alpha(u) \tensor w \mapsto \alpha(u) \tensor (u^{-1} gu w)$. Notice $\chi_W (u^{-1} g u)$ is invariant in the same left congruence class: if $uH = u'H$, then $(u')^{-1} u \in H$, giving 
+    \[
+        \chi_W (u^{-1} g u) = \chi_W (\underbrace{((u')^{-1} u)}_{\in H} u^{-1} g u \underbrace{u^{-1} u'}_{((u')^{-1} u)^{-1}} )
+    \]
+    Decomposing the representation into left congruence classes we have
+    \[
+        \chi_V (g) = \sum_{u \in R, u^{-1} g u \in H} \chi_W (u^{-1} g u) = \frac{1}{\abs{H}} \sum_{u \in G, u^{-1} g u \in H} \chi_W (u^{-1} g u)
+    \]
+\end{proof}
+
+Recall that by Theorem \ref{thm: character of irred repres gives a basis of C(G)} $\chi_V$s for $V$ irreducible representations give an orthonormal basis of the class function on $G$ $\mathcal{C}(G)$. The extension of representation then gives an extension of class functions
+\[
+    \mathcal{C}(H) \to \mathcal{C}(G), \quad \psi \mapsto \Ind_H^G (\psi) \quad \text{where } \Ind_H^G (\psi) (g) = \frac{1}{\abs{H}} \sum_{u \in G, u^{-1} g u \in H} \psi(u^{-1} g u)
+\]
+which is indeed in $\mathcal{C}(G)$ by the same reasoning as in the proof above. The result in Proposition \ref{prop: induced character} then can be formalized as $\chi_{\Ind_H^G}(p) = \Ind_H^G (\chi_p)$. We have the result in the inverse direction by definition: for $\alpha : G \to \GL(V)$ a representation, $\chi_{(\restr{\alpha}{H})} = \restr{\chi_{\alpha}}{H}$.
+
+\begin{theorem}[Frobenius Reciprocity]\label{thm: Frobenius Reciprocity}
+    For $H < G$, $\varphi \in \mathcal{C}(G)$ and $\psi \in \mathcal{C}(H)$, we have
+    \[
+        \inner{\Ind_H^G(\psi), \varphi}_G = \inner{\psi, \restr{\varphi}{H}}_H
+    \]
+\end{theorem}
+
+\begin{proof}
+    Since $\mathcal{C}(G)$ and $\mathcal{C}(H)$ have a basis given by the character of irreducible representations, we may assume $\psi = \chi_W$ and $\varphi = \chi_{W'}$, where $W$ is an $H$-representation, and $W'$ is a $G$-representation. We need the following extra result:
+
+    \begin{parenthesis}
+        If $V$ and $V'$ are (without loss of generality, irreducible) $G$-representations, then
+        \[
+            \inner{\chi_V, \chi_{V'}} = \dim_{\C} \Hom_{\C[H]} (V, \restr{V'}{H})
+        \]
+    \end{parenthesis}
+
+    \begin{proof}
+        For LHS = 0 this is given by the orthogonality given by Theorem \ref{thm: character of irred repres gives a basis of C(G)}; and for LHS $\neq 0$ this is given by \hyperref[lem: Schur]{Schur}.
+    \end{proof}
+
+    Use the parenthesis. In this setup, we have
+    \[
+        \inner{\psi, \restr{\varphi}{H}}_H = \inner{\chi_{W}, \restr{\chi_{W'}}{H}} = \dim_{\C} \Hom_{\C[H]} (W, \restr{W'}{H})
+    \]
+    On the other hand, by the explicit expression of induced representations we have
+    \[
+        \inner{\Ind_H^G(\psi), \varphi}_G = \dim_{\C} \Hom_{\C[G]} (\C[G] \tensor_{\C[H]} W, W')
+    \]
+    where the two spaces we take dimension on are isomorphic by \hyperref[prop: Universal Property of Extension of Scalar]{Universal Property of Extension of Scalar}.
+\end{proof}
+
+\begin{example}[Representations of $D_n$]
+    We use the induced representation to find out representations on $D_n$ for $n$ even.
+
+    Consider $G = D_n = \inner{ \sigma, \tau \mid \sigma^n = e, \tau^2 = e, \tau \sigma = \sigma^{n-1} \tau }$, $H := \pair{\sigma} \subseteq G$. Notice $(G : H) = 2$, $H \normaleqin G$, and $H$ is commutative as it is in particular cyclic. 
+
+    By Example \ref{ex: abelian subgp gives dim repr on group the index of subgp} since $H$ is abelian, every irreducible representation of $G$ has degree $\leq (G : H) = 2$. Consider the 1-dimensional representations of $G$, which is a group homomorphism $G \to \C^{\ast}$, corresponding to $G^{\text{ab}} \to \C^{\ast}$.
+
+    Now we seek to describe $G^{\text{ab}}$. Compute
+    \[
+        [\sigma, \tau] = \sigma \tau \sigma^{-1} \tau^{-1} = \sigma \tau \sigma^{n-1} \tau = \sigma (\sigma^{n-1})^{n-1} \tau^2 = \sigma^{n(n-2) + 2} = \sigma^2
+    \]
+    giving $[G, G] \supseteq \inner{\sigma^2} \implies \abs{G/\inner{\sigma^2}} = 4$. $G^{\text{ab}}$ is generated by $\bar{\sigma}$ and $\bar{\tau}$, both of order 2. This implies that $G/\pair{\sigma^2}$ is abelian, and is isomorphic to $\Z/2\Z \times \Z/2\Z$. Then $\sigma$ and $\tau$ can only go to $\pm 1$. This gives 4 1-dimensional irreducible representations. Use the result from Corollary \ref{cor: check whether obtained all irred repr.}, if there are $d$ isomorphic classes of representations we have
+    \[
+        4 + \sum_{i = 1}^d 2^2 = \abs{D_n} = 2n \implies d = \frac{n}{2} - 1
+    \]
+    the other representations cannot be higher as $D_n$ is generated by 2 elements.
+
+    Notice that every irreducible $G$-representation appears in $\Ind_H^G(\rho)$ for $\rho$ some irreducible $H$-representation (as any decomposition of $G$-representation restricted to $H$ gives a decomposition of $H$-representation), we have $\dim_{\C} (\Ind_H^G(W)) = \dim_C(W) \cdot (G : H)$. Therefore, every irreducible representation of $D_n$ with dimension 2 is isomorphic to $\Ind_H^{D_n}(\rho)$ for $\rho$ some 1-dimensional $H$-representation.
+
+    Now consider the 1-dimensional representation of $H = \pair{\sigma} \simeq \Z/n\Z$. Since the representatives for $G/H$ are $\{1, \tau\}$, explicitly we have $\Ind_H^{D_n} (\rho) = \C e \oplus \C \tau$ for any $H$-representation $\rho$. 1-dimensional representation of $H$ maps $\sigma$ to powers of $w = \cos(\frac{2\pi}{n}) + i \sin(\frac{2\pi}{n})$. Denote them to be $\rho_j (\sigma) = w^j$. Viewing $\Ind_H^{D_n} (\rho) = \C e \oplus \C \tau$ as a 2-dimensional $\C$-vector space we have (by $e_2 = \tau e_1$)
+    \[
+        \text{Action of $\sigma$: }
+        \begin{pmatrix}
+            w^j & \\
+            & w^{-j}
+        \end{pmatrix}
+        \qquad
+        \text{Action of $\tau$: }
+        \begin{pmatrix}
+            0 & 1 \\
+            1 & 0
+        \end{pmatrix}
+    \]
+    Notice that $\Ind_H^{D_n} (\rho_j) = \Ind_H^{D_n} (\rho_{n-j})$, via swapping $e_1$ and $e_2$. By symmetry the eigenvectors of $\tau$ are given by $\C(e_1 + e_2)$ and $\C(e_1 - e_2)$. Then $\Ind_H^G (\rho_j)$ is not irreducible if and only if $\tau$ and $\sigma$ maps independently on the vector subspace generated by $e_1$ and $e_2$, i.e. 
+    \[
+        \begin{cases}
+            \sigma(e_1 + e_2) \in \C(e_1 + e_2) \\
+            \sigma(e_1 - e_2) \in \C(e_1 - e_2) \\
+        \end{cases}
+        \implies 
+        w^j = w^{n-j}
+        \implies
+        j = 0 \text{ or } \frac{n}{2}
+    \]
+    \bu{Conclusion:} There are $\left( \frac{n}{2} - 1 \right)$ isomorphic classes of irreducible 2-dimensional representations, namely $\Ind_H^{D_n} (\rho_j)$ for $0 < j < \frac{n}{2}$. Any two of them are non-isomorphic, which can be seen via computing the character:
+    \[
+        \chi (\Ind_H^{D_n} (\rho_j)): \qquad \sigma \mapsto 2 \cos \frac{2\pi j}{n}, \quad \tau \mapsto 0
+    \]
+    which are all distinct (for different $j$)
+\end{example}
+
+As we have seen in the example above, for $H < G$, every irreducible $G$-representation appears in $\Ind_H^G(\rho)$ for $\rho$ some irreducible $H$-representation. The question now is, when is $\Ind_H^G(W)$ irreducible for a given $H$-representation $W$?
+
+\begin{definition}[Double Coset]
+    Given a group $G$ and a subgroup $H < G$, the \textbf{double coset} of $H$ in $G$ is defined as
+    \[
+        HgH := \{ h_1 g h_2 \mid h_1, h_2 \in H, g \in G \} = \bigcup_{h \in H} (hg) H
+    \]
+    where the last union is considered as union of left equivalence classes.
+\end{definition}
+
+\begin{remark}
+    The double cosets give a partition of $G$, as for $H g_1 H \cap H g_2 H \neq \emptyset$ we have $g_1 \in H g_2 H$ and therefore $H g_1 H = H g_2 H$.
+\end{remark}
+
+\begin{notation}
+    The set equivalence classes corresponding to the double coset is denoted $H \backslash G / H$.
+\end{notation}
+
+Suppose that we have $H \leq G$ a subgroup, Choose $S$ be the set of representatives of double cosets. For each $s \in S$, consider $H_s := H \cap s H s^{-1}$. Given an $H$-representation $\rho: H \to \GL(W)$, we get two representations:
+\[
+    \begin{cases}
+        \Res_s (\rho) := \restr{\rho}{H_s} \\
+        \rho_s(u) := \rho(s^{-1} u s)
+    \end{cases}
+\]
+
+\begin{theorem}\label{thm: decomposition of restrction of induced repr}
+    If $\rho$ is an $H$-representation, then
+    \[
+        \restr{\Ind_H^G (\rho)}{H} = \bigoplus_{s \in S} \Ind_{H_s}^H (\rho_s)
+    \]
+\end{theorem}
+
+\begin{proof}[Outline of Proof]
+    The proof quite resembles the explicit expression of induced representations: recall that by Lemma \ref{lem: repr decompose as direct sum of left cong classes} we have
+    \[
+        \restr{\Ind_H^G (\rho)}{H} = \bigoplus_{\sigma \in (G/H)_{\ell}}
+    \]
+    Define for $\tau \in H\backslash G/H$ $V(\tau) = \bigoplus_{\sigma \in (G/H)_{\ell}, \sigma \in H\tau H} W_{\sigma}$ an $H$-representation. This gives the isomorphism $V(HsH) = \Ind_{H_s}^H (\rho_s)$.
+\end{proof}
+
+\begin{remark}
+    An important special case for the discussion is for $H \normaleqin G$. Then $H \backslash G/H = G/H$, and $sHs^{-1} = H$ for all $s \in G$. The decomposition above then becomes $\restr{\Ind_H^G (\rho)}{H} \simeq \bigoplus_{s \in S} \rho_s$.
+\end{remark}
+
+\begin{remark}
+    In general, for all $H < G$, if $s \in H$, the representation $\rho_s : H \to \GL(W)$ is isomorphic to $\rho$, with the isomorphism given by
+    \[
+        \rho \isom \rho_s, \quad w \mapsto s^{-1}w (hw \mapsto (s^{-1}hs)(s^{-1}w)) = s^{-1} hw
+    \]
+    This is clearly a group homomorphism.
+\end{remark}
+
+\begin{theorem}[Mackey's Irreducible Criterion]
+    Let $H < G$ be a subgroup, and $\rho: H \to \GL(W)$ a subrepresentation.Then $\Ind_H^G (\rho)$ is irreducible if and only if $\rho$ is irreducible, and for all $s \in S \smallsetminus H$ (where $S$ set of representatives of $H \smallsetminus G / H$), $\restr{\rho}{H_s}$ and $\rho_s$ have no common irreducible components.
+\end{theorem}
+
+\begin{proof}
+    Let $\psi = \Ind_H^G (\rho)$. Then $\psi$ is irreducible if and only if $\inner{\chi_{\psi}, \chi_{\psi}}_G = 1$. \hyperref[thm: Frobenius Reciprocity]{Frobenius Reciprocity} gives $\inner{\chi_{\psi}, \chi_{\psi}}_G = \inner{\chi_{\rho}, \chi_{\restr{\psi}{H}}}_H$. Apply the decomposition in Theorem \ref{thm: decomposition of restrction of induced repr}:
+    \[
+        \text{LHS} = \sum_s \in S \inner{\chi_{\rho}, \chi_{\Ind_{H_s}^H (\rho_s)}}_H \overset{\text{Frobenius Reciprocity}}{=} \sum_{s \in S} \inner{\chi_{\restr{\rho}{H_s}}, \chi_{\rho_s}}_{H_s}
+    \]
+    By the remark above, for $s \in S$, $\rho_s \simeq \rho$, giving
+    \[
+        \text{LHS} = \underbrace{\inner{\chi_{\rho}, \chi_{\rho}}_H}_{\geq 1, \text{equal iff $\rho$ irreducible}} + \sum_{s \in S \smallsetminus H} \underbrace{\inner{\chi_{\restr{\rho}{H_s}}, \chi_{\rho_s}}}_{\geq 0}
+    \]
+    This is 1 if and only if $\inner{\chi_{\rho}, \chi_{\rho}}_H = 1$; and $\inner{\chi_{\restr{\rho}{H_s}}, \chi_{\rho_s}} = 0$ for all $s$, i.e. $\rho$ is irreducible, and $\restr{\rho}{H_s}$ and $\rho_s$ have no common component.
+\end{proof}

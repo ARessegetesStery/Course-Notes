@@ -12,4 +12,4 @@ Specifically, this repository contains (or refers to) notes of the following cou
 
 - MATH 636, *Outer Automorphism Groups of Free Groups* (2023 Fall), taught by [Prof. Alex Wright](https://websites.umich.edu/~alexmw). In class we collective constructed the [course notes](https://websites.umich.edu/~alexmw/Math636Notes.pdf), so I do not bother to make my own.
 
-- MATH 594, *Algebra II* (2023 Fall), taught by [Prof. Mircea Mustaţă](http://www-personal.umich.edu/~mmustata/). This course covers basic group theory, its application in representation theory, and field extensiosn with Galois theory. Notes for individual chapters can be found [here](https://github.com/ARessegetesStery/MATH594-Notes).
+- MATH 594, *Algebra II* (2024 Winter), taught by [Prof. Mircea Mustaţă](http://www-personal.umich.edu/~mmustata/). This course covers basic group theory, its application in representation theory, and field extensiosn with Galois theory. Notes for individual chapters can be found [here](https://github.com/ARessegetesStery/MATH594-Notes).

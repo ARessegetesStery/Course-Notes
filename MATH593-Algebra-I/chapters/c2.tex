@@ -9,17 +9,17 @@
         \item Addition $(+): M\times M \to M$ , s.t. $(M, +)$ is an abelian group.
         \item Multiplication $(\times): R\times M \to M$, s.t. it has the following properties:
             \begin{itemize}
-                \item \underline{Identity}. For all $x\in M$, there exists $1\in R$ s.t. $1\cdot x = x$.
-                \item \underline{Associativity}. For all $a, b\in R, x\in M$, $a(bx) = (ab)x$.
-                \item \underline{Distributivity in $R$}. For all $a_1, a_2\in R$, $(a_1 + a_2)x = a_1 x + a_2 x$.
-                \item \underline{Distributivity in $M$}. For all $a\in R, x_1, x_2\in M$, $a(x_1 + x_2) = a x_1 + a x_2$.
+                \item \underline{Identity}. For all $x\in M$, there exists $1\in R$ s.t. $1\times x = x$.
+                \item \underline{Associativity}. For all $a, b\in R, x\in M$, $a(b\times x) = (ab)\times x$.
+                \item \underline{Distributivity in $R$}. For all $a_1, a_2\in R$, $(a_1 + a_2)\times x = a_1\times x + a_2\times x$.
+                \item \underline{Distributivity in $M$}. For all $a\in R, x_1, x_2\in M$, $a\times (x_1 + x_2) = a\times x_1 + a\times x_2$.
             \end{itemize}
     \end{itemize}
-    Right modules are defined with the same structure, but with $a\times b = b\cdot a$ for $a\in R, b\in M$, where $\times$ is the multiplication in $M$, and $\cdot$ the multiplication in $R$.
+    Right modules are defined with the same structure, but with multiplication in the form $b\times a$ for $a\in R, b\in M$.
 \end{definition}
 
 \begin{definition}[Submodule]
-    Let $(M, +, \times)$ be an $R$-module. $N \subseteq M$ is a \textbf{$\bm{R}$-submodule} of $M$ if $(N, +)$ is a subgroup of $M$; and for all $n\in N, r\in R, n\times r\in N$.
+    Let $(M, +, \times)$ be an $R$-module. $N \subseteq M$ is a \textbf{$\bm{R}$-submodule} of $M$ if $(N, +)$ is a subgroup of $M$; and for all $n\in N, r\in R, r\times n\in N$.
 \end{definition}
 
 \begin{remark}
@@ -625,7 +625,7 @@ For discussions in this section, fix $R$ to be a commutative ring.
 \end{theorem}
 
 \begin{remark}
-    In Section \ref{sec:Artin-Noeth Ring Implication} it will be shown that a ring being Artinian implies that is Noetherian. However, this generally does not hold in modules, as modules attain a ``weaker'' structure than rings as multiplication is not defined there.
+    In this section it will be shown that a ring being Artinian implies that is Noetherian. However, this generally does not hold in modules, as modules attain a ``weaker'' structure than rings as multiplication is not defined there.
 
     Consider the following construction that specifically takes advantage of the absence of multiplication:
     

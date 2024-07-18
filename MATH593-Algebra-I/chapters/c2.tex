@@ -74,24 +74,24 @@
 \end{definition}
 
 \begin{proposition}\label{prop:R-module morphism injective iff kernel is 0}
-    Let $f: M\to N$ be a morphism of $R$-modules. Then $\im f\subseteq M$ and $\ker f \subseteq M$ are submodules; and $f$ is injective if and only if $\ker f = \{0\}$. 
+    Let $f: M\to N$ be a morphism of $R$-modules. Then $\im f\subseteq N$ and $\ker f \subseteq M$ are submodules; and $f$ is injective if and only if $\ker f = \{0\}$. 
 \end{proposition}
 
 \begin{proof}
     By the fact that $f$ is $R$-linear, both the image and kernel should be closed w.r.t. addition and scalar multiplication, i.e. are submodules. For the condition of injectivity, check
     \begin{itemize}
         \item[$\Rightarrow$:] Consider the contraposition. Suppose that $0 \neq a\in\ker f$. Then $f(1) = f(1 + a)$ with $1 \neq 1+a$ which is a contradiction.
-        \item[$\Leftarrow$:] Consider the contraposition. Suppose that there exists $a \neq b \in R$ s.t. $f(a) = f(b)$, i.e. $f$ is not injective; then $f(a-b) = 0$ which indicates that $0 \neq (a - b)\in \ker $. 
+        \item[$\Leftarrow$:] Consider the contraposition. Suppose that there exists $a \neq b \in R$ s.t. $f(a) = f(b)$, i.e. $f$ is not injective; then $f(a-b) = 0$ which indicates that $0 \neq (a - b)\in \ker f$. 
     \end{itemize}
 \end{proof}
 
 \begin{definition}[Quotient Module]
-    Let $N\subseteq M$ be a $R$-submodule. Define the equivalence relation $\sim: a\sim b$ if and only if $a - b \in N$. Then $M/N := M/\sim$ is a \textbf{quotient module}, with $\pi: m \to M/N$ the induced morphism of $R$-modules. 
+    Let $N\subseteq M$ be a $R$-submodule. Define the equivalence relation $\sim: a\sim b$ if and only if $a - b \in N$. Then $M/N := M/\sim$ is a \textbf{quotient module}, with $\pi: M \to M/N$ the induced morphism of $R$-modules. 
 \end{definition}
 
 \begin{theorem}[Universal Property of Quotient Modules]
     \label{thm:Universal Property of Quotient Modules}
-    Let $f: M\to P$ be a morphism of $R$-modules. Let $N$ be a submodule of $M$, with $\pi$ the induced morphism of $R$-modules. Further suppose that $N \subseteq \ker f$. Then there exists a unique $g: M/N \to P$ s.t. $f = g\circ \pi$, i.e. the following diagram commutes:
+    Let $f: M\to P$ be a morphism of $R$-modules. Let $N$ be a submodule of $M$, with $\pi$ the induced morphism of $R$-modules. Further suppose that $N \subseteq \ker f$. Then there exists a unique morphism of $R$-modules $g: M/N \to P$ s.t. $f = g\circ \pi$, i.e. the following diagram commutes:
     
     \begin{minipage}{\linewidth}
         \centering
@@ -112,7 +112,7 @@
 \end{proof}
 
 \begin{theorem}[First Isomorphism Theorem]\label{thm:First Isomorphism Theorem}
-    Let $f: M\to N$ be a surjective morphism of $R$-modules. Define $K := \ker f$. If there exists a morphism of $R$-modules $\bar{f}: M/K\to N$ s.t. it is $R$-linear and $\bar{f}\circ \pi = f$, i.e. the following diagram commutes:
+    Let $f: M\to N$ be a surjective morphism of $R$-modules. Define $K := \ker f$. Then there exists a morphism of $R$-modules $\bar{f}: M/K\to N$ s.t. $\bar{f}\circ \pi = f$, i.e. the following diagram commutes:
     
     \begin{minipage}{\linewidth}
         \centering
@@ -123,19 +123,19 @@
         \end{tikzcd}
     \end{minipage}
 
-    Then $\bar{f}$ is an isomorphism.
+    Such $\bar{f}$ is an isomorphism.
 \end{theorem}
 
 \begin{proof}
-    By the universal property of morphism of $R$-modules (Theorem \ref{thm:Universal Property of Quotient Modules}), a morphism $f: M/K\to N$ s.t. the diagram above commutes exists. It suffices to verify that $\bar{f}$ is bijective. It is surjective as $f$ is surjective; and is injective as $f(x) - f(y) = 0$ if and only if $(x - y)\in K$.
+    By the universal property of morphism of $R$-modules (Theorem \ref{thm:Universal Property of Quotient Modules}), a morphism $\bar{f}: M/K\to N$ s.t. the diagram above commutes exists. It suffices to verify that $\bar{f}$ is bijective. It is surjective as $f$ is surjective; and is injective as $f(x) - f(y) = 0$ if and only if $(x - y)\in K$.
 \end{proof}
 
 \begin{definition}[Direct Product; Direct Sum]
-    Let $(R_i)_{i\in I}$ be a family (potentially infinite) of modules. Then
+    Let $(R_i)_{i\in I}$ be a family (potentially infinite) of $R$-modules. Then
     \begin{itemize}
         \item The \textbf{direct product} of them is the cartesian product $\prod_{i\in I} R_i$, where addition and multiplication is defined element-wise.
-        \item The \textbf{direct sum} is a sub-ring of the direct sum $\bigoplus_{i\in I} R_i$ where only finitely many elements can be non-zero.
-        \item $M$ is the \textbf{(internal) direct sum} if $M_1$ and $M_2$ if there exists an isomorphism $f: M_1 \oplus M_2 \to M$.
+        \item The \textbf{direct sum} $\bigoplus_{i\in I} R_i$ is a submodule of the direct product $\prod_{i\in I} R_i$ where only finitely many elements can be non-zero.
+        \item $M$ is the \textbf{(internal) direct sum} of $M_1$ and $M_2$ if there exists an isomorphism $f: M_1 \oplus M_2 \to M$.
     \end{itemize}
 \end{definition}
 
@@ -157,9 +157,9 @@
 \end{proof}
 
 \begin{theorem}[Universal Property of Direct Sum]\label{thm:Universal Property of Direct Sum}
-    Let $(M_i)_{i\in I}$ be a family of modules, with $f_j: M_j \to Q$ a family of morphism of $R$-algebras. Denote $\alpha_j$ to be the \underline{natrual embedding} s.t.
+    Let $Q$ be an $R$-module, $(M_i)_{i\in I}$ be a family of modules, with $f_j: M_j \to Q$ a family of morphism of $R$-modules. Denote $\alpha_j$ to be the \underline{natrual embedding} s.t.
     \[
-        \alpha_j: M_j  \to \bigoplus_{i\in I} M_i, \qquad \alpha_j(x) = (x_i)i, \quad\text{where } x_i = \begin{cases} x, & i = j \\ 0, & \text{otherwise} \end{cases}
+        \alpha_j: M_j  \to \bigoplus_{i\in I} M_i, \qquad \alpha_j(x) = (x_i)_{i\in I}, \quad\text{where } x_i = \begin{cases} x, & i = j \\ 0, & \text{otherwise} \end{cases}
     \]
     Then there exists a unique $R$-linear map $f: \bigoplus_{i\in I} M_i \to Q$ s.t. $f\circ \alpha_j = f_j$ for all $j$, i.e. the following diagram commutes:
     
@@ -187,11 +187,11 @@ This interlude provides some general constructions on how to obtain submodules o
 
 \begin{enumerate}
     \item Let $(M_i)_{i\in I}$ be a family of submodules of $M$. Then $\bigcap_{i\in I} M_i$ is a submodule of $M$. 
-    \item Consider the submodule generated by a subset $A \subseteq M$. By definition, $\pair{A} := \bigcup\{N \mid N\subseteq M, a\subseteq N, N \text{ submodules}\}$. The following proposition provides an explicit expression:
+    \item Consider the submodule generated by a subset $A \subseteq M$. By definition, $\pair{A} := \bigcap\{N \mid N \text{ submodule of } M, A\subseteq N\}$. The following proposition provides an explicit expression:
         \begin{proposition}\label{prop:Explicit Expression of Generated Submodules}
             The submodule generated by $A\subseteq M$ has the following explicit expression:
             \[
-                \pair{A} = \left\{ \sum\limits_{i\in I} a_i x_i \bigmid a_i \in R,\ x_i\in A, \text{ finitely many nonzero } a_i \right\}
+                \pair{A} = \left\{ \sum\limits_{i=1}^{N} a_i x_i \bigmid a_i \in R,\ x_i\in A, N\in \mathbb{N}^* \right\}
             \]
         \end{proposition}
 
@@ -202,9 +202,9 @@ This interlude provides some general constructions on how to obtain submodules o
                 \item[$\supseteq$:] By the fact that module should be closed w.r.t scalar multiplication and addition.
             \end{itemize}
         \end{proof}
-    \item Let $(M_i)i\in I$ a family of modules. Then
+    \item Let $(M_i)_{i\in I}$ be a family of submodules of $M$. Then
         \[
-            \sum\limits_{i\in I} M_i := \pair{\bigcup_{i\in I} M_i} := \left\{ \sum\limits_{i\in I} x_i \mid x_i\in M_i\ \forall i, \text{ finitely many nonzero } x_i \right\}
+            \sum\limits_{i\in I} M_i := \pair{\bigcup_{i\in I} M_i} = \left\{ \sum\limits_{i\in I} x_i \mid x_i\in M_i\ \forall i, \text{ finitely many nonzero } x_i \right\}
         \]
     \item It would be interesting to consider the following isomorphism of quotient of $R$-modules:
         \begin{theorem}[Third Isomorphism Theorem]\label{thm:Third Isomorphism Theorem}
@@ -215,7 +215,7 @@ This interlude provides some general constructions on how to obtain submodules o
          \end{theorem}
 
          \begin{proof}
-            Consider two functions $f: M_1 \to (M_1 + M_2)/M_2$ and $g: M_1 \to M_1\cap M_2$. Attempt to show this via applying the first isomorphism theorem. Consider the following diagram:
+            Consider two functions $f: M_1 \to (M_1 + M_2)/M_2$ and $g: M_1 \to M_1/(M_1\cap M_2)$. Attempt to show this via applying the first isomorphism theorem. Consider the following diagram:
             
             \begin{minipage}{\linewidth}
                 \centering
@@ -234,14 +234,14 @@ This interlude provides some general constructions on how to obtain submodules o
         \end{proof}
     \item Let $N\subseteq M$ a left submodule. Let $I\subseteq R$ an ideal. Then consider the submodule
          \[
-             IN := \left\{ IN := \sum\limits_{i\in\mathcal{I}} a_i x_i \bigmid a_i \in I,\ x_i\in N,\ \text{finitely many nonzero } a_i \right\}
+             IN := \left\{ \sum\limits_{i=1}^{N} a_i x_i \bigmid a_i \in I,\ x_i\in N, N\in \mathbb{N}^* \right\}
          \]
 \end{enumerate}
 
 \section{Free Modules}
 
 \begin{definition}[Linear Combination (Module)]
-    Let $M$ be an $R$-module, with $(x_i)_{i\in I}$ a finite family of elements in $M$. Then a \textbf{linear combination} of $x_i$s for some fixed family of elements $(r_i)_{i\in I}$ in $R$ is the sum $\sum\limits_{i\in I} x_i r_i$.
+    Let $M$ be an $R$-module, with $(x_i)_{i\in I}$ a finite family of elements in $M$. Then a \textbf{linear combination} of $x_i$s for some fixed family of elements $(r_i)_{i\in I}$ in $R$ is the sum $\sum\limits_{i\in I} r_i x_i$.
 \end{definition}
 
 For the following definitions, fix $M$ to be an $R$-module.
@@ -254,7 +254,7 @@ For the following definitions, fix $M$ to be an $R$-module.
 \end{definition}
 
 \begin{definition}[Linear Independence]
-    $A\subseteq M$ a subset of $M$ is \textbf{linearly independent} if the finite sum $\sum\limits_{a_i\in A, u_i\in U} a_i u_i = 0$ implies that for all $i$, $u_i = 0$.
+    $A\subseteq M$ a subset of $M$ is \textbf{linearly independent} if any finite sum $\sum\limits_{a_i\in A, r_i\in R} r_i a_i = 0$ implies that for all $i$, $r_i = 0$.
 \end{definition}
 
 \begin{definition}[Basis]
@@ -262,17 +262,17 @@ For the following definitions, fix $M$ to be an $R$-module.
 \end{definition}
 
 \begin{definition}[Free Module]
-    $M$ is a \textbf{Free $\bm{R}$-module} if it admits a basis.
+    $M$ is a \textbf{free $\bm{R}$-module} if it admits a basis.
 \end{definition}
 
 \begin{remark}\label{rmk:4.1}
     $R$ not admitting a multiplicative inverse makes modules slightly different from vector spaces. Consider the following examples:
     \begin{enumerate}
         \item A nonzero module may not admit an independent subset. For example $R=\Z$ with $M = \Z/n\Z$. Then $n$ annihilates the whole ring.
-        \item For $N\subseteq M$ a submodule, generally $M \cong N \oplus M/N$ does not hold. Take the example where $M = \Z$ and $N = n\Z$. $N \oplus (M/N)$ is not an integral domain as $n\cdot(0, 1) = (0, 0)$; but $M$ is effectively an integral domain.
+        \item For $N\subseteq M$ a submodule, generally $M \cong N \oplus (M/N)$ does not hold. Take the example where $M = \Z$ and $N = n\Z$. $N \oplus (M/N)$ has a finite nontrivial subgroup as $n\cdot(0, 1) = (0, 0)$; but all nontrivial subgroups of $M$ are infinite.
         \item Similar to the case of vector spaces, it is useful to think in terms of modules in the canonical form. A useful result in vector space is that all $K$-vector spaces with dimension $n$ is isomorphic to $K^n$. We make the analogy in terms of modules. 
         
-        Let $I$ be a set. Denote $R^{(I)} := \bigoplus_{i\in I} M_i = \left\{ (x_i)_{i\in I} \bigmid \text{ finitely nonzero }x_i\text{s} \right\}$, where $M_i = R$. This has a basis $(e_j)_{j\in I}$ which has 1 in the $j$-th entry. Every free (left) $R$-module is isomorphism to some $R^{(I)}$ which sends the bases to bases.
+        Let $I$ be a set. Denote $R^{(I)} := \bigoplus_{i\in I} M_i = \left\{ (x_i)_{i\in I} \bigmid x_i \in M_i, \text{ finitely nonzero }x_i\text{s} \right\}$, where $M_i = R$. This has a basis $(e_j)_{j\in I}$ which has 1 in the $j$-th entry. Every free (left) $R$-module is isomorphism to some $R^{(I)}$ which sends the bases to bases.
         \item If $R$ is commutative, then any two bases of a free $R$-module has the same cardinality (which is given by considering the quotient of maximal ideals and observe that every basis is a basis in the field; which has the same cardinality as this is in a vector space). But this can fail if $R$ is not commutative.
     \end{enumerate}
 \end{remark}
